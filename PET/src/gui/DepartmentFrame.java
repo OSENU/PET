@@ -4,6 +4,11 @@
  */
 package gui;
 
+import database.DepartmentTableModal;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Aleo
@@ -15,6 +20,19 @@ public class DepartmentFrame extends javax.swing.JFrame {
      */
     public DepartmentFrame() {
         initComponents();
+
+        new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    DepartmentTableModal modal = new DepartmentTableModal();
+                    jTableDepartment.setModel(modal);
+                } catch (SQLException ex) {
+                    Logger.getLogger(DepartmentFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }.run();
+
     }
 
     /**
@@ -104,13 +122,13 @@ public class DepartmentFrame extends javax.swing.JFrame {
 
     private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
         EditDepartmentFrame edf = new EditDepartmentFrame();
-        
+
         edf.setVisible(true);
     }//GEN-LAST:event_jButtonAddActionPerformed
 
     private void jButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditActionPerformed
         EditDepartmentFrame edf = new EditDepartmentFrame(1);
-        
+
         edf.setVisible(true);
     }//GEN-LAST:event_jButtonEditActionPerformed
 
