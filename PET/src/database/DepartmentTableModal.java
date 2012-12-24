@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
+import settings.ConfigureProgramm;
 
 /**
  *
@@ -45,18 +46,21 @@ public class DepartmentTableModal extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 2;
+        if(ConfigureProgramm.isDEBAG()){
+            return 2;
+        } else {
+            return 1;
+        }
+        
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch (columnIndex){
             case(0) : 
-                return departments.get(rowIndex).id;
-            case(1) : 
                 return departments.get(rowIndex).name;
             default:
-                return 0;
+                return departments.get(rowIndex).id;
             
         }
     }
@@ -65,11 +69,9 @@ public class DepartmentTableModal extends AbstractTableModel {
     public String getColumnName(int column) {
         switch (column){
             case(0) : 
-                return "Код кафедры";
-            case(1) : 
                 return "Название кафедры";
             default:
-                return "";
+                return "Код кафедры";
             
         }
     }
@@ -78,9 +80,9 @@ public class DepartmentTableModal extends AbstractTableModel {
     public Class<?> getColumnClass(int columnIndex) {
         switch (columnIndex){
             case(0) :
-                return Integer.class;
-            default:
                 return String.class;
+            default:
+                return Integer.class;
         }
     }
     

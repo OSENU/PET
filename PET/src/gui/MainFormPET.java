@@ -5,6 +5,7 @@
 package gui;
 
 import javax.swing.JFrame;
+import settings.ConfigureProgramm;
 
 /**
  *
@@ -51,7 +52,7 @@ public class MainFormPET extends javax.swing.JFrame {
 
         jMenuDictionaries.setText("Словари");
 
-        jMenuItemDepartment.setText("Факультеты");
+        jMenuItemDepartment.setText("Кафедры");
         jMenuItemDepartment.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemDepartmentActionPerformed(evt);
@@ -125,8 +126,13 @@ public class MainFormPET extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(MainFormPET.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
-        /* Create and display the form */
+        
+        /**
+         * Установка программы в режим отладки
+         * В этом режиме необходимо показывать код объектов в табилце
+         */
+        ConfigureProgramm.setDEBAG(false);
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 MainFormPET mf = new MainFormPET();

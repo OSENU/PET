@@ -51,7 +51,7 @@ public class DepartmentFrame extends javax.swing.JFrame {
         jButtonEdit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Факультеты");
+        setTitle("Кафедры");
         setAlwaysOnTop(true);
         setModalExclusionType(java.awt.Dialog.ModalExclusionType.TOOLKIT_EXCLUDE);
         setType(java.awt.Window.Type.UTILITY);
