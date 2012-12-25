@@ -11,17 +11,18 @@ import java.awt.HeadlessException;
  * @author Aleo
  */
 public class EditDepartmentFrame extends javax.swing.JFrame {
-
+    DepartmentFrame parent = null;
     /**
      * Creates new form EditDepartmentFrame
      */
-    public EditDepartmentFrame() {
+    public EditDepartmentFrame(DepartmentFrame parent) {
+        this.parent = parent;
         initComponents();
         setTitle("Добление");
     }
 
-    public EditDepartmentFrame(int idDepartment) {
-        this();
+    public EditDepartmentFrame(int idDepartment, DepartmentFrame parent) {
+        this(parent);
         setTitle("Редактирование");
     }
     
@@ -68,7 +69,7 @@ public class EditDepartmentFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 44, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButtonOK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
