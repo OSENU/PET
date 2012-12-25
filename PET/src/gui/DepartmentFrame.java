@@ -121,13 +121,13 @@ public class DepartmentFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
-        EditDepartmentFrame edf = new EditDepartmentFrame();
+        EditDepartmentFrame edf = new EditDepartmentFrame(this);
 
         edf.setVisible(true);
     }//GEN-LAST:event_jButtonAddActionPerformed
 
     private void jButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditActionPerformed
-        EditDepartmentFrame edf = new EditDepartmentFrame(1);
+        EditDepartmentFrame edf = new EditDepartmentFrame(1, this);
 
         edf.setVisible(true);
     }//GEN-LAST:event_jButtonEditActionPerformed
