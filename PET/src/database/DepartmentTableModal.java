@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
 
 /**
- *
+ * Класса описывает модель таблицы для окна DepartmentFrame
  * @author Aleo
  */
 public class DepartmentTableModal extends AbstractTableModel {
@@ -35,7 +35,7 @@ public class DepartmentTableModal extends AbstractTableModel {
         
         rs.close();
         st.close();
-//        DataBaseConnect.destroyConnection();
+//      DataBaseConnect.destroyConnection();
     }
     
     @Override
@@ -45,6 +45,7 @@ public class DepartmentTableModal extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
+        // Возврат количество столбцов которые будут в таблице
         return 2;
     }
 
@@ -52,7 +53,8 @@ public class DepartmentTableModal extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch (columnIndex){
             case(0) : 
-                return departments.get(rowIndex).id;
+                // Возможно надо добавить поддержку отладки
+                return (departments.get(rowIndex).id);
             case(1) : 
                 return departments.get(rowIndex).name;
             default:

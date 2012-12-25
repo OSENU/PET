@@ -159,7 +159,7 @@ public class DepartmentFrame extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */
+        /* Запуск фрейма программы в другом потоке java.awt */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new DepartmentFrame().setVisible(true);
