@@ -122,7 +122,7 @@ public class DepartmentFrame extends javax.swing.JFrame {
 
     private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
         EditDepartmentFrame edf = new EditDepartmentFrame(this);
-
+        //адывоа
         edf.setVisible(true);
     }//GEN-LAST:event_jButtonAddActionPerformed
 
