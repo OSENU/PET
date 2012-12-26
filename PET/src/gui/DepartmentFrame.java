@@ -1,40 +1,60 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Класс описывает окна с таблицей факультетов
+ * Все действия происходят в этом класе
+ * У класса есть два диалога:
+ * 
+ * 1) Диалог Добавления-Редактирования
+ * 2) Диалог Ошибки
+ * 
+ * Перед открытием диалога, наше окно необходимо диактевировать
+ * Как только диалог закрывается, мы возобновляем диалог
  */
 package gui;
 
 import database.DepartmentTableModal;
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import settings.ConfigureProgramm;
 
 /**
  *
  * @author Aleo
  */
 public class DepartmentFrame extends javax.swing.JFrame {
-
+    
+    private boolean isAddNewDepartment = false;
+    private Object objectWhoCreateDialog = null;
     /**
      * Creates new form DepartmentFrame
      */
-    public DepartmentFrame() {
+    public DepartmentFrame() {        
         initComponents();
-
-        new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    DepartmentTableModal modal = new DepartmentTableModal();
-                    jTableDepartment.setModel(modal);
-                } catch (SQLException ex) {
-                    Logger.getLogger(DepartmentFrame.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }.run();
-
+        updateTableDepartment();
     }
-
+    
+    private void updateTableDepartment(){
+        
+        try {
+            DepartmentTableModal modal = new DepartmentTableModal();
+            jTableDepartment.setModel(modal);
+        } catch (SQLException ex) {
+            Logger.getLogger(DepartmentFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        if(! ConfigureProgramm.isDEBAG()){
+            // Если программа не врежиме отладки, то скроем колонку с id
+            jTableDepartment.getColumnModel().getColumn(0).setMaxWidth(0);
+            jTableDepartment.getColumnModel().getColumn(0).setMinWidth(0);
+            jTableDepartment.getColumnModel().getColumn(0).setPreferredWidth(0);
+            jTableDepartment.getColumnModel().getColumn(0).setResizable(false);
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -70,11 +90,11 @@ public class DepartmentFrame extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
         );
 
         jButtonAdd.setText("Добавить");
@@ -98,12 +118,13 @@ public class DepartmentFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButtonAdd)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonEdit)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jButtonEdit)
+                        .addGap(0, 172, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -113,59 +134,94 @@ public class DepartmentFrame extends javax.swing.JFrame {
                     .addComponent(jButtonAdd)
                     .addComponent(jButtonEdit))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
-        EditDepartmentFrame edf = new EditDepartmentFrame(this);
-        //адывоа
-        edf.setVisible(true);
-    }//GEN-LAST:event_jButtonAddActionPerformed
-
-    private void jButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditActionPerformed
-        EditDepartmentFrame edf = new EditDepartmentFrame(1, this);
-
-        edf.setVisible(true);
-    }//GEN-LAST:event_jButtonEditActionPerformed
-
+    
     /**
-     * @param args the command line arguments
+     * Событие нажатия кнопки добавления кафедры
+     * Необходимо показать окно, а наше окно сделать не активным
+     * @param evt 
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
+    private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
+        String nameDepartment;
+        this.setEnabled(false);
+        do{
+            nameDepartment = JOptionPane.showInputDialog
+                    (this, "Введите название кафедры:", "Ввод данных", 
+                    JOptionPane.INFORMATION_MESSAGE);
+            if(nameDepartment != null){
+                if(nameDepartment.trim().length() > 0){
+                    JOptionPane.showMessageDialog(this, nameDepartment, "Результат", JOptionPane.INFORMATION_MESSAGE);
+                    if(inputIntoDepartment(nameDepartment)){
+                        // Выходим с цикла
+                        break;
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Вы ничего не ввели", 
+                            "Пустая строка", JOptionPane.WARNING_MESSAGE);
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DepartmentFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DepartmentFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DepartmentFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DepartmentFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Запуск фрейма программы в другом потоке java.awt */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new DepartmentFrame().setVisible(true);
+        }while(nameDepartment != null);
+        this.setEnabled(true);
+    }//GEN-LAST:event_jButtonAddActionPerformed
+    
+    /**
+     * Событие нажатия кнопки редактирования значения в таблице
+     * @param evt 
+     */
+    private void jButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditActionPerformed
+        
+    }//GEN-LAST:event_jButtonEditActionPerformed
+    
+    private boolean inputIntoDepartment(String name){
+        boolean ret = true;
+        try {
+            Connection conn = database.DataBaseConnect.getConnection();
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery("Select * "
+                    + "from Department where name_department = '"+name+"';");
+            if(!rs.next()){
+                // Значит в базе такого значения нет
+                int resalt = st.executeUpdate("insert into "
+                        + "department(name_department) values('"+name+"');");
+                if(resalt == 0){
+                    JOptionPane.showMessageDialog(this, 
+                            "Произошла ошибка при добавлении значения.", 
+                            "Ошибка добавления", JOptionPane.ERROR_MESSAGE);
+                } else{
+                    // Все прошло удачно, можем обновить таблицу
+                    this.updateTableDepartment();
+                }
+            } else {
+                // Такое значение уже есть
+                int resalt = JOptionPane.showConfirmDialog
+                        (this, "Такое значение уже есть.\n"
+                        + "Хотете еще раз ввести значение?", "Ошибка!", 
+                        JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                if(resalt == JOptionPane.YES_OPTION){
+                    ret = false;
+                } else{
+                    ret = true;
+                }
             }
-        });
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, ex.toString(), 
+                    "Ошибка добавления", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(DepartmentFrame.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        } finally {
+            return ret;
+        }
+        
+        
     }
+    
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAdd;
     private javax.swing.JButton jButtonEdit;

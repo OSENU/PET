@@ -13,7 +13,7 @@ import settings.ConfigureProgramm;
  * @author Aleo
  */
 public class DepartmentTableModal extends AbstractTableModel {
-    private int countRow;
+    private int countRow, countColumn;
     private ArrayList<Department> departments;
     public DepartmentTableModal() throws SQLException{
         Connection conn = DataBaseConnect.getConnection();
@@ -22,7 +22,7 @@ public class DepartmentTableModal extends AbstractTableModel {
         ResultSet rs = st.executeQuery("select * from Department;");
         rs.last();
         countRow = rs.getRow();
-
+        countColumn = rs.getMetaData().getColumnCount();
         rs.beforeFirst();
         
         int id;
@@ -46,21 +46,16 @@ public class DepartmentTableModal extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        //Добавлен режим отладки
-        if(ConfigureProgramm.isDEBAG()){
-            return 2;
-        } else {
-            return 1;
-        }
+        return countColumn;
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch (columnIndex){
             case(0) : 
-                return departments.get(rowIndex).name;
-            default:
                 return departments.get(rowIndex).id;
+            default:
+                return departments.get(rowIndex).name;
             
         }
     }
@@ -69,9 +64,9 @@ public class DepartmentTableModal extends AbstractTableModel {
     public String getColumnName(int column) {
         switch (column){
             case(0) : 
-                return "Название кафедры";
-            default:
                 return "Код кафедры";
+            default:
+                return "Название кафедры";
             
         }
     }
@@ -80,9 +75,9 @@ public class DepartmentTableModal extends AbstractTableModel {
     public Class<?> getColumnClass(int columnIndex) {
         switch (columnIndex){
             case(0) :
-                return String.class;
+                return Integer.class;                
             default:
-                return Integer.class;
+                return String.class;
         }
     }
     

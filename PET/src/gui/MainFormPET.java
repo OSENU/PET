@@ -131,7 +131,7 @@ public class MainFormPET extends javax.swing.JFrame {
          * Установка программы в режим отладки
          * В этом режиме необходимо показывать код объектов в табилце
          */
-        ConfigureProgramm.setDEBAG(false);
+        ConfigureProgramm.setDEBAG(true);
         
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
