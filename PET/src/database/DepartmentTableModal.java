@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
-import settings.ConfigureProgramm;
+import database.entity.Department;
 
 /**
  * Класса описывает модель таблицы для окна DepartmentFrame
@@ -53,9 +53,9 @@ public class DepartmentTableModal extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch (columnIndex){
             case(0) : 
-                return departments.get(rowIndex).id;
+                return departments.get(rowIndex).getIdDepartment();
             default:
-                return departments.get(rowIndex).name;
+                return departments.get(rowIndex).getNameDepartment();
             
         }
     }
