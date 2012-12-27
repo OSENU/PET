@@ -18,7 +18,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import settings.ConfigureProgramm;
 
 /**
@@ -26,27 +29,25 @@ import settings.ConfigureProgramm;
  * @author Aleo
  */
 public class DepartmentFrame extends javax.swing.JFrame {
-    
-    private boolean isAddNewDepartment = false;
-    private Object objectWhoCreateDialog = null;
+
     /**
      * Creates new form DepartmentFrame
      */
-    public DepartmentFrame() {        
+    public DepartmentFrame() {
         initComponents();
         updateTableDepartment();
     }
-    
-    private void updateTableDepartment(){
-        
+
+    private void updateTableDepartment() {
+
         try {
             DepartmentTableModal modal = new DepartmentTableModal();
             jTableDepartment.setModel(modal);
         } catch (SQLException ex) {
             Logger.getLogger(DepartmentFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        if(! ConfigureProgramm.isDEBAG()){
+
+        if (!ConfigureProgramm.isDEBAG()) {
             // Если программа не врежиме отладки, то скроем колонку с id
             jTableDepartment.getColumnModel().getColumn(0).setMaxWidth(0);
             jTableDepartment.getColumnModel().getColumn(0).setMinWidth(0);
@@ -54,7 +55,7 @@ public class DepartmentFrame extends javax.swing.JFrame {
             jTableDepartment.getColumnModel().getColumn(0).setResizable(false);
         }
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -73,7 +74,6 @@ public class DepartmentFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Кафедры");
         setAlwaysOnTop(true);
-        setModalExclusionType(java.awt.Dialog.ModalExclusionType.TOOLKIT_EXCLUDE);
         setType(java.awt.Window.Type.UTILITY);
 
         jTableDepartment.setModel(new javax.swing.table.DefaultTableModel(
@@ -140,88 +140,218 @@ public class DepartmentFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
+
     /**
-     * Событие нажатия кнопки добавления кафедры
-     * Необходимо показать окно, а наше окно сделать не активным
-     * @param evt 
+     * Событие нажатия кнопки добавления кафедры Необходимо показать окно, а
+     * наше окно сделать не активным
+     *
+     * @param evt
      */
     private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
         String nameDepartment;
         this.setEnabled(false);
-        do{
-            nameDepartment = JOptionPane.showInputDialog
-                    (this, "Введите название кафедры:", "Ввод данных", 
-                    JOptionPane.INFORMATION_MESSAGE);
-            if(nameDepartment != null){
-                if(nameDepartment.trim().length() > 0){
-                    JOptionPane.showMessageDialog(this, nameDepartment, "Результат", JOptionPane.INFORMATION_MESSAGE);
-                    if(inputIntoDepartment(nameDepartment)){
+        // Цыкл необходим для того, что бы было несколько попыток у пользователя
+        do {
+            nameDepartment = JOptionPane.showInputDialog(this, "Введите название кафедры:", "Ввод данных",
+                    JOptionPane.PLAIN_MESSAGE);
+            if (nameDepartment != null) {
+                if (nameDepartment.trim().length() > 0) {
+                    if (inputIntoDepartment(nameDepartment)) {
                         // Выходим с цикла
                         break;
                     }
                 } else {
-                    JOptionPane.showMessageDialog(this, "Вы ничего не ввели", 
+                    JOptionPane.showMessageDialog(this, "Вы ничего не ввели",
                             "Пустая строка", JOptionPane.WARNING_MESSAGE);
                 }
             }
-        }while(nameDepartment != null);
+        } while (nameDepartment != null);
         this.setEnabled(true);
     }//GEN-LAST:event_jButtonAddActionPerformed
-    
+
     /**
      * Событие нажатия кнопки редактирования значения в таблице
-     * @param evt 
+     *
+     * @param evt
      */
     private void jButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditActionPerformed
-        
+        String nameDepartment = null;
+        //Делаем окно недоступным
+        this.setEnabled(false);
+        // Получаем количество выделеных строк в таблице
+        int countSelect = jTableDepartment.getSelectedColumnCount();
+        if (countSelect == 0) {
+            // Значит ни одной строки не выбратно
+            JOptionPane.showMessageDialog(this,
+                    "Вы не выбрали ни одного значения!", "Выбор данных!",
+                    JOptionPane.WARNING_MESSAGE);
+        } else if (countSelect > 1) {
+            // Значит выбрано больше одной строки
+            JOptionPane.showMessageDialog(this,
+                    "Вы выбрали больше одного значения!", "Выбор данных!",
+                    JOptionPane.WARNING_MESSAGE);
+        } else { // Все нормально и можем показть окно ввода
+            // Считываем значение из теблицы
+            nameDepartment = (String) jTableDepartment.getValueAt(
+                    jTableDepartment.getSelectedRow(), 1);
+            // Значения на кнопки
+            Object variant[] = {"Да", "Нет"};
+            // Создаем поле которое будет в диалоге
+            JTextField text = new JTextField();
+            // Создаем компоненты, для диалога
+            final JComponent[] fields = {
+                new JLabel("Введите новое название кафедры:"),
+                text
+            };
+            // Цыкл необходим для того, что бы было несколько попыток у пользователя
+            do {
+                // Инициализируем значение в текстовом поле
+                text.setText(nameDepartment);
+                // Показываем диалог
+                int resalt = JOptionPane.showOptionDialog(this,
+                        fields, "Введите данные:",
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                        null, variant, variant[0]);
+                // Если выбрали ДА
+                if (resalt == 0) {
+                    if (text.getText().trim().length() > 0) {
+                        // Значит то что ввели не пустое!!!
+                        if (!nameDepartment.equals(text.getText())) {
+                            // Если введенное значение отличаеться то заносим в базу данных
+                            boolean res = updateDataBase((Integer) 
+                                    jTableDepartment.
+                                    getValueAt(jTableDepartment.
+                                    getSelectedRow(), 0), text.getText());
+                            if(res){
+                                break;
+                            }
+                        } else {
+                            // Иначе мы игнорируем и ничего не делаем
+                            // Хотя может быть надо выводить сообщение
+                            
+                            break;
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Вы ничего не ввели",
+                                "Пустая строка", JOptionPane.WARNING_MESSAGE);
+                    }
+                } else { // Если Выбрали НЕТ
+                    break;
+                }
+            } while (true);
+
+        }
+
+        // Окно сново доступно
+        this.setEnabled(true);
     }//GEN-LAST:event_jButtonEditActionPerformed
-    
-    private boolean inputIntoDepartment(String name){
+
+    /**
+     * Метод добавления в безу данных
+     * Этот метод так же проверяет на наличие данной строчки в базе
+     * 
+     * @param name - то что надо передать в базу
+     * @return true если добавлено или не надо еще делать попыток, 
+     *         false - если такое уже есть в базе.
+     */
+    private boolean inputIntoDepartment(String name) {
         boolean ret = true;
         try {
+            // Получаем соединение с базой
             Connection conn = database.DataBaseConnect.getConnection();
             Statement st = conn.createStatement();
+            // Формируем запрос на проверку
             ResultSet rs = st.executeQuery("Select * "
-                    + "from Department where name_department = '"+name+"';");
-            if(!rs.next()){
+                    + "from Department where name_department = '" + name + "';");
+            if (!rs.next()) {
                 // Значит в базе такого значения нет
                 int resalt = st.executeUpdate("insert into "
-                        + "department(name_department) values('"+name+"');");
-                if(resalt == 0){
-                    JOptionPane.showMessageDialog(this, 
-                            "Произошла ошибка при добавлении значения.", 
+                        + "department(name_department) values('" + name + "');");
+                if (resalt == 0) {
+                    JOptionPane.showMessageDialog(this,
+                            "Произошла ошибка при добавлении значения.",
                             "Ошибка добавления", JOptionPane.ERROR_MESSAGE);
-                } else{
+                } else {
                     // Все прошло удачно, можем обновить таблицу
                     this.updateTableDepartment();
                 }
             } else {
                 // Такое значение уже есть
-                int resalt = JOptionPane.showConfirmDialog
-                        (this, "Такое значение уже есть.\n"
-                        + "Хотете еще раз ввести значение?", "Ошибка!", 
-                        JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-                if(resalt == JOptionPane.YES_OPTION){
+                Object variant[] = {"Да", "Нет"};
+                int resalt = JOptionPane.showOptionDialog(this,
+                        "Такое значение уже есть.\n"
+                        + "Хотете еще раз ввести значение?", "Ошибка!",
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                        null, variant, variant[0]);
+
+                if (resalt == 0) {
                     ret = false;
-                } else{
+                } else {
                     ret = true;
                 }
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex.toString(), 
+            JOptionPane.showMessageDialog(this, ex.toString(),
                     "Ошибка добавления", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(DepartmentFrame.class.getName())
                     .log(Level.SEVERE, null, ex);
         } finally {
             return ret;
         }
-        
+    }
+
+    /**
+     * Метод изменения значений в базе данных
+     * @param id - кому надо поменять значение
+     * @param name - на какое значение
+     * @return true - если значение изменино
+     *         false - значение не изменино
+     */
+    private boolean updateDataBase(int id, String name) {
+        boolean result = true;
+        try {
+            Connection conn = database.DataBaseConnect.getConnection();
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery("Select * "
+                    + "from Department where name_department = '" + name +
+                    "' and id_department <> "+id+";");
+            if (!rs.next()) {
+                // Значит в базе такого значения нет
+                int resalt = st.executeUpdate("update department "
+                        + "set name_department = '" + name + "' Where id_department = "+id+";");
+                if (resalt == 0) {
+                    JOptionPane.showMessageDialog(this,
+                            "Произошла ошибка при изменении значения!",
+                            "Ошибка добавления", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    // Все прошло удачно, можем обновить таблицу
+                    this.updateTableDepartment();
+                }
+            } else {
+                // Такое значение уже есть
+                Object variant[] = {"Да", "Нет"};
+                int res = JOptionPane.showOptionDialog(this,
+                        "Такое значение уже есть.\n"
+                        + "Хотете еще раз ввести значение?", "Ошибка!",
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                        null, variant, variant[0]);
+
+                if (res == 0) {
+                    result = false;
+                } else {
+                    result = true;
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, ex.toString(),
+                    "Ошибка добавления", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(DepartmentFrame.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        } finally {
+            return result;
+        }
         
     }
-    
-    
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAdd;
     private javax.swing.JButton jButtonEdit;
