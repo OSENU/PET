@@ -4,36 +4,14 @@
 package database.entity;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author Aleo
  */
-@Entity
-@Table(name = "SUBJECT", catalog = "TEST", schema = "PUBLIC", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"ID_SUBJECT"})})
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Subject.findAll", query = "SELECT s FROM Subject s"),
-    @NamedQuery(name = "Subject.findByIdSubject", query = "SELECT s FROM Subject s WHERE s.idSubject = :idSubject"),
-    @NamedQuery(name = "Subject.findByNameSubject", query = "SELECT s FROM Subject s WHERE s.nameSubject = :nameSubject")})
 public class Subject implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @Column(name = "ID_SUBJECT", nullable = false)
     private Integer idSubject;
-    @Basic(optional = false)
-    @Column(name = "NAME_SUBJECT", nullable = false, length = 50)
     private String nameSubject;
 
     public Subject() {
@@ -91,5 +69,5 @@ public class Subject implements Serializable {
     public String toString() {
         return "database.entity.Subject[ idSubject=" + idSubject + ", nameSubject=" + nameSubject + " ]";
     }
-    
+ 
 }
