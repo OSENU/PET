@@ -1,5 +1,5 @@
 /*
-* Класс описывает сушность в базе данных таблицы Subject
+ * Класс описывает сушность в базе данных таблицы Subject
  */
 package database.entity;
 
@@ -10,7 +10,8 @@ import java.io.Serializable;
  * @author Aleo
  */
 public class Subject implements Serializable {
-   private Integer idSubject;
+
+    private Integer idSubject;
     private String nameSubject;
 
     public Subject() {
@@ -68,5 +69,4 @@ public class Subject implements Serializable {
     public String toString() {
         return "database.entity.Subject[ idSubject=" + idSubject + ", nameSubject=" + nameSubject + " ]";
     }
- 
 }
