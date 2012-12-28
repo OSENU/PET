@@ -68,5 +68,5 @@ public class Subject implements Serializable {
     public String toString() {
         return "database.entity.Subject[ idSubject=" + idSubject + ", nameSubject=" + nameSubject + " ]";
     }
-    
+ 
 }
