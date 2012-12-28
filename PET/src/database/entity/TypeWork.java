@@ -4,36 +4,14 @@
 package database.entity;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 /**
  *
  * @author Aleo
  */
-@Entity
-@Table(name = "TYPE_WORK", catalog = "TEST", schema = "PUBLIC", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"ID_TYPE_WORK"})})
-@NamedQueries({
-    @NamedQuery(name = "TypeWork.findAll", query = "SELECT t FROM TypeWork t")})
 
 public class TypeWork implements Serializable {
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "ID_TYPE_WORK", nullable = false)
     private Integer idTypeWork;
-    @Basic(optional = false)
-    @Column(name = "NAME_TYPE_WORK", nullable = false, length = 50)
     private String nameTypeWork;
 
     public TypeWork() {
