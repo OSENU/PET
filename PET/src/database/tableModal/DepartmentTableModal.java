@@ -1,5 +1,6 @@
-package database;
+package database.tableModal;
 
+import database.DataBaseConnect;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;

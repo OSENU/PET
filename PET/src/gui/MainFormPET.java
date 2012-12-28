@@ -4,6 +4,7 @@
  */
 package gui;
 
+import gui.dictionaries.DepartmentFrame;
 import javax.swing.JFrame;
 import settings.ConfigureProgramm;
 

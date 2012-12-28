@@ -1,17 +1,10 @@
 /*
  * Класс описывает окна с таблицей факультетов
  * Все действия происходят в этом класе
- * У класса есть два диалога:
- * 
- * 1) Диалог Добавления-Редактирования
- * 2) Диалог Ошибки
- * 
- * Перед открытием диалога, наше окно необходимо диактевировать
- * Как только диалог закрывается, мы возобновляем диалог
  */
-package gui;
+package gui.dictionaries;
 
-import database.DepartmentTableModal;
+import database.tableModal.DepartmentTableModal;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -45,6 +38,7 @@ public class DepartmentFrame extends javax.swing.JFrame {
             DepartmentTableModal modal = new DepartmentTableModal();
             jTableDepartment.setModel(modal);
         } catch (SQLException ex) {
+            SMS.error(this, ex.toString());
             Logger.getLogger(DepartmentFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
 
