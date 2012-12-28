@@ -78,13 +78,13 @@ public class SMS {
         
         int resalt = JOptionPane.showOptionDialog(parent,
                 message, title,
-                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
+                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
                 null, variant, variant[0]);
 
         if (resalt == 0) {
-            result = false;
-        } else {
             result = true;
+        } else {
+            result = false;
         }
         
         enableParent(parent, true);
@@ -236,13 +236,30 @@ public class SMS {
         return dialog(null, title, components);
     }
     
-    public static String input(JFrame parent, String message, String title){
+    
+    /**
+     * Создаеться диалог в котром есть одно текстовое поле, возращает метод
+     * строку с результатом, если строка == null, то тогда нажали отмену
+     * @param parent - Родитель которого надо блокировать
+     * @param message - Сообщение диалога 
+     * @param title - Заголовове окна
+     * @param value - Значение по умолчанию в диалоге
+     * @return 
+     */
+    public static String input(JFrame parent, String message, String title, String value){
         enableParent(parent, false);
         JTextField text = new JTextField();
             // Создаем компоненты, для диалога
         final JComponent[] fields = {new JLabel(message), text };
-            
-        boolean resalt = dialog(parent, "Введите данные:", fields); 
+        
+        if(value != null){
+            text.setText(value);
+        }
+        if(title == null){
+            title = "Введите данные:";
+        }
+        
+        boolean resalt = dialog(parent, title, fields); 
         String result;
         if(resalt){
             result = text.getText();
@@ -253,15 +270,46 @@ public class SMS {
         return result;
     }
     
+    /**
+     * Создаеться диалог в котром есть одно текстовое поле, возращает метод
+     * строку с результатом, если строка == null, то тогда нажали отмену
+     * @param parent - Родитель которого надо блокировать
+     * @param message - Сообщение диалога
+     * @param title - заголовок диалога
+     * @return 
+     */
+    public static String input(JFrame parent, String message, String title ){
+        return input(parent, message, title, null);
+    }
+    
+    /**
+     * Создаеться диалог в котром есть одно текстовое поле, возращает метод
+     * строку с результатом, если строка == null, то тогда нажали отмену
+     * @param parent - Родитель которого надо блокировать
+     * @param message - Сообщение диалога
+     * @return 
+     */
     public static String input(JFrame parent, String message){
         return input(parent, message, "Ввод данных");
     }
     
-    
+    /**
+     * Создаеться диалог в котром есть одно текстовое поле, возращает метод
+     * строку с результатом, если строка == null, то тогда нажали отмену
+     * @param message - Сообщение диалога
+     * @param title - Заголовок диалога
+     * @return 
+     */
     public static String input(String message, String title){
         return input(null, message, title);
     }
     
+    /**
+     * Создаеться диалог в котром есть одно текстовое поле, возращает метод
+     * строку с результатом, если строка == null, то тогда нажали отмену
+     * @param message - Сообщение диалога
+     * @return 
+     */
     public static String input(String message){
         return input(null, message, "Ввод данных:");
     }

@@ -18,11 +18,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 import settings.ConfigureProgramm;
+import util.SMS;
 
 /**
  *
@@ -38,6 +35,10 @@ public class DepartmentFrame extends javax.swing.JFrame {
         updateTableDepartment();
     }
 
+    /**
+     * Метод обновляет данные в таблице
+     * И если необходимо скарывает столбец
+     */
     private void updateTableDepartment() {
 
         try {
@@ -152,8 +153,7 @@ public class DepartmentFrame extends javax.swing.JFrame {
         this.setEnabled(false);
         // Цыкл необходим для того, что бы было несколько попыток у пользователя
         do {
-            nameDepartment = JOptionPane.showInputDialog(this, "Введите название кафедры:", "Ввод данных",
-                    JOptionPane.PLAIN_MESSAGE);
+            nameDepartment = SMS.input(this, "Введите название кафедры:");
             if (nameDepartment != null) {
                 if (nameDepartment.trim().length() > 0) {
                     if (inputIntoDepartment(nameDepartment)) {
@@ -161,8 +161,7 @@ public class DepartmentFrame extends javax.swing.JFrame {
                         break;
                     }
                 } else {
-                    JOptionPane.showMessageDialog(this, "Вы ничего не ввели",
-                            "Пустая строка", JOptionPane.WARNING_MESSAGE);
+                    SMS.warning(this, "Вы ничего не ввели");
                 }
             }
         } while (nameDepartment != null);
@@ -182,46 +181,33 @@ public class DepartmentFrame extends javax.swing.JFrame {
         int countSelect = jTableDepartment.getSelectedColumnCount();
         if (countSelect == 0) {
             // Значит ни одной строки не выбратно
-            JOptionPane.showMessageDialog(this,
-                    "Вы не выбрали ни одного значения!", "Выбор данных!",
-                    JOptionPane.WARNING_MESSAGE);
+            SMS.warning(this, "Вы не выбрали данные для редактирования");
         } else if (countSelect > 1) {
             // Значит выбрано больше одной строки
-            JOptionPane.showMessageDialog(this,
-                    "Вы выбрали больше одного значения!", "Выбор данных!",
-                    JOptionPane.WARNING_MESSAGE);
+            SMS.warning(this, "Выберите только одно значение в таблице");
         } else { // Все нормально и можем показть окно ввода
             // Считываем значение из теблицы
             nameDepartment = (String) jTableDepartment.getValueAt(
                     jTableDepartment.getSelectedRow(), 1);
-            // Значения на кнопки
-            Object variant[] = {"Да", "Нет"};
-            // Создаем поле которое будет в диалоге
-            JTextField text = new JTextField();
-            // Создаем компоненты, для диалога
-            final JComponent[] fields = {
-                new JLabel("Введите новое название кафедры:"),
-                text
-            };
             // Цыкл необходим для того, что бы было несколько попыток у пользователя
             do {
-                // Инициализируем значение в текстовом поле
-                text.setText(nameDepartment);
-                // Показываем диалог
-                int resalt = JOptionPane.showOptionDialog(this,
-                        fields, "Введите данные:",
-                        JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
-                        null, variant, variant[0]);
+
+                String newDepartment = 
+                        SMS.input(this, 
+                        "Введите новое название кафедры:",
+                        null, 
+                        nameDepartment);
+                
                 // Если выбрали ДА
-                if (resalt == 0) {
-                    if (text.getText().trim().length() > 0) {
+                if (newDepartment != null) {
+                    if (newDepartment.trim().length() > 0) {
                         // Значит то что ввели не пустое!!!
-                        if (!nameDepartment.equals(text.getText())) {
+                        if (!nameDepartment.equals(newDepartment)) {
                             // Если введенное значение отличаеться то заносим в базу данных
                             boolean res = updateDataBase((Integer) 
                                     jTableDepartment.
                                     getValueAt(jTableDepartment.
-                                    getSelectedRow(), 0), text.getText());
+                                    getSelectedRow(), 0),newDepartment);
                             if(res){
                                 break;
                             }
@@ -232,8 +218,7 @@ public class DepartmentFrame extends javax.swing.JFrame {
                             break;
                         }
                     } else {
-                        JOptionPane.showMessageDialog(this, "Вы ничего не ввели",
-                                "Пустая строка", JOptionPane.WARNING_MESSAGE);
+                        SMS.warning(this, "Вы ничего не ввели");
                     }
                 } else { // Если Выбрали НЕТ
                     break;
@@ -268,31 +253,23 @@ public class DepartmentFrame extends javax.swing.JFrame {
                 int resalt = st.executeUpdate("insert into "
                         + "department(name_department) values('" + name + "');");
                 if (resalt == 0) {
-                    JOptionPane.showMessageDialog(this,
-                            "Произошла ошибка при добавлении значения.",
-                            "Ошибка добавления", JOptionPane.ERROR_MESSAGE);
+                    SMS.error(this, "Произошла ошибка при добавлении значения!",
+                            "Ошибка добавления");
                 } else {
                     // Все прошло удачно, можем обновить таблицу
                     this.updateTableDepartment();
                 }
             } else {
                 // Такое значение уже есть
-                Object variant[] = {"Да", "Нет"};
-                int resalt = JOptionPane.showOptionDialog(this,
-                        "Такое значение уже есть.\n"
-                        + "Хотете еще раз ввести значение?", "Ошибка!",
-                        JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
-                        null, variant, variant[0]);
-
-                if (resalt == 0) {
+                if (SMS.query(this, "Такое значение уже есть.\n"
+                        + "Хотете еще раз ввести значение?")) {
                     ret = false;
                 } else {
                     ret = true;
                 }
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex.toString(),
-                    "Ошибка добавления", JOptionPane.ERROR_MESSAGE);
+                    SMS.error(this, ex.toString(),"Ошибка добавления");
             Logger.getLogger(DepartmentFrame.class.getName())
                     .log(Level.SEVERE, null, ex);
         } finally {
@@ -320,40 +297,29 @@ public class DepartmentFrame extends javax.swing.JFrame {
                 int resalt = st.executeUpdate("update department "
                         + "set name_department = '" + name + "' Where id_department = "+id+";");
                 if (resalt == 0) {
-                    JOptionPane.showMessageDialog(this,
-                            "Произошла ошибка при изменении значения!",
-                            "Ошибка добавления", JOptionPane.ERROR_MESSAGE);
+                    SMS.error(this, "Произошла ошибка при изменении значения!",
+                            "Ошибка изменения");
                 } else {
                     // Все прошло удачно, можем обновить таблицу
                     this.updateTableDepartment();
                 }
             } else {
                 // Такое значение уже есть
-                Object variant[] = {"Да", "Нет"};
-                int res = JOptionPane.showOptionDialog(this,
-                        "Такое значение уже есть.\n"
-                        + "Хотете еще раз ввести значение?", "Ошибка!",
-                        JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
-                        null, variant, variant[0]);
-
-                if (res == 0) {
+                if (SMS.query(this, "Такое значение уже есть.\n"
+                        + "Хотете еще раз ввести значение?")) {
                     result = false;
                 } else {
                     result = true;
                 }
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex.toString(),
-                    "Ошибка добавления", JOptionPane.ERROR_MESSAGE);
+            SMS.error(this, ex.toString(), "Ошибка добавления");
             Logger.getLogger(DepartmentFrame.class.getName())
                     .log(Level.SEVERE, null, ex);
         } finally {
             return result;
         }
-        /*
-         * 
-         * 
-         */
+
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAdd;
