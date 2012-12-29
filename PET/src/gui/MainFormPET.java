@@ -5,6 +5,7 @@
 package gui;
 
 import gui.dictionaries.DepartmentFrame;
+import gui.dictionaries.TeacherFrame;
 import javax.swing.JFrame;
 import settings.ConfigureProgramm;
 
@@ -41,6 +42,8 @@ public class MainFormPET extends javax.swing.JFrame {
         jMenuItemTypeWork = new javax.swing.JMenuItem();
         jMenuItemGroup = new javax.swing.JMenuItem();
         jMenuItemStudent = new javax.swing.JMenuItem();
+        jMenuSettings = new javax.swing.JMenu();
+        jCheckBoxMenuItemIsDebag = new javax.swing.JCheckBoxMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("PET");
@@ -68,6 +71,11 @@ public class MainFormPET extends javax.swing.JFrame {
         jMenuDictionaries.add(jMenuItemSubject);
 
         jMenuItemTeachers.setText("Преподаватели");
+        jMenuItemTeachers.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemTeachersActionPerformed(evt);
+            }
+        });
         jMenuDictionaries.add(jMenuItemTeachers);
 
         jMenuItemMark.setText("Оценки");
@@ -83,6 +91,19 @@ public class MainFormPET extends javax.swing.JFrame {
         jMenuDictionaries.add(jMenuItemStudent);
 
         jMenuBar1.add(jMenuDictionaries);
+
+        jMenuSettings.setText("Настройки");
+
+        jCheckBoxMenuItemIsDebag.setSelected(true);
+        jCheckBoxMenuItemIsDebag.setText("Режим отладки");
+        jCheckBoxMenuItemIsDebag.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxMenuItemIsDebagActionPerformed(evt);
+            }
+        });
+        jMenuSettings.add(jCheckBoxMenuItemIsDebag);
+
+        jMenuBar1.add(jMenuSettings);
 
         setJMenuBar(jMenuBar1);
 
@@ -105,6 +126,15 @@ public class MainFormPET extends javax.swing.JFrame {
         df.setLocationByPlatform(true);
         df.setVisible(true);
     }//GEN-LAST:event_jMenuItemDepartmentActionPerformed
+
+    private void jMenuItemTeachersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemTeachersActionPerformed
+        TeacherFrame tf = new TeacherFrame();
+        tf.setVisible(true);
+    }//GEN-LAST:event_jMenuItemTeachersActionPerformed
+
+    private void jCheckBoxMenuItemIsDebagActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItemIsDebagActionPerformed
+        ConfigureProgramm.setDEBAG(jCheckBoxMenuItemIsDebag.getState());
+    }//GEN-LAST:event_jCheckBoxMenuItemIsDebagActionPerformed
 
     /**
      * @param args the command line arguments
@@ -132,7 +162,6 @@ public class MainFormPET extends javax.swing.JFrame {
          * Установка программы в режим отладки
          * В этом режиме необходимо показывать код объектов в табилце
          */
-        ConfigureProgramm.setDEBAG(true);
         
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -140,10 +169,13 @@ public class MainFormPET extends javax.swing.JFrame {
                 mf.setExtendedState(JFrame.MAXIMIZED_BOTH);
                 
                 mf.setVisible(true);
+                mf.jCheckBoxMenuItemIsDebag.setState(false);
+                ConfigureProgramm.setDEBAG(false);
             }
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemIsDebag;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuDictionaries;
@@ -155,5 +187,6 @@ public class MainFormPET extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemSubject;
     private javax.swing.JMenuItem jMenuItemTeachers;
     private javax.swing.JMenuItem jMenuItemTypeWork;
+    private javax.swing.JMenu jMenuSettings;
     // End of variables declaration//GEN-END:variables
 }
