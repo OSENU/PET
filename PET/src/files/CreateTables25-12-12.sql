@@ -1,3 +1,5 @@
+-- Удаляем все существующие объекты
+drop all objects;
 
 CREATE TABLE Department
 (
@@ -122,7 +124,7 @@ ALTER TABLE Student
 
 CREATE TABLE Subject
 (
-	id_subject           INTEGER NOT NULL ,
+	id_subject           INTEGER NOT NULL AUTO_INCREMENT(1) ,
 	name_subject         VARCHAR2(50) NOT NULL 
 );
 
@@ -140,7 +142,7 @@ ALTER TABLE Subject
 
 CREATE TABLE Teacher
 (
-	id_teacher           INTEGER NOT NULL ,
+	id_teacher           INTEGER NOT NULL AUTO_INCREMENT(1)  ,
 	name                 VARCHAR2(50) NOT NULL ,
 	name2                VARCHAR2(50) NOT NULL ,
 	surname              VARCHAR2(50) NOT NULL ,
