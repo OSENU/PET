@@ -67,7 +67,8 @@ public class Department implements Serializable {
 
     @Override
     public String toString() {
-        return "database.entity.Department[ idDepartment=" + idDepartment + ", nameDepartment="+nameDepartment+" ]";
+        //return "database.entity.Department[ idDepartment=" + idDepartment + ", nameDepartment="+nameDepartment+" ]";
+        return nameDepartment;
     }
     
 }

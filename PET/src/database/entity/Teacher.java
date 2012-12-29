@@ -4,6 +4,11 @@
 package database.entity;
 
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import util.SMS;
 
 
 /**
@@ -95,6 +100,77 @@ public class Teacher implements Serializable {
     @Override
     public String toString() {
         return "database.entity.Teacher[ idTeacher=" + idTeacher + " ]";
+    }
+    
+    /**
+     * Метод добавляет в базу данных данный объект 
+     * @return код результата: -1 - Такие данные уже есть
+     *                         -2 - Произошла вообще ошибка
+     *                         Или количество добавленых записей 
+     * @throws SQLException 
+     */
+    public int insertInto() throws SQLException{
+        int result;
+        Connection conn = database.DataBaseConnect.getConnection();
+        Statement st = conn.createStatement();
+        // Формируем запрос на проверку
+        ResultSet rs = st.executeQuery("Select id_teacher "
+                + "from Teacher "
+                + "where name = '" + name + "' and "
+                + "name2 = '" + name2 + "' and "
+                + "surname = '" + surname + "' and "
+                + "id_department = " + idDepartment.getIdDepartment() + ";");
+        if (!rs.next()) {
+           // Значит в базе такого значения нет
+            result = st.executeUpdate("insert into teacher"
+                + "(name, name2, surname, id_department) "
+                + " values('" + name + "', '" + name2 + "', '" + surname + "', "
+                    + idDepartment.getIdDepartment() + ");");
+            conn.commit();
+  
+        } else {
+            result = -1;
+        }
+        
+        return result;
+    }
+    
+    /**
+     * Метод заносит измененный объект в базу данных.
+     * Тоесть данный элимент в базу занесеть переданый элимент
+     * @param newTeacher - объект на который надо заменить
+     * @return код результата: -1 - Такие данные уже есть
+     *                         -2 - Произошла вообще ошибка
+     *                         Или количество добавленых записей
+     * @throws SQLException 
+     */
+    public int updateTable(Teacher newTeacher) throws SQLException{
+        int result;
+        Connection conn = database.DataBaseConnect.getConnection();
+        Statement st = conn.createStatement();
+        // Формируем запрос на проверку
+        ResultSet rs = st.executeQuery("Select id_teacher "
+                + "from Teacher "
+                + "where name = '" + newTeacher.name + "' and "
+                + "name2 = '" + newTeacher.name2 + "' and "
+                + "surname = '" + newTeacher.surname + "' and "
+                + "id_department = " + newTeacher.idDepartment.getIdDepartment() + ""
+                + "and id_teacher <> " + idTeacher + " ;");
+        if (!rs.next()) {
+           // Значит в базе такого значения нет
+            String s = "update teacher "
+                    + "set name = '" + newTeacher.name + "', "
+                    + "name2 = '" + newTeacher.name2 +"', "
+                    + "surname = '" + newTeacher.surname + "', "
+                    + "id_department = " + newTeacher.idDepartment.getIdDepartment()
+                    + " where id_teacher = " + idTeacher + " ;";
+            result = st.executeUpdate(s);
+  
+        } else {
+            result = -1;
+        }
+        
+        return result;
     }
     
 }

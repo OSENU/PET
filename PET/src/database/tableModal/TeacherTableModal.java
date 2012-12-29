@@ -47,9 +47,9 @@ public class TeacherTableModal extends AbstractTableModel{
             name2 = rs.getString("name2");
             surname = rs.getString("surname");
             idDepartment = rs.getInt("id_department");
-            nameDepartment = rs.getString("name_deparmnet");
+            nameDepartment = rs.getString("name_department");
             
-            teacher = new Teacher(idDepartment, name, name2, surname);
+            teacher = new Teacher(id, name, name2, surname);
             teacher.setIdDepartment(new Department(idDepartment, nameDepartment));
             
             teachers.add(teacher);
@@ -73,7 +73,23 @@ public class TeacherTableModal extends AbstractTableModel{
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        switch (columnIndex) {
+            case 0: 
+               return teachers.get(rowIndex).getIdTeacher(); 
+            case 1: 
+               return teachers.get(rowIndex).getName();
+            case 2: 
+               return teachers.get(rowIndex).getName2();
+            case 3:
+                return teachers.get(rowIndex).getSurname();
+            case 4:
+                return teachers.get(rowIndex).getIdDepartment().getIdDepartment();
+            case 5:
+                return teachers.get(rowIndex).getIdDepartment().getNameDepartment();
+            default:
+                return null;
+        }
+        
     }
 
     @Override
