@@ -5,13 +5,15 @@
 package gui.dictionaries;
 
 import database.entity.Department;
+import database.entity.Faculty;
 import database.tableModal.DepartmentTableModal;
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 import settings.ConfigureProgramm;
 import util.SMS;
 
@@ -44,10 +46,12 @@ public class DepartmentFrame extends javax.swing.JFrame {
 
         if (!ConfigureProgramm.isDEBAG()) {
             // Если программа не врежиме отладки, то скроем колонку с id
-            jTableDepartment.getColumnModel().getColumn(0).setMaxWidth(0);
-            jTableDepartment.getColumnModel().getColumn(0).setMinWidth(0);
-            jTableDepartment.getColumnModel().getColumn(0).setPreferredWidth(0);
-            jTableDepartment.getColumnModel().getColumn(0).setResizable(false);
+            util.TablesUtil.hideColumn(jTableDepartment, 0);
+            util.TablesUtil.hideColumn(jTableDepartment, 2);
+//            jTableDepartment.getColumnModel().getColumn(0).setMaxWidth(0);
+//            jTableDepartment.getColumnModel().getColumn(0).setMinWidth(0);
+//            jTableDepartment.getColumnModel().getColumn(0).setPreferredWidth(0);
+//            jTableDepartment.getColumnModel().getColumn(0).setResizable(false);
         }
     }
 
@@ -143,41 +147,67 @@ public class DepartmentFrame extends javax.swing.JFrame {
      * @param evt
      */
     private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
-        String nameDepartment;
-        Department department = new Department();
-        this.setEnabled(false);
-        // Цыкл необходим для того, что бы было несколько попыток у пользователя
-        do {
-            nameDepartment = SMS.input(this, "Введите название кафедры:");
-            if (nameDepartment != null) {
-                if (nameDepartment.trim().length() > 0) {
-                    department.setNameDepartment(nameDepartment);
-                    try {
-                        // Заносим этот объект в базу
-                        int res = department.insertInto();
-                        if (res >= 0) {
-                            // все успешно
-                            updateTableDepartment();
-                            break;
-                        } else {
-                            if (SMS.query(this, "Такое значение уже есть.\n"
-                                    + "Хотете еще раз ввести значение?")) {
-                                break;
+        try {
+            String nameDepartment;
+            Department department = new Department();
+            JTextField name = new JTextField();
+            // Получили массив объектов для комбо-бокса
+            Faculty[] facultys = database.data.GetDataTable.getFacultys();
+            JComboBox<Faculty> box = new JComboBox<Faculty>(facultys);
+            JComponent[] components = new JComponent[]{
+              new JLabel("Введите название кафедры:"),
+              name,
+              new JLabel("Выберите факультет:"),
+              box
+            };
+            
+            // Цыкл необходим для того, что бы было несколько попыток у пользователя
+            do {
+                boolean flag = SMS.dialog(this, "Укажите данные о кафедре:", components);
+                if(flag){
+                    nameDepartment = name.getText();
+                    if (nameDepartment != null) {
+                        if(box.getSelectedItem() != null){
+                            if (nameDepartment.trim().length() > 0) {
+                                department.setNameDepartment(nameDepartment);
+                                department.setIdFaculty((Faculty)box.getSelectedItem());
+                                try {
+                                    // Заносим этот объект в базу
+                                    int res = department.insertInto();
+                                    if (res >= 0) {
+                                        // все успешно
+                                        updateTableDepartment();
+                                        break;
+                                    } else {
+                                        if (SMS.query(this, "Такое значение уже есть.\n"
+                                                + "Хотете еще раз ввести значение?")) {
+                                            continue;
+                                        } else {
+                                            break;
+                                        }
+                                    }
+                                } catch (SQLException ex) {
+                                    SMS.error(this, ex.toString());
+                                    Logger.getLogger(DepartmentFrame.class.getName()).log(Level.SEVERE, null, ex);
+                                    break;
+                                }
+
                             } else {
-                                continue;
+                                SMS.warning(this, "Вы ничего не ввели!");
                             }
+                        } else {
+                            SMS.warning(this, "Укажите факультет!");
                         }
-                    } catch (SQLException ex) {
-                        SMS.error(this, ex.toString());
-                        Logger.getLogger(DepartmentFrame.class.getName()).log(Level.SEVERE, null, ex);
-                        break;
                     }
                 } else {
-                    SMS.warning(this, "Вы ничего не ввели");
+                    // Пользователь отказался от ввода
+                    break;
                 }
-            }
-        } while (nameDepartment != null);
-        this.setEnabled(true);
+            } while (true);
+        } catch (SQLException ex) {
+            SMS.error(this, ex.toString());
+            Logger.getLogger(DepartmentFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButtonAddActionPerformed
 
     /**
@@ -186,76 +216,96 @@ public class DepartmentFrame extends javax.swing.JFrame {
      * @param evt
      */
     private void jButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditActionPerformed
-        String nameDepartment = null;
-        Department department = new Department(), newDepartment = new Department();
-        //Делаем окно недоступным
-        this.setEnabled(false);
-        // Получаем количество выделеных строк в таблице
-        int countSelect = jTableDepartment.getSelectedColumnCount();
-        if (countSelect == 0) {
-            // Значит ни одной строки не выбратно
-            SMS.warning(this, "Вы не выбрали данные для редактирования");
-        } else if (countSelect > 1) {
-            // Значит выбрано больше одной строки
-            SMS.warning(this, "Выберите только одно значение в таблице");
-        } else { // Все нормально и можем показть окно ввода
-            // Считываем значение из теблицы
-            nameDepartment = (String) jTableDepartment.getValueAt(
-                    jTableDepartment.getSelectedRow(), 1);
-            department.setNameDepartment(nameDepartment);
-            department.setIdDepartment((Integer) jTableDepartment.getValueAt(jTableDepartment.getSelectedRow(), 0));
-            // Цыкл необходим для того, что бы было несколько попыток у пользователя
-            do {
-
-                String newDepartments =
-                        SMS.input(this,
-                        "Введите новое название кафедры:",
-                        null,
-                        nameDepartment);
-
-                // Если выбрали ДА
-                if (newDepartment != null) {
-                    if (newDepartments.trim().length() > 0) {
-                        // Значит то что ввели не пустое!!!
-                        if (!nameDepartment.equals(newDepartments)) {
-                            // Если введенное значение отличаеться то заносим в базу данных
-                            newDepartment.setNameDepartment(newDepartments);
-                            try {
-                                int ret = department.updateTable(newDepartment);
-                                if (ret >= 0) {
-                                    updateTableDepartment();
-                                    break;
-                                } else {
-                                    if (SMS.query(this, "Такое значение уже есть.\n"
-                                            + "Хотете еще раз ввести значение?")) {
+        try {
+            String nameDepartment = null, newNameDepartment = null;
+            Department department = new Department(), newDepartment = new Department();
+            JTextField name = new JTextField();
+                // Получили массив объектов для комбо-бокса
+                Faculty[] facultys = database.data.GetDataTable.getFacultys();
+                JComboBox<Faculty> box = new JComboBox<Faculty>(facultys);
+                JComponent[] components = new JComponent[]{
+                  new JLabel("Введите название кафедры:"),
+                  name,
+                  new JLabel("Выберите факультет:"),
+                  box
+                };
+                
+            // Получаем количество выделеных строк в таблице
+            int countSelect = jTableDepartment.getSelectedColumnCount();
+            if (countSelect == 0) {
+                // Значит ни одной строки не выбратно
+                SMS.warning(this, "Вы не выбрали данные для редактирования");
+            } else if (countSelect > 1) {
+                // Значит выбрано больше одной строки
+                SMS.warning(this, "Выберите только одно значение в таблице");
+            } else { // Все нормально и можем показть окно ввода
+                // Считываем значение из теблицы
+                nameDepartment = (String) jTableDepartment.getValueAt(
+                        jTableDepartment.getSelectedRow(), 1);
+                department.setNameDepartment(nameDepartment);
+                department.setIdDepartment((Integer) jTableDepartment.getValueAt(jTableDepartment.getSelectedRow(), 0));
+                department.setIdFaculty(new Faculty(
+                        (Integer)jTableDepartment.getValueAt(jTableDepartment.getSelectedRow(), 2), 
+                        (String) jTableDepartment.getValueAt(jTableDepartment.getSelectedRow(), 3)));
+                // Цыкл необходим для того, что бы было несколько попыток у пользователя
+                do {
+                    name.setText(nameDepartment);
+                    box.setSelectedItem(department.getIdFaculty());
+                    
+                    boolean flag = SMS.dialog(this, "Измените данные о кафедре", components);
+                    if(flag){
+                        newNameDepartment = name.getText();
+                        Faculty f =(Faculty) box.getSelectedItem();
+                        // Если выбрали ДА
+                        if (newNameDepartment.trim().length() > 0) {
+                            // Значит то что ввели не пустое!!!
+                            if(f != null) {
+                                if (!nameDepartment.equals(newNameDepartment) || !f.equals(department.getIdFaculty()) ) {
+                                    // Если введенное значение отличаеться то заносим в базу данных
+                                    // Соберем объект
+                                    newDepartment.setNameDepartment(newNameDepartment);
+                                    newDepartment.setIdFaculty(f);
+                                    try {
+                                        int ret = department.updateTable(newDepartment);
+                                        if (ret >= 0) {
+                                            updateTableDepartment();
+                                            break;
+                                        } else {
+                                            if (SMS.query(this, "Такое значение уже есть.\n"
+                                                    + "Хотете еще раз ввести значение?")) {
+                                                continue;
+                                            } else {
+                                                break;
+                                            }
+                                        }
+                                    } catch (SQLException ex) {
+                                        SMS.error(this, ex.toString());
+                                        Logger.getLogger(DepartmentFrame.class.getName()).log(Level.SEVERE, null, ex);
                                         break;
-                                    } else {
-                                        continue;
                                     }
+                                } else {
+                                    // Иначе мы игнорируем и ничего не делаем
+                                    // Хотя может быть надо выводить сообщение
+
+                                    break;
                                 }
-                            } catch (SQLException ex) {
-                                SMS.error(this, ex.toString());
-                                Logger.getLogger(DepartmentFrame.class.getName()).log(Level.SEVERE, null, ex);
-                                break;
+                            } else {
+                                SMS.warning(this, "Укажите факульет!");
                             }
                         } else {
-                            // Иначе мы игнорируем и ничего не делаем
-                            // Хотя может быть надо выводить сообщение
-
+                            SMS.warning(this, "Вы ничего не ввели!");
+                        }
+                    }else { // Если Выбрали НЕТ
                             break;
                         }
-                    } else {
-                        SMS.warning(this, "Вы ничего не ввели");
-                    }
-                } else { // Если Выбрали НЕТ
-                    break;
-                }
-            } while (true);
+                } while (true);
 
+            }
+
+        } catch (SQLException ex) {
+            SMS.error(this, ex.toString());
+            Logger.getLogger(DepartmentFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        // Окно сново доступно
-        this.setEnabled(true);
     }//GEN-LAST:event_jButtonEditActionPerformed
 
     

@@ -5,6 +5,7 @@
 package gui;
 
 import gui.dictionaries.DepartmentFrame;
+import gui.dictionaries.FacultyFrame;
 import gui.dictionaries.TeacherFrame;
 import javax.swing.JFrame;
 import settings.ConfigureProgramm;
@@ -65,7 +66,12 @@ public class MainFormPET extends javax.swing.JFrame {
         });
         jMenuDictionaries.add(jMenuItemDepartment);
 
-        jMenuItemFaculty.setText("Деканаты");
+        jMenuItemFaculty.setText("Факультет");
+        jMenuItemFaculty.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemFacultyActionPerformed(evt);
+            }
+        });
         jMenuDictionaries.add(jMenuItemFaculty);
 
         jMenuItemSubject.setText("Предметы");
@@ -136,6 +142,11 @@ public class MainFormPET extends javax.swing.JFrame {
     private void jCheckBoxMenuItemIsDebagActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItemIsDebagActionPerformed
         ConfigureProgramm.setDEBAG(jCheckBoxMenuItemIsDebag.getState());
     }//GEN-LAST:event_jCheckBoxMenuItemIsDebagActionPerformed
+
+    private void jMenuItemFacultyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemFacultyActionPerformed
+        FacultyFrame ff = new FacultyFrame();
+        ff.setVisible(true);
+    }//GEN-LAST:event_jMenuItemFacultyActionPerformed
 
     /**
      * @param args the command line arguments

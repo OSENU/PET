@@ -17,7 +17,6 @@ import java.sql.Statement;
 public class Faculty implements Serializable {
     private Integer idFaculty;
     private String nameFaculty;
-    private Department idDepartment;
 
     public Faculty() {
     }
@@ -47,14 +46,6 @@ public class Faculty implements Serializable {
         this.nameFaculty = nameFaculty;
     }
 
-    public Department getIdDepartment() {
-        return idDepartment;
-    }
-
-    public void setIdDepartment(Department idDepartment) {
-        this.idDepartment = idDepartment;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -77,7 +68,8 @@ public class Faculty implements Serializable {
 
     @Override
     public String toString() {
-        return "database.entity.Faculty[ idFaculty=" + idFaculty + " ]";
+        //return "database.entity.Faculty[ idFaculty=" + idFaculty + " ]";
+        return nameFaculty;
     }
         /**
      * Метод заносит измененный объект в базу данных.
@@ -96,13 +88,11 @@ public class Faculty implements Serializable {
         ResultSet rs = st.executeQuery("Select id_Faculty "
                 + "from Faculty "
                 + "where name_Faculty = '" + newFaculty.nameFaculty +"' "
-                + "and id_department = " + newFaculty.idDepartment.getIdDepartment()
                 + "and id_Faculty <> " + idFaculty + " ;");
         if (!rs.next()) {
            // Значит в базе такого значения нет
             String s = "update Faculty "
-                    + "set name_Faculty = '" + newFaculty.nameFaculty + "', "
-                    + "id_department = " + newFaculty.idDepartment.getIdDepartment()
+                    + "set name_Faculty = '" + newFaculty.nameFaculty + "' "
                     + " where id_Faculty = " + idFaculty + " ;";
             result = st.executeUpdate(s);
   
@@ -121,12 +111,12 @@ public class Faculty implements Serializable {
         ResultSet rs = st.executeQuery("Select id_Faculty "
                 + "from Faculty "
                 + "where name_Faculty = '" + nameFaculty + "' "
-                + "and id_department = " + idDepartment.getIdDepartment() + ";");
+                + ";");
         if (!rs.next()) {
            // Значит в базе такого значения нет
             result = st.executeUpdate("insert into Faculty "
-                + "(name_Faculty, id_Department) "
-                + " values('" + nameFaculty + "', "+ idDepartment.getIdDepartment() +" );");
+                + "(name_Faculty) "
+                + " values('" + nameFaculty + "' );");
             conn.commit();
   
         } else {

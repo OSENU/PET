@@ -16,6 +16,7 @@ import java.sql.Statement;
 public class Department implements Serializable {
     private Integer idDepartment;
     private String nameDepartment;
+    private Faculty idFaculty;
    
     public Department() {
     }
@@ -28,7 +29,13 @@ public class Department implements Serializable {
         this.idDepartment = idDepartment;
         this.nameDepartment = nameDepartment;
     }
-
+    
+    public Department(Integer idDepartment, String nameDepartment, Faculty idFaculty) {
+        this.idDepartment = idDepartment;
+        this.nameDepartment = nameDepartment;
+        this.idFaculty = idFaculty;
+    }
+    
     public Integer getIdDepartment() {
         return idDepartment;
     }
@@ -72,7 +79,7 @@ public class Department implements Serializable {
     @Override
     public String toString() {
         //return "database.entity.Department[ idDepartment=" + idDepartment + ", nameDepartment="+nameDepartment+" ]";
-        return nameDepartment;
+        return nameDepartment + " : " + idFaculty.getNameFaculty();
     }
     
     /**
@@ -88,13 +95,15 @@ public class Department implements Serializable {
         Statement st = conn.createStatement();
         // Формируем запрос на проверку
         ResultSet rs = st.executeQuery("Select id_department "
-                + "from Department "
-                + "where name_department = '" + nameDepartment + "';");
+                + "from department "
+                + "where name_department = '" + nameDepartment +"' "
+                + "and id_Faculty = " + idFaculty.getIdFaculty() + " ; ") ;
+
         if (!rs.next()) {
            // Значит в базе такого значения нет
             result = st.executeUpdate("insert into department"
-                + "(name_department) "
-                + " values('" + nameDepartment + "');");
+                + "(name_department, id_faculty) "
+                + " values('" + nameDepartment + "', " + idFaculty.getIdFaculty() + ");");
             conn.commit();
   
         } else {
@@ -118,14 +127,16 @@ public class Department implements Serializable {
         Connection conn = database.DataBaseConnect.getConnection();
         Statement st = conn.createStatement();
         // Формируем запрос на проверку
-        ResultSet rs = st.executeQuery("Select id_teacher "
-                + "from Teacher "
-                + "where name = '" + newDepartment.nameDepartment +"' " 
+        ResultSet rs = st.executeQuery("Select id_department "
+                + "from department "
+                + "where name_department = '" + newDepartment.nameDepartment +"' "
+                + "and id_Faculty = " + newDepartment.idFaculty.getIdFaculty() + " " 
                 + "and id_department <> " + idDepartment + " ;");
         if (!rs.next()) {
            // Значит в базе такого значения нет
             String s = "update department "
-                    + "set name_department = '" + newDepartment.nameDepartment + "' "
+                    + "set name_department = '" + newDepartment.nameDepartment + "',"
+                    + "id_faculty = " + newDepartment.idFaculty.getIdFaculty()
                     + " where id_department = " + idDepartment + " ;";
             result = st.executeUpdate(s);
   
@@ -134,6 +145,20 @@ public class Department implements Serializable {
         }
         
         return result;
+    }
+
+    /**
+     * @return the idFaculty
+     */
+    public Faculty getIdFaculty() {
+        return idFaculty;
+    }
+
+    /**
+     * @param idFaculty the idFaculty to set
+     */
+    public void setIdFaculty(Faculty idFaculty) {
+        this.idFaculty = idFaculty;
     }
 
     
