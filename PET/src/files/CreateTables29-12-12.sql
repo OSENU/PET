@@ -4,7 +4,8 @@ drop all objects;
 CREATE TABLE Department
 (
 	id_department        INTEGER NOT NULL AUTO_INCREMENT(1) ,
-	name_department      CHAR(100) NOT NULL 
+	name_department      CHAR(100) NOT NULL ,
+	id_faculty           INTEGER NOT NULL 
 );
 
 
@@ -22,8 +23,7 @@ ALTER TABLE Department
 CREATE TABLE Faculty
 (
 	id_faculty           INTEGER NOT NULL AUTO_INCREMENT(1) ,
-	name_faculty         CHAR(100) NOT NULL ,
-	id_department        INTEGER NOT NULL 
+	name_faculty         CHAR(100) NOT NULL 
 );
 
 
@@ -84,9 +84,9 @@ ALTER TABLE Journal
 CREATE TABLE Mark
 (
 	id_mark              INTEGER NOT NULL AUTO_INCREMENT(1) ,
-	name_mark            CHAR(100) NOT NULL,
-        min_persent          INTEGER NOT NULL ,
-	max_persent          INTEGER NOT NULL  
+	name_mark            CHAR(100) NOT NULL ,
+	min_persent          INTEGER NOT NULL ,
+	max_persent          INTEGER NOT NULL 
 );
 
 
@@ -267,7 +267,7 @@ ALTER TABLE Type_Work
 
 
 
-CREATE TABLE Аnswer
+CREATE TABLE Ànswer
 (
 	id_answer            INTEGER NOT NULL AUTO_INCREMENT(1) ,
 	name_answer          CHAR(100) NOT NULL ,
@@ -281,18 +281,18 @@ CREATE TABLE Аnswer
 
 
 
-CREATE UNIQUE INDEX XPKАnswer ON Аnswer
+CREATE UNIQUE INDEX XPKÀnswer ON Ànswer
 (id_answer   ASC,id_question   ASC,id_test   ASC,id_type_question   ASC);
 
 
 
-ALTER TABLE Аnswer
-	ADD CONSTRAINT  XPKАnswer PRIMARY KEY (id_answer,id_question,id_test,id_type_question);
+ALTER TABLE Ànswer
+	ADD CONSTRAINT  XPKÀnswer PRIMARY KEY (id_answer,id_question,id_test,id_type_question);
 
 
 
-ALTER TABLE Faculty
-	ADD CONSTRAINT R_17 FOREIGN KEY (id_department) REFERENCES Department (id_department);
+ALTER TABLE Department
+	ADD CONSTRAINT R_23 FOREIGN KEY (id_faculty) REFERENCES Faculty (id_faculty);
 
 
 
@@ -386,6 +386,7 @@ ALTER TABLE Test
 
 
 
-ALTER TABLE Аnswer
+ALTER TABLE Ànswer
 	ADD CONSTRAINT R_22 FOREIGN KEY (id_question, id_test, id_type_question) REFERENCES Question (id_question, id_test, id_type_question);
+
 
