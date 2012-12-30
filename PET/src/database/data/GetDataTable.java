@@ -6,6 +6,7 @@ package database.data;
 
 import database.DataBaseConnect;
 import database.entity.Department;
+import database.entity.Faculty;
 import database.entity.Teacher;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -31,10 +32,15 @@ public class GetDataTable {
         Connection conn = DataBaseConnect.getConnection();
         Statement st;
         st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-        ResultSet rs = st.executeQuery("select * from Department;");
+        ResultSet rs = st.executeQuery(
+                "select d.ID_DEPARTMENT, "
+                + "d.NAME_DEPARTMENT, "
+                + "d.ID_FACULTY, "
+                + "f.NAME_FACULTY "
+                + "from Department d inner join Faculty f "
+                + "on d.id_faculty = f.id_faculty;");
         rs.last();
         int countRow = rs.getRow();
-        int countColumn = rs.getMetaData().getColumnCount();
         rs.beforeFirst();
         
         int id;
@@ -42,9 +48,11 @@ public class GetDataTable {
         
         Department[] departments = new Department[countRow+1];
         for(int i = 1;rs.next(); i++){
-            id = rs.getInt("id_department");
+            id = rs.getInt("ID_DEPARTMENT");
             name = rs.getString("name_department");
-            departments[i] = new Department(id, name);
+            Faculty faculty = new Faculty(rs.getInt("id_faculty"), 
+                    rs.getString("name_faculty"));
+            departments[i] = new Department(id, name, faculty);
         }
         
         rs.close();
@@ -77,7 +85,7 @@ public class GetDataTable {
         Teacher[] teachers = new Teacher[countRow+1];
         
         Teacher teacher;
-        for(int i = 0; rs.next(); i++){
+        for(int i = 1; rs.next(); i++){
             id = rs.getInt("id_teacher");
             name = rs.getString("name");
             name2 = rs.getString("name2");
@@ -95,5 +103,35 @@ public class GetDataTable {
         st.close();
         
         return teachers;
+    }
+    
+    public static Faculty[] getFacultys() throws SQLException{
+        Connection conn = DataBaseConnect.getConnection();
+        Statement st;
+        st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        ResultSet rs = st.executeQuery(
+                "select *" +
+                "from Faculty;"
+                );
+        // Переходим на последнюю строчку что бы узнать количество записей
+        rs.last();
+        int countRow = rs.getRow();
+        // Перешли снова на первую запись
+        rs.beforeFirst();
+        int id;
+        String name;
+        Faculty[] facultys = new Faculty[countRow+1];
+
+        for(int i = 1; rs.next(); i++){
+            id = rs.getInt("id_faculty");
+            name = rs.getString("name_faculty");
+            
+            facultys[i] = new Faculty(id, name);
+        }
+        
+        rs.close();
+        st.close();
+        
+        return facultys;
     }
 }
