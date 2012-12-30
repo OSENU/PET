@@ -4,6 +4,10 @@
 package database.entity;
 
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
@@ -67,7 +71,70 @@ public class TypeWork implements Serializable {
 
     @Override
     public String toString() {
-        return "database.entity.TypeWork[ idTypeWork=" + idTypeWork + ", nameTypeWork=" + nameTypeWork +" ]";
+        //return "database.entity.TypeWork[ idTypeWork=" + idTypeWork + ", nameTypeWork=" + nameTypeWork +" ]";
+        return nameTypeWork;
+    }
+    
+       
+    /**
+     * Метод добавляет в базу данных данный объект 
+     * @return код результата: -1 - Такие данные уже есть
+     *                         -2 - Произошла вообще ошибка
+     *                         Или количество добавленых записей 
+     * @throws SQLException 
+     */
+    public int insertInto() throws SQLException{
+        int result;
+        Connection conn = database.DataBaseConnect.getConnection();
+        Statement st = conn.createStatement();
+        // Формируем запрос на проверку
+        ResultSet rs = st.executeQuery("Select id_type_work "
+                + "from type_work "
+                + "where name_type_work = '" + nameTypeWork + "';");
+        if (!rs.next()) {
+           // Значит в базе такого значения нет
+            result = st.executeUpdate("insert into Type_work"
+                + "(name_type_work) "
+                + " values('" + nameTypeWork + "');");
+            conn.commit();
+  
+        } else {
+            result = -1;
+        }
+        
+        return result;
+    }
+    
+    /**
+     * Метод заносит измененный объект в базу данных.
+     * Тоесть данный элимент в базу занесеть переданый элимент
+     * @param newTypeWork - объект на который надо заменить
+     * @return код результата: -1 - Такие данные уже есть
+     *                         -2 - Произошла вообще ошибка
+     *                         Или количество добавленых записей
+     * @throws SQLException 
+     */
+    public int updateTable(TypeWork newTypeWork) throws SQLException{
+        int result;
+        Connection conn = database.DataBaseConnect.getConnection();
+        Statement st = conn.createStatement();
+        // Формируем запрос на проверку
+        ResultSet rs = st.executeQuery("Select id_type_work "
+                + "from type_work "
+                + "where name_type_work = '" + newTypeWork.nameTypeWork +"' " 
+                + "and id_type_work <> " + idTypeWork + " ;");
+        if (!rs.next()) {
+           // Значит в базе такого значения нет
+            String s = "update type_work "
+                    + "set name_subject = '" + newTypeWork.nameTypeWork + "' "
+                    + " where id_type_work = " + idTypeWork + " ;";
+            result = st.executeUpdate(s);
+  
+        } else {
+            result = -1;
+        }
+        
+        return result;
     }
     
 }

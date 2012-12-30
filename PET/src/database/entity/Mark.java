@@ -4,14 +4,20 @@
 package database.entity;
 
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
  * @author Aleo
  */
 public class Mark implements Serializable {
-    private Integer idMark;
+    private Integer idMark = 0;
     private String nameMark;
+    private Integer minPersent = 0;
+    private Integer maxPersent = 0;
 
     public Mark() {
     }
@@ -66,7 +72,100 @@ public class Mark implements Serializable {
 
     @Override
     public String toString() {
-        return "database.entity.Mark[ idMark=" + idMark + ", nameMark="+ nameMark +" ]";
+        //return "database.entity.Mark[ idMark=" + idMark + ", nameMark="+ nameMark +" ]";
+        return nameMark;
     }
     
+    /**
+     * Метод добавляет в базу данных данный объект 
+     * @return код результата: -1 - Такие данные уже есть
+     *                         -2 - Произошла вообще ошибка
+     *                         Или количество добавленых записей 
+     * @throws SQLException 
+     */
+    public int insertInto() throws SQLException{
+        int result;
+        Connection conn = database.DataBaseConnect.getConnection();
+        Statement st = conn.createStatement();
+        // Формируем запрос на проверку
+        ResultSet rs = st.executeQuery("Select id_mark "
+                + "from Mark "
+                + "where name_mark = '" + nameMark + "';");
+        if (!rs.next()) {
+           // Значит в базе такого значения нет
+            result = st.executeUpdate("insert into mark"
+                + "(name_mark, min_persent, max_persent) "
+                + " values('" + nameMark + "', "+ minPersent +", "
+                + " " + maxPersent + ");");
+            conn.commit();
+  
+        } else {
+            result = -1;
+        }
+        
+        return result;
+    }
+    
+    /**
+     * Метод заносит измененный объект в базу данных.
+     * Тоесть данный элимент в базу занесеть переданый элимент
+     * @param newTeacher - объект на который надо заменить
+     * @return код результата: -1 - Такие данные уже есть
+     *                         -2 - Произошла вообще ошибка
+     *                         Или количество добавленых записей
+     * @throws SQLException 
+     */
+    public int updateTable(Mark newMark) throws SQLException{
+        int result;
+        Connection conn = database.DataBaseConnect.getConnection();
+        Statement st = conn.createStatement();
+        // Формируем запрос на проверку
+        ResultSet rs = st.executeQuery("Select id_mark "
+                + "from Mark "
+                + "where name_mark = '" + newMark.nameMark +"' " 
+                + "and id_Mark <> " + idMark + " ;");
+        if (!rs.next()) {
+           // Значит в базе такого значения нет
+            String s = "update Mark "
+                    + "set name_mark = '" + newMark.nameMark + "', "
+                    + "min_persent = " + newMark.minPersent + ", "
+                    + "max_persent = " + newMark.maxPersent + " "
+                    + " where id_Mark = " + idMark + " ;";
+            result = st.executeUpdate(s);
+  
+        } else {
+            result = -1;
+        }
+        
+        return result;
+    }
+
+    /**
+     * @return the minPersent
+     */
+    public Integer getMinPersent() {
+        return minPersent;
+    }
+
+    /**
+     * @param minPersent the minPersent to set
+     */
+    public void setMinPersent(Integer minPersent) {
+        this.minPersent = minPersent;
+    }
+
+    /**
+     * @return the maxPersent
+     */
+    public Integer getMaxPersent() {
+        return maxPersent;
+    }
+
+    /**
+     * @param maxPersent the maxPersent to set
+     */
+    public void setMaxPersent(Integer maxPersent) {
+        this.maxPersent = maxPersent;
+    }
+
 }

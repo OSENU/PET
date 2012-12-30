@@ -65,7 +65,7 @@ public class TeacherFrame extends javax.swing.JFrame {
         jButtonEdit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setType(java.awt.Window.Type.UTILITY);
+        setType(java.awt.Window.Type.POPUP);
 
         jTableTeacher.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

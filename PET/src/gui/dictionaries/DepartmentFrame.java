@@ -4,6 +4,7 @@
  */
 package gui.dictionaries;
 
+import database.entity.Department;
 import database.tableModal.DepartmentTableModal;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -29,8 +30,7 @@ public class DepartmentFrame extends javax.swing.JFrame {
     }
 
     /**
-     * Метод обновляет данные в таблице
-     * И если необходимо скарывает столбец
+     * Метод обновляет данные в таблице И если необходимо скарывает столбец
      */
     private void updateTableDepartment() {
 
@@ -69,7 +69,7 @@ public class DepartmentFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Кафедры");
         setAlwaysOnTop(true);
-        setType(java.awt.Window.Type.UTILITY);
+        setType(java.awt.Window.Type.POPUP);
 
         jTableDepartment.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -144,14 +144,32 @@ public class DepartmentFrame extends javax.swing.JFrame {
      */
     private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
         String nameDepartment;
+        Department department = new Department();
         this.setEnabled(false);
         // Цыкл необходим для того, что бы было несколько попыток у пользователя
         do {
             nameDepartment = SMS.input(this, "Введите название кафедры:");
             if (nameDepartment != null) {
                 if (nameDepartment.trim().length() > 0) {
-                    if (inputIntoDepartment(nameDepartment)) {
-                        // Выходим с цикла
+                    department.setNameDepartment(nameDepartment);
+                    try {
+                        // Заносим этот объект в базу
+                        int res = department.insertInto();
+                        if (res >= 0) {
+                            // все успешно
+                            updateTableDepartment();
+                            break;
+                        } else {
+                            if (SMS.query(this, "Такое значение уже есть.\n"
+                                    + "Хотете еще раз ввести значение?")) {
+                                break;
+                            } else {
+                                continue;
+                            }
+                        }
+                    } catch (SQLException ex) {
+                        SMS.error(this, ex.toString());
+                        Logger.getLogger(DepartmentFrame.class.getName()).log(Level.SEVERE, null, ex);
                         break;
                     }
                 } else {
@@ -169,6 +187,7 @@ public class DepartmentFrame extends javax.swing.JFrame {
      */
     private void jButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditActionPerformed
         String nameDepartment = null;
+        Department department = new Department(), newDepartment = new Department();
         //Делаем окно недоступным
         this.setEnabled(false);
         // Получаем количество выделеных строк в таблице
@@ -183,32 +202,46 @@ public class DepartmentFrame extends javax.swing.JFrame {
             // Считываем значение из теблицы
             nameDepartment = (String) jTableDepartment.getValueAt(
                     jTableDepartment.getSelectedRow(), 1);
+            department.setNameDepartment(nameDepartment);
+            department.setIdDepartment((Integer) jTableDepartment.getValueAt(jTableDepartment.getSelectedRow(), 0));
             // Цыкл необходим для того, что бы было несколько попыток у пользователя
             do {
 
-                String newDepartment = 
-                        SMS.input(this, 
+                String newDepartments =
+                        SMS.input(this,
                         "Введите новое название кафедры:",
-                        null, 
+                        null,
                         nameDepartment);
-                
+
                 // Если выбрали ДА
                 if (newDepartment != null) {
-                    if (newDepartment.trim().length() > 0) {
+                    if (newDepartments.trim().length() > 0) {
                         // Значит то что ввели не пустое!!!
-                        if (!nameDepartment.equals(newDepartment)) {
+                        if (!nameDepartment.equals(newDepartments)) {
                             // Если введенное значение отличаеться то заносим в базу данных
-                            boolean res = updateDataBase((Integer) 
-                                    jTableDepartment.
-                                    getValueAt(jTableDepartment.
-                                    getSelectedRow(), 0),newDepartment);
-                            if(res){
+                            newDepartment.setNameDepartment(newDepartments);
+                            try {
+                                int ret = department.updateTable(newDepartment);
+                                if (ret >= 0) {
+                                    updateTableDepartment();
+                                    break;
+                                } else {
+                                    if (SMS.query(this, "Такое значение уже есть.\n"
+                                            + "Хотете еще раз ввести значение?")) {
+                                        break;
+                                    } else {
+                                        continue;
+                                    }
+                                }
+                            } catch (SQLException ex) {
+                                SMS.error(this, ex.toString());
+                                Logger.getLogger(DepartmentFrame.class.getName()).log(Level.SEVERE, null, ex);
                                 break;
                             }
                         } else {
                             // Иначе мы игнорируем и ничего не делаем
                             // Хотя может быть надо выводить сообщение
-                            
+
                             break;
                         }
                     } else {
@@ -225,96 +258,7 @@ public class DepartmentFrame extends javax.swing.JFrame {
         this.setEnabled(true);
     }//GEN-LAST:event_jButtonEditActionPerformed
 
-    /**
-     * Метод добавления в безу данных
-     * Этот метод так же проверяет на наличие данной строчки в базе
-     * 
-     * @param name - то что надо передать в базу
-     * @return true если добавлено или не надо еще делать попыток, 
-     *         false - если такое уже есть в базе.
-     */
-    private boolean inputIntoDepartment(String name) {
-        boolean ret = true;
-        try {
-            // Получаем соединение с базой
-            Connection conn = database.DataBaseConnect.getConnection();
-            Statement st = conn.createStatement();
-            // Формируем запрос на проверку
-            ResultSet rs = st.executeQuery("Select * "
-                    + "from Department where name_department = '" + name + "';");
-            if (!rs.next()) {
-                // Значит в базе такого значения нет
-                int resalt = st.executeUpdate("insert into "
-                        + "department(name_department) values('" + name + "');");
-                if (resalt == 0) {
-                    SMS.error(this, "Произошла ошибка при добавлении значения!",
-                            "Ошибка добавления");
-                } else {
-                    // Все прошло удачно, можем обновить таблицу
-                    this.updateTableDepartment();
-                }
-            } else {
-                // Такое значение уже есть
-                if (SMS.query(this, "Такое значение уже есть.\n"
-                        + "Хотете еще раз ввести значение?")) {
-                    ret = false;
-                } else {
-                    ret = true;
-                }
-            }
-        } catch (SQLException ex) {
-                    SMS.error(this, ex.toString(),"Ошибка добавления");
-            Logger.getLogger(DepartmentFrame.class.getName())
-                    .log(Level.SEVERE, null, ex);
-        } finally {
-            return ret;
-        }
-    }
-
-    /**
-     * Метод изменения значений в базе данных
-     * @param id - кому надо поменять значение
-     * @param name - на какое значение
-     * @return true - если значение изменино
-     *         false - значение не изменино
-     */
-    private boolean updateDataBase(int id, String name) {
-        boolean result = true;
-        try {
-            Connection conn = database.DataBaseConnect.getConnection();
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("Select * "
-                    + "from Department where name_department = '" + name +
-                    "' and id_department <> "+id+";");
-            if (!rs.next()) {
-                // Значит в базе такого значения нет
-                int resalt = st.executeUpdate("update department "
-                        + "set name_department = '" + name + "' Where id_department = "+id+";");
-                if (resalt == 0) {
-                    SMS.error(this, "Произошла ошибка при изменении значения!",
-                            "Ошибка изменения");
-                } else {
-                    // Все прошло удачно, можем обновить таблицу
-                    this.updateTableDepartment();
-                }
-            } else {
-                // Такое значение уже есть
-                if (SMS.query(this, "Такое значение уже есть.\n"
-                        + "Хотете еще раз ввести значение?")) {
-                    result = false;
-                } else {
-                    result = true;
-                }
-            }
-        } catch (SQLException ex) {
-            SMS.error(this, ex.toString(), "Ошибка добавления");
-            Logger.getLogger(DepartmentFrame.class.getName())
-                    .log(Level.SEVERE, null, ex);
-        } finally {
-            return result;
-        }
-
-    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAdd;
     private javax.swing.JButton jButtonEdit;

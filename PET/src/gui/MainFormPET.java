@@ -47,6 +47,7 @@ public class MainFormPET extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("PET");
+        setAutoRequestFocus(false);
         setLocationByPlatform(true);
         setMinimumSize(new java.awt.Dimension(40, 40));
         setModalExclusionType(java.awt.Dialog.ModalExclusionType.TOOLKIT_EXCLUDE);

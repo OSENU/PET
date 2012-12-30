@@ -4,6 +4,10 @@
 package database.entity;
 
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
@@ -69,4 +73,66 @@ public class Subject implements Serializable {
     public String toString() {
         return "database.entity.Subject[ idSubject=" + idSubject + ", nameSubject=" + nameSubject + " ]";
     }
+    
+    /**
+     * Метод добавляет в базу данных данный объект 
+     * @return код результата: -1 - Такие данные уже есть
+     *                         -2 - Произошла вообще ошибка
+     *                         Или количество добавленых записей 
+     * @throws SQLException 
+     */
+    public int insertInto() throws SQLException{
+        int result;
+        Connection conn = database.DataBaseConnect.getConnection();
+        Statement st = conn.createStatement();
+        // Формируем запрос на проверку
+        ResultSet rs = st.executeQuery("Select id_subject "
+                + "from Subject "
+                + "where name_subject = '" + nameSubject + "';");
+        if (!rs.next()) {
+           // Значит в базе такого значения нет
+            result = st.executeUpdate("insert into Subject"
+                + "(name_Subject) "
+                + " values('" + nameSubject + "');");
+            conn.commit();
+  
+        } else {
+            result = -1;
+        }
+        
+        return result;
+    }
+    
+    /**
+     * Метод заносит измененный объект в базу данных.
+     * Тоесть данный элимент в базу занесеть переданый элимент
+     * @param newTeacher - объект на который надо заменить
+     * @return код результата: -1 - Такие данные уже есть
+     *                         -2 - Произошла вообще ошибка
+     *                         Или количество добавленых записей
+     * @throws SQLException 
+     */
+    public int updateTable(Subject newSubject) throws SQLException{
+        int result;
+        Connection conn = database.DataBaseConnect.getConnection();
+        Statement st = conn.createStatement();
+        // Формируем запрос на проверку
+        ResultSet rs = st.executeQuery("Select id_subject "
+                + "from subject "
+                + "where name_subject = '" + newSubject.nameSubject +"' " 
+                + "and id_subject <> " + idSubject + " ;");
+        if (!rs.next()) {
+           // Значит в базе такого значения нет
+            String s = "update Subject "
+                    + "set name_subject = '" + newSubject.nameSubject + "' "
+                    + " where id_subject = " + idSubject + " ;";
+            result = st.executeUpdate(s);
+  
+        } else {
+            result = -1;
+        }
+        
+        return result;
+    }
+
 }

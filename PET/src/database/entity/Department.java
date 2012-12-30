@@ -4,15 +4,19 @@
 package database.entity;
 
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
  * @author Aleo
  */
 public class Department implements Serializable {
-   private Integer idDepartment;
-   private String nameDepartment;
-
+    private Integer idDepartment;
+    private String nameDepartment;
+   
     public Department() {
     }
 
@@ -70,5 +74,68 @@ public class Department implements Serializable {
         //return "database.entity.Department[ idDepartment=" + idDepartment + ", nameDepartment="+nameDepartment+" ]";
         return nameDepartment;
     }
+    
+    /**
+     * Метод добавляет в базу данных данный объект 
+     * @return код результата: -1 - Такие данные уже есть
+     *                         -2 - Произошла вообще ошибка
+     *                         Или количество добавленых записей 
+     * @throws SQLException 
+     */
+    public int insertInto() throws SQLException{
+        int result;
+        Connection conn = database.DataBaseConnect.getConnection();
+        Statement st = conn.createStatement();
+        // Формируем запрос на проверку
+        ResultSet rs = st.executeQuery("Select id_department "
+                + "from Department "
+                + "where name_department = '" + nameDepartment + "';");
+        if (!rs.next()) {
+           // Значит в базе такого значения нет
+            result = st.executeUpdate("insert into department"
+                + "(name_department) "
+                + " values('" + nameDepartment + "');");
+            conn.commit();
+  
+        } else {
+            result = -1;
+        }
+        
+        return result;
+    }
+    
+    /**
+     * Метод заносит измененный объект в базу данных.
+     * Тоесть данный элимент в базу занесеть переданый элимент
+     * @param newDepartment - объект на который надо заменить
+     * @return код результата: -1 - Такие данные уже есть
+     *                         -2 - Произошла вообще ошибка
+     *                         Или количество добавленых записей
+     * @throws SQLException 
+     */
+    public int updateTable(Department newDepartment) throws SQLException{
+        int result;
+        Connection conn = database.DataBaseConnect.getConnection();
+        Statement st = conn.createStatement();
+        // Формируем запрос на проверку
+        ResultSet rs = st.executeQuery("Select id_teacher "
+                + "from Teacher "
+                + "where name = '" + newDepartment.nameDepartment +"' " 
+                + "and id_department <> " + idDepartment + " ;");
+        if (!rs.next()) {
+           // Значит в базе такого значения нет
+            String s = "update department "
+                    + "set name_department = '" + newDepartment.nameDepartment + "' "
+                    + " where id_department = " + idDepartment + " ;";
+            result = st.executeUpdate(s);
+  
+        } else {
+            result = -1;
+        }
+        
+        return result;
+    }
+
+    
     
 }
