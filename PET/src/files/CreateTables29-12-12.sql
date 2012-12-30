@@ -84,7 +84,9 @@ ALTER TABLE Journal
 CREATE TABLE Mark
 (
 	id_mark              INTEGER NOT NULL AUTO_INCREMENT(1) ,
-	name_mark            CHAR(100) NOT NULL 
+	name_mark            CHAR(100) NOT NULL,
+        min_persent          INTEGER NOT NULL ,
+	max_persent          INTEGER NOT NULL  
 );
 
 
