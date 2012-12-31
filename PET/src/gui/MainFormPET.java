@@ -6,6 +6,7 @@ package gui;
 
 import gui.dictionaries.DepartmentFrame;
 import gui.dictionaries.FacultyFrame;
+import gui.dictionaries.GroupsFrame;
 import gui.dictionaries.TeacherFrame;
 import javax.swing.JFrame;
 import settings.ConfigureProgramm;
@@ -92,6 +93,11 @@ public class MainFormPET extends javax.swing.JFrame {
         jMenuDictionaries.add(jMenuItemTypeWork);
 
         jMenuItemGroup.setText("Группы");
+        jMenuItemGroup.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemGroupActionPerformed(evt);
+            }
+        });
         jMenuDictionaries.add(jMenuItemGroup);
 
         jMenuItemStudent.setText("Студенты");
@@ -147,6 +153,12 @@ public class MainFormPET extends javax.swing.JFrame {
         FacultyFrame ff = new FacultyFrame();
         ff.setVisible(true);
     }//GEN-LAST:event_jMenuItemFacultyActionPerformed
+
+    private void jMenuItemGroupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemGroupActionPerformed
+        GroupsFrame frame = new GroupsFrame();
+        frame.setVisible(true);
+        frame.updateTable();
+    }//GEN-LAST:event_jMenuItemGroupActionPerformed
 
     /**
      * @param args the command line arguments
