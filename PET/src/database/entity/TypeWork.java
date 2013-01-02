@@ -126,7 +126,7 @@ public class TypeWork implements Serializable {
         if (!rs.next()) {
            // Значит в базе такого значения нет
             String s = "update type_work "
-                    + "set name_subject = '" + newTypeWork.nameTypeWork + "' "
+                    + "set name_type_work = '" + newTypeWork.nameTypeWork + "' "
                     + " where id_type_work = " + idTypeWork + " ;";
             result = st.executeUpdate(s);
   

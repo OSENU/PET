@@ -8,6 +8,7 @@ import gui.dictionaries.DepartmentFrame;
 import gui.dictionaries.FacultyFrame;
 import gui.dictionaries.GroupsFrame;
 import gui.dictionaries.TeacherFrame;
+import gui.dictionaries.TypeWorkFrame;
 import javax.swing.JFrame;
 import settings.ConfigureProgramm;
 
@@ -90,6 +91,11 @@ public class MainFormPET extends javax.swing.JFrame {
         jMenuDictionaries.add(jMenuItemMark);
 
         jMenuItemTypeWork.setText("Типы работ");
+        jMenuItemTypeWork.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemTypeWorkActionPerformed(evt);
+            }
+        });
         jMenuDictionaries.add(jMenuItemTypeWork);
 
         jMenuItemGroup.setText("Группы");
@@ -159,6 +165,12 @@ public class MainFormPET extends javax.swing.JFrame {
         frame.setVisible(true);
         frame.updateTable();
     }//GEN-LAST:event_jMenuItemGroupActionPerformed
+
+    private void jMenuItemTypeWorkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemTypeWorkActionPerformed
+        TypeWorkFrame frame = new TypeWorkFrame();
+        frame.setVisible(true);
+        frame.updateTable();
+    }//GEN-LAST:event_jMenuItemTypeWorkActionPerformed
 
     /**
      * @param args the command line arguments
