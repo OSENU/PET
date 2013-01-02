@@ -35,12 +35,12 @@ public class GroupsFrame extends javax.swing.JFrame {
     public GroupsFrame() {
         initComponents();
     }
-    
-    public void updateTable(){
+
+    public void updateTable() {
         try {
             AbstractTableModel modal = new GroupsTableModal();
             jTableGroups.setModel(modal);
-            if(!settings.ConfigureProgramm.isDEBAG()){
+            if (!settings.ConfigureProgramm.isDEBAG()) {
                 util.TablesUtil.hideColumn(jTableGroups, 0);
                 util.TablesUtil.hideColumn(jTableGroups, 3);
             }
@@ -48,8 +48,9 @@ public class GroupsFrame extends javax.swing.JFrame {
             SMS.error(this, ex.toString());
             Logger.getLogger(GroupsFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -136,40 +137,37 @@ public class GroupsFrame extends javax.swing.JFrame {
             Calendar calendar = Calendar.getInstance();
             // Получим текущий год
             int y = calendar.get(Calendar.YEAR);
-            year.setStartYear(y-10);
-            year.setEndYear(y+2);
-            
+            year.setStartYear(y - 10);
+            year.setEndYear(y + 2);
             // Собираем компоненты
-            JComponent[] component = new JComponent[] {
+            JComponent[] component = new JComponent[]{
                 new JLabel("Номер группы:"),
                 num,
                 new JLabel("Год поступления:"),
                 year,
                 new JLabel("Факультет:"),
                 box
-                
             };
-            
+
             do {
                 boolean flag = SMS.dialog(this, "Введите данные о группе:", component);
-                if(!flag){
+                if (!flag) {
                     break;
                 }
                 String number = num.getText();
-                if(number.trim().length() <= 0){
+                if (number.trim().length() <= 0) {
                     SMS.warning(this, "Введите номер группы!");
                     continue;
                 }
                 int numb;
-                try{
+                try {
                     numb = Integer.parseInt(number);
-                }
-                catch(NumberFormatException ex){
+                } catch (NumberFormatException ex) {
                     SMS.message(this, "Номер группы должен быть числом\nили ввели слишком большое число!");
                     continue;
                 }
                 int inputYear = year.getYear();
-                if(box.getSelectedItem() == null){
+                if (box.getSelectedItem() == null) {
                     SMS.message(this, "Укажите факультет!");
                     continue;
                 }
@@ -177,18 +175,17 @@ public class GroupsFrame extends javax.swing.JFrame {
                 // Собираем объект
                 Groups groups = new Groups();
                 groups.setNumGroup(numb);
-                calendar.set(Calendar.YEAR, inputYear);
-                groups.setYearSupply(calendar.getTime());
-                groups.setFaculty((Faculty)box.getSelectedItem());
-                
+                groups.setYearSupply(inputYear);
+                groups.setFaculty((Faculty) box.getSelectedItem());
+
                 int res = groups.insertInto();
-                if(res == -1){
-                    if(SMS.query(this, "Такое значение уже есть,\nХотите другие данные ввести?")){
+                if (res == -1) {
+                    if (SMS.query(this, "Такое значение уже есть,\nХотите другие данные ввести?")) {
                         continue;
                     } else {
                         break;
                     }
-                } else if(res >= 0){
+                } else if (res >= 0) {
                     updateTable();
                     break;
                 }
@@ -201,12 +198,12 @@ public class GroupsFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonAddActionPerformed
 
     private void jButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditActionPerformed
-       try {
-           int row = jTableGroups.getSelectedRow();
-           if(row == -1){
-               SMS.warning(this, "Выберите данные для редактирования!");
-               return;
-           }
+        try {
+            int row = jTableGroups.getSelectedRow();
+            if (row == -1) {
+                SMS.warning(this, "Выберите данные для редактирования!");
+                return;
+            }
             // Создадим поле ввода
             JTextField num = new JTextField();
             String oldNum = String.valueOf((Integer) jTableGroups.getValueAt(row, 1));
@@ -216,57 +213,53 @@ public class GroupsFrame extends javax.swing.JFrame {
             JComboBox<Faculty> box = new JComboBox<Faculty>(facultys);
             Faculty f = new Faculty(
                     (int) jTableGroups.getValueAt(row, 3),
-                     (String) jTableGroups.getValueAt(row, 4)
-                    );
+                    (String) jTableGroups.getValueAt(row, 4));
             // Создаем штуку для ввода времени
             JYearChooser year = new JYearChooser();
             Calendar calendar = Calendar.getInstance();
             // Получим текущий год
             int y = calendar.get(Calendar.YEAR);
-            year.setStartYear(y-10);
-            year.setEndYear(y+2);
+            year.setStartYear(y - 10);
+            year.setEndYear(y + 2);
             y = (int) jTableGroups.getValueAt(row, 2);
             // Собираем компоненты
-            JComponent[] component = new JComponent[] {
+            JComponent[] component = new JComponent[]{
                 new JLabel("Номер группы:"),
                 num,
                 new JLabel("Год поступления:"),
                 year,
                 new JLabel("Факультет:"),
                 box
-                
             };
             // Соберем объект для обновления
             Groups oldGroups = new Groups();
-            oldGroups.setIdGroups((int)jTableGroups.getValueAt(row, 0));
+            oldGroups.setIdGroups((int) jTableGroups.getValueAt(row, 0));
             oldGroups.setNumGroup(Integer.valueOf(oldNum));
-            calendar.set(Calendar.YEAR, y);
-            oldGroups.setYearSupply(calendar.getTime());
+            oldGroups.setYearSupply(y);
             oldGroups.setFaculty(f);
             do {
                 num.setText(oldNum);
                 year.setYear(y);
                 box.setSelectedItem(f);
-                
-                boolean flag = SMS.dialog(this, "Введите данные о группе:", component);
-                if(!flag){
+
+                boolean flag = SMS.dialog(this, "Измените данные о группе:", component);
+                if (!flag) {
                     break;
                 }
                 String number = num.getText();
-                if(number.trim().length() <= 0){
-                    SMS.warning(this, "Введите номер группы!");
+                if (number.trim().length() <= 0) {
+                    SMS.warning(this, "Измените номер группы!");
                     continue;
                 }
                 int numb;
-                try{
+                try {
                     numb = Integer.parseInt(number);
-                }
-                catch(NumberFormatException ex){
+                } catch (NumberFormatException ex) {
                     SMS.message(this, "Номер группы должен быть числом\nили ввели слишком большое число!");
                     continue;
                 }
                 int inputYear = year.getYear();
-                if(box.getSelectedItem() == null){
+                if (box.getSelectedItem() == null) {
                     SMS.message(this, "Укажите факультет!");
                     continue;
                 }
@@ -274,18 +267,17 @@ public class GroupsFrame extends javax.swing.JFrame {
                 // Собираем объект
                 Groups groups = new Groups();
                 groups.setNumGroup(numb);
-                calendar.set(Calendar.YEAR, inputYear);
-                groups.setYearSupply(calendar.getTime());
-                groups.setFaculty((Faculty)box.getSelectedItem());
-                
-                int res = groups.insertInto();
-                if(res == -1){
-                    if(SMS.query(this, "Такое значение уже есть,\nХотите другие данные ввести?")){
+                groups.setYearSupply(inputYear);
+                groups.setFaculty((Faculty) box.getSelectedItem());
+
+                int res = oldGroups.updateTable(groups);
+                if (res == -1) {
+                    if (SMS.query(this, "Такое значение уже есть,\nХотите другие данные ввести?")) {
                         continue;
                     } else {
                         break;
                     }
-                } else if(res >= 0){
+                } else if (res >= 0) {
                     updateTable();
                     break;
                 }
@@ -296,8 +288,6 @@ public class GroupsFrame extends javax.swing.JFrame {
             this.dispose();
         }
     }//GEN-LAST:event_jButtonEditActionPerformed
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAdd;
     private javax.swing.JButton jButtonEdit;

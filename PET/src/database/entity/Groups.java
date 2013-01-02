@@ -20,7 +20,7 @@ import java.util.Locale;
  */
 public class Groups implements Serializable {
     private Integer idGroups;
-    private Date yearSupply;
+    private Integer yearSupply;
     private Integer numGroup;
     private Faculty faculty;
 
@@ -44,11 +44,11 @@ public class Groups implements Serializable {
         this.idGroups = idGroups;
     }
 
-    public Date getYearSupply() {
+    public Integer getYearSupply() {
         return yearSupply;
     }
 
-    public void setYearSupply(Date yearSupply) {
+    public void setYearSupply(Integer yearSupply) {
         this.yearSupply = yearSupply;
     }
 
@@ -119,13 +119,11 @@ public class Groups implements Serializable {
         int result;
         Connection conn = database.DataBaseConnect.getConnection();
         Statement st = conn.createStatement();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(yearSupply);
         // Формируем запрос на проверку
         ResultSet rs = st.executeQuery("Select id_groups "
                 + "from Groups "
                 + "where num_Group = '" + numGroup +"' "
-                + "and year(year_Supply) = " + calendar.get(Calendar.YEAR) + " "
+                + "and year_Supply = " + yearSupply + " "
                 + "and id_Faculty = " + faculty.getIdFaculty() + " ; ") ;
         Locale.setDefault(Locale.US);
         if (!rs.next()) {
@@ -133,8 +131,7 @@ public class Groups implements Serializable {
             SimpleDateFormat sd = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
             result = st.executeUpdate("insert into Groups"
                 + "(num_group, year_supply, id_faculty) "
-                + " values(" + numGroup + ", "
-                    + "PARSEDATETIME ('" + sd.format(yearSupply) + "', 'EEE, d MMM yyyy HH:mm:ss'), "
+                + " values(" + numGroup + ", " + yearSupply + ", "
                     + " " + faculty.getIdFaculty() + ");");
             conn.commit();
   
@@ -152,7 +149,7 @@ public class Groups implements Serializable {
      *                         -2 - Произошла вообще ошибка
      *                         Или количество добавленых записей
      * @throws SQLException 
-     
+     */ 
     public int updateTable(Groups newGroups) throws SQLException{
         int result;
         Connection conn = database.DataBaseConnect.getConnection();
@@ -161,20 +158,21 @@ public class Groups implements Serializable {
         ResultSet rs = st.executeQuery("Select id_groups "
                 + "from Groups "
                 + "where num_Group = '" + newGroups.numGroup +"' "
-                + "and year(year_Supply) = " + calendar.get(Calendar.YEAR) + " "
-                + "and id_Faculty = " + faculty.getIdFaculty() + " ; ") ;
+                + "and year_Supply = " + newGroups.yearSupply + " "
+                + "and id_Faculty = " + faculty.getIdFaculty() + " "
+                + "and id_groups <> " + idGroups + "; ") ;
         if (!rs.next()) {
            // Значит в базе такого значения нет
-            String s = "update department "
-                    + "set name_department = '" + newDepartment.nameDepartment + "',"
-                    + "id_faculty = " + newDepartment.idFaculty.getIdFaculty()
-                    + " where id_department = " + idDepartment + " ;";
+            String s = "update groups "
+                    + "set num_group = '" + newGroups.numGroup + "', "
+                    + "year_supply = " + newGroups.yearSupply + ", "
+                    + "id_faculty = " + newGroups.faculty.getIdFaculty()
+                    + " where id_groups = " + idGroups + " ;";
             result = st.executeUpdate(s);
   
         } else {
             result = -1;
         }
-        
         return result;
-    }*/
+    }
 }

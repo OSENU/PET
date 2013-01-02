@@ -10,8 +10,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -42,7 +40,7 @@ public class GroupsTableModal extends AbstractTableModel{
             g = new Groups();
             g.setIdGroups((Integer) rs.getInt("id_groups"));
             g.setNumGroup((Integer) rs.getInt("num_group"));
-            g.setYearSupply((Date) rs.getDate("year_supply"));
+            g.setYearSupply((Integer) rs.getInt("year_supply"));
             f = new Faculty();
             f.setIdFaculty((Integer) rs.getInt("id_faculty"));
             f.setNameFaculty((String) rs.getString("name_faculty"));
@@ -71,9 +69,7 @@ public class GroupsTableModal extends AbstractTableModel{
             case 1:
                 return groups.get(rowIndex).getNumGroup();
             case 2:
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTime(groups.get(rowIndex).getYearSupply());
-                return calendar.get(Calendar.YEAR);
+                return groups.get(rowIndex).getYearSupply();
             case 3:
                 return groups.get(rowIndex).getFaculty().getIdFaculty();
             case 4:
