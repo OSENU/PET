@@ -62,6 +62,7 @@ public class FacultyFrame extends javax.swing.JFrame {
         jButtonEdit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Факультеты");
         setAlwaysOnTop(true);
 
         jTableFaculty.setModel(new javax.swing.table.DefaultTableModel(
