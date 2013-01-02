@@ -50,7 +50,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemTypeWork">
               <Properties>
-                <Property name="text" type="java.lang.String" value="&#x422;&#x438;&#x43f;&#x44b; &#x43e;&#x446;&#x435;&#x43d;&#x43e;&#x43a;"/>
+                <Property name="text" type="java.lang.String" value="&#x422;&#x438;&#x43f;&#x44b; &#x440;&#x430;&#x431;&#x43e;&#x442;"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemGroup">

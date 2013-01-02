@@ -89,7 +89,7 @@ public class MainFormPET extends javax.swing.JFrame {
         jMenuItemMark.setText("Оценки");
         jMenuDictionaries.add(jMenuItemMark);
 
-        jMenuItemTypeWork.setText("Типы оценок");
+        jMenuItemTypeWork.setText("Типы работ");
         jMenuDictionaries.add(jMenuItemTypeWork);
 
         jMenuItemGroup.setText("Группы");
