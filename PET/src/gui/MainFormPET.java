@@ -4,9 +4,11 @@
  */
 package gui;
 
+import database.entity.Subject;
 import gui.dictionaries.DepartmentFrame;
 import gui.dictionaries.FacultyFrame;
 import gui.dictionaries.GroupsFrame;
+import gui.dictionaries.SubjectFrame;
 import gui.dictionaries.TeacherFrame;
 import gui.dictionaries.TypeWorkFrame;
 import javax.swing.JFrame;
@@ -77,6 +79,11 @@ public class MainFormPET extends javax.swing.JFrame {
         jMenuDictionaries.add(jMenuItemFaculty);
 
         jMenuItemSubject.setText("Предметы");
+        jMenuItemSubject.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemSubjectActionPerformed(evt);
+            }
+        });
         jMenuDictionaries.add(jMenuItemSubject);
 
         jMenuItemTeachers.setText("Преподаватели");
@@ -171,6 +178,12 @@ public class MainFormPET extends javax.swing.JFrame {
         frame.setVisible(true);
         frame.updateTable();
     }//GEN-LAST:event_jMenuItemTypeWorkActionPerformed
+
+    private void jMenuItemSubjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSubjectActionPerformed
+        SubjectFrame frame = new SubjectFrame();
+        frame.setVisible(true);
+        frame.updateTable();
+    }//GEN-LAST:event_jMenuItemSubjectActionPerformed
 
     /**
      * @param args the command line arguments

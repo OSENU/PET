@@ -4,10 +4,9 @@
  */
 package gui.dictionaries;
 
-import database.entity.Department;
 import database.entity.Faculty;
-import database.tableModal.DepartmentTableModal;
-import database.tableModal.FacultyTableModal;
+import database.entity.Subject;
+import database.tableModal.SubjectTableModal;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,21 +17,20 @@ import util.SMS;
  *
  * @author Aleo
  */
-public class FacultyFrame extends javax.swing.JFrame {
+public class SubjectFrame extends javax.swing.JFrame {
 
     /**
-     * Creates new form FacultyFrame
+     * Creates new form SubjectFrame
      */
-    public FacultyFrame() {
+    public SubjectFrame() {
         initComponents();
-        updateTable();
     }
-
-    private void updateTable() {
+    
+    public void updateTable() {
 
         try {
-            FacultyTableModal modal = new FacultyTableModal();
-            jTableFaculty.setModel(modal);
+            SubjectTableModal modal = new SubjectTableModal();
+            jTableSubject.setModel(modal);
         } catch (SQLException ex) {
             SMS.error(this, ex.toString());
             Logger.getLogger(DepartmentFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -40,14 +38,10 @@ public class FacultyFrame extends javax.swing.JFrame {
 
         if (!ConfigureProgramm.isDEBAG()) {
             // Если программа не врежиме отладки, то скроем колонку с id
-            util.TablesUtil.hideColumn(jTableFaculty, 0);
-//            jTableDepartment.getColumnModel().getColumn(0).setMaxWidth(0);
-//            jTableDepartment.getColumnModel().getColumn(0).setMinWidth(0);
-//            jTableDepartment.getColumnModel().getColumn(0).setPreferredWidth(0);
-//            jTableDepartment.getColumnModel().getColumn(0).setResizable(false);
+            util.TablesUtil.hideColumn(jTableSubject, 0);
         }
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -58,15 +52,14 @@ public class FacultyFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableFaculty = new javax.swing.JTable();
+        jTableSubject = new javax.swing.JTable();
         jButtonAdd = new javax.swing.JButton();
         jButtonEdit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Факультеты");
-        setAlwaysOnTop(true);
+        setTitle("Предметы");
 
-        jTableFaculty.setModel(new javax.swing.table.DefaultTableModel(
+        jTableSubject.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -74,7 +67,7 @@ public class FacultyFrame extends javax.swing.JFrame {
                 "Загрузка..."
             }
         ));
-        jScrollPane1.setViewportView(jTableFaculty);
+        jScrollPane1.setViewportView(jTableSubject);
 
         jButtonAdd.setText("Добавить");
         jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -97,7 +90,7 @@ public class FacultyFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 514, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButtonAdd)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -113,7 +106,7 @@ public class FacultyFrame extends javax.swing.JFrame {
                     .addComponent(jButtonAdd)
                     .addComponent(jButtonEdit))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -122,16 +115,16 @@ public class FacultyFrame extends javax.swing.JFrame {
 
     private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
         String name;
-        Faculty faculty = new Faculty();
+        Subject subject = new Subject();
         // Цыкл необходим для того, что бы было несколько попыток у пользователя
         do {
-            name = SMS.input(this, "Введите название факультета:");
+            name = SMS.input(this, "Введите название предмета:");
             if (name != null) {
                 if (name.trim().length() > 0) {
-                    faculty.setNameFaculty(name);
+                    subject.setNameSubject(name);
                     try {
                         // Заносим этот объект в базу
-                        int res = faculty.insertInto();
+                        int res = subject.insertInto();
                         if (res >= 0) {
                             // все успешно
                             updateTable();
@@ -154,15 +147,15 @@ public class FacultyFrame extends javax.swing.JFrame {
                 }
             }
         } while (name != null);
-        FacultyFrame.this.setVisible(true);
+        SubjectFrame.this.setVisible(true);
     }//GEN-LAST:event_jButtonAddActionPerformed
 
     private void jButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditActionPerformed
         String name = null;
-        Faculty faculty = new Faculty(), newFaculty = new Faculty();
+        Subject subject = new Subject(), newSubject = new Subject();
 
         // Получаем количество выделеных строк в таблице
-        int countSelect = jTableFaculty.getSelectedColumnCount();
+        int countSelect = jTableSubject.getSelectedColumnCount();
         if (countSelect == 0) {
             // Значит ни одной строки не выбратно
             SMS.warning(this, "Вы не выбрали данные для редактирования");
@@ -171,28 +164,28 @@ public class FacultyFrame extends javax.swing.JFrame {
             SMS.warning(this, "Выберите только одно значение в таблице");
         } else { // Все нормально и можем показть окно ввода
             // Считываем значение из теблицы
-            name = (String) jTableFaculty.getValueAt(
-                    jTableFaculty.getSelectedRow(), 1);
-            faculty.setNameFaculty(name);
-            faculty.setIdFaculty((Integer) jTableFaculty.getValueAt(jTableFaculty.getSelectedRow(), 0));
+            name = (String) jTableSubject.getValueAt(
+                    jTableSubject.getSelectedRow(), 1);
+            subject.setNameSubject(name);
+            subject.setIdSubject((Integer) jTableSubject.getValueAt(jTableSubject.getSelectedRow(), 0));
             // Цыкл необходим для того, что бы было несколько попыток у пользователя
             do {
 
-                String newFacultys =
+                String newSubjects =
                         SMS.input(this,
-                        "Введите новое название факультета:",
+                        "Введите новое название предмета:",
                         null,
                         name);
 
                 // Если выбрали ДА
-                if (newFacultys != null) {
-                    if (newFacultys.trim().length() > 0) {
+                if (newSubjects != null) {
+                    if (newSubjects.trim().length() > 0) {
                         // Значит то что ввели не пустое!!!
-                        if (!name.equals(newFacultys)) {
+                        if (!name.equals(newSubjects)) {
                             // Если введенное значение отличаеться то заносим в базу данных
-                            newFaculty.setNameFaculty(newFacultys);
+                            newSubject.setNameSubject(newSubjects);
                             try {
-                                int ret = faculty.updateTable(newFaculty);
+                                int ret = subject.updateTable(newSubject);
                                 if (ret >= 0) {
                                     updateTable();
                                     break;
@@ -222,13 +215,14 @@ public class FacultyFrame extends javax.swing.JFrame {
                     break;
                 }
             } while (true);
-        FacultyFrame.this.setVisible(true);
         }
+        SubjectFrame.this.setVisible(true);
     }//GEN-LAST:event_jButtonEditActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAdd;
     private javax.swing.JButton jButtonEdit;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableFaculty;
+    private javax.swing.JTable jTableSubject;
     // End of variables declaration//GEN-END:variables
 }
