@@ -98,7 +98,7 @@ public class Teacher implements Serializable {
 
     @Override
     public String toString() {
-        return "database.entity.Teacher[ idTeacher=" + idTeacher + " ]";
+        return surname + " " + name.charAt(0) + "."+ name2.charAt(0) + " : "+idDepartment.getNameDepartment();
     }
     
     /**

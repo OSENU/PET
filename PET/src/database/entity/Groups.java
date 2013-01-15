@@ -91,7 +91,7 @@ public class Groups implements Serializable {
 
     @Override
     public String toString() {
-        return "database.entity.Groups[ idGroups=" + idGroups + " ]";
+        return numGroup + " : " + yearSupply + " : " + faculty.getNameFaculty();
     }
 
     /**

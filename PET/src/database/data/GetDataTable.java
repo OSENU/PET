@@ -7,7 +7,10 @@ package database.data;
 import database.DataBaseConnect;
 import database.entity.Department;
 import database.entity.Faculty;
+import database.entity.Groups;
+import database.entity.Subject;
 import database.entity.Teacher;
+import database.entity.TypeWork;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -86,12 +89,12 @@ public class GetDataTable {
         
         Teacher teacher;
         for(int i = 1; rs.next(); i++){
-            id = rs.getInt("id_teacher");
-            name = rs.getString("name");
-            name2 = rs.getString("name2");
-            surname = rs.getString("surname");
-            idDepartment = rs.getInt("id_department");
-            nameDepartment = rs.getString("name_deparmnet");
+            id = rs.getInt("id_teacher"); // 1
+            name = rs.getString("name"); // 2
+            name2 = rs.getString("name2"); // 3
+            surname = rs.getString("surname"); // 4
+            idDepartment = rs.getInt("id_department"); // 5
+            nameDepartment = rs.getString(6); // 6
             
             teacher = new Teacher(idDepartment, name, name2, surname);
             teacher.setIdDepartment(new Department(idDepartment, nameDepartment));
@@ -134,4 +137,107 @@ public class GetDataTable {
         
         return facultys;
     }
+    
+    public static Subject[] getSubjects() throws SQLException{
+        Connection conn = DataBaseConnect.getConnection();
+        Statement st;
+        st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        ResultSet rs = st.executeQuery(
+                "select *" +
+                "from Subject;"
+                );
+        // Переходим на последнюю строчку что бы узнать количество записей
+        rs.last();
+        int countRow = rs.getRow();
+        // Перешли снова на первую запись
+        rs.beforeFirst();
+        int id;
+        String name;
+        Subject[] subjects = new Subject[countRow+1];
+
+        for(int i = 1; rs.next(); i++){
+            id = rs.getInt("id_subject");
+            name = rs.getString("name_subject");
+            
+            subjects[i] = new Subject(id, name);
+        }
+        
+        rs.close();
+        st.close();
+        
+        return subjects;
+    }
+    
+    public static TypeWork[] getTypeWork() throws SQLException{
+        Connection conn = DataBaseConnect.getConnection();
+        Statement st;
+        st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        ResultSet rs = st.executeQuery(
+                "select *" +
+                "from Type_work;"
+                );
+        // Переходим на последнюю строчку что бы узнать количество записей
+        rs.last();
+        int countRow = rs.getRow();
+        // Перешли снова на первую запись
+        rs.beforeFirst();
+        int id;
+        String name;
+        TypeWork[] typeWorks = new TypeWork[countRow+1];
+
+        for(int i = 1; rs.next(); i++){
+            id = rs.getInt("id_type_work");
+            name = rs.getString("name_type_work");
+            
+            typeWorks[i] = new TypeWork(id, name);
+        }
+        
+        rs.close();
+        st.close();
+        
+        return typeWorks;
+    }
+    
+    public static Groups[] getGroupses() throws SQLException{
+        Connection conn = DataBaseConnect.getConnection();
+        Statement st;
+        st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        ResultSet rs = st.executeQuery(
+                "SELECT "
+                + "G.ID_GROUPS, "
+                + "G.YEAR_SUPPLY, "
+                + "G.NUM_GROUP, "
+                + "F.ID_fACULTY, "
+                + "F.NAME_FACULTY "
+                + "FROM GROUPS G INNER JOIN FACULTY F "
+                + "ON F.ID_FACULTY = G.ID_FACULTY "
+                );
+        // Переходим на последнюю строчку что бы узнать количество записей
+        rs.last();
+        int countRow = rs.getRow();
+        // Перешли снова на первую запись
+        rs.beforeFirst();
+        int id, year, idF, num;
+        String name;
+        Groups[] groupses = new Groups[countRow+1];
+
+        for(int i = 1; rs.next(); i++){
+            id = rs.getInt(1);
+            year = rs.getInt(2);
+            num = rs.getInt(3);
+            idF = rs.getInt(4);
+            name = rs.getString(5);
+            
+            groupses[i] = new Groups(id);
+            groupses[i].setYearSupply(year);
+            groupses[i].setNumGroup(num);
+            groupses[i].setFaculty(new Faculty(idF, name));
+        }
+        
+        rs.close();
+        st.close();
+        
+        return groupses;
+    }
+    
 }

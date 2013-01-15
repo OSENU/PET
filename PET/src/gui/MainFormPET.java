@@ -11,6 +11,7 @@ import gui.dictionaries.GroupsFrame;
 import gui.dictionaries.SubjectFrame;
 import gui.dictionaries.TeacherFrame;
 import gui.dictionaries.TypeWorkFrame;
+import gui.tests.TestsFrame;
 import javax.swing.JFrame;
 import settings.ConfigureProgramm;
 
@@ -36,6 +37,8 @@ public class MainFormPET extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jToolBar1 = new javax.swing.JToolBar();
+        jButtonNewTest = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuDictionaries = new javax.swing.JMenu();
@@ -56,6 +59,19 @@ public class MainFormPET extends javax.swing.JFrame {
         setLocationByPlatform(true);
         setMinimumSize(new java.awt.Dimension(40, 40));
         setModalExclusionType(java.awt.Dialog.ModalExclusionType.TOOLKIT_EXCLUDE);
+
+        jToolBar1.setRollover(true);
+
+        jButtonNewTest.setText("Новый тест");
+        jButtonNewTest.setFocusable(false);
+        jButtonNewTest.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonNewTest.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonNewTest.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNewTestActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButtonNewTest);
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -137,11 +153,13 @@ public class MainFormPET extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 279, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 254, Short.MAX_VALUE))
         );
 
         pack();
@@ -185,6 +203,11 @@ public class MainFormPET extends javax.swing.JFrame {
         frame.updateTable();
     }//GEN-LAST:event_jMenuItemSubjectActionPerformed
 
+    private void jButtonNewTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNewTestActionPerformed
+        TestsFrame frame = new TestsFrame();
+        frame.setVisible(true);
+    }//GEN-LAST:event_jButtonNewTestActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -224,6 +247,7 @@ public class MainFormPET extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonNewTest;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemIsDebag;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
@@ -237,5 +261,6 @@ public class MainFormPET extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemTeachers;
     private javax.swing.JMenuItem jMenuItemTypeWork;
     private javax.swing.JMenu jMenuSettings;
+    private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables
 }

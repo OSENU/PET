@@ -71,7 +71,12 @@ public class Subject implements Serializable {
 
     @Override
     public String toString() {
-        return "database.entity.Subject[ idSubject=" + idSubject + ", nameSubject=" + nameSubject + " ]";
+        if (nameSubject.length() > 30) {
+            return nameSubject.substring(0, 30);
+        }
+        else {
+            return nameSubject;
+        }
     }
     
     /**

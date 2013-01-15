@@ -64,7 +64,6 @@ public class FacultyFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Факультеты");
-        setAlwaysOnTop(true);
 
         jTableFaculty.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

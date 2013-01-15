@@ -4,6 +4,12 @@
  */
 package gui.tests;
 
+import database.entity.Groups;
+import database.entity.Subject;
+import database.entity.Teacher;
+import database.entity.TypeWork;
+import java.sql.SQLException;
+
 /**
  *
  * @author Aleo
@@ -16,6 +22,43 @@ public class RegistTestPanel extends javax.swing.JPanel {
     public RegistTestPanel() {
         initComponents();
     }
+    
+    public int getCountTest(){
+        return Integer.valueOf(jSpinnerAsk.getValue().toString());
+    }
+    
+    public void init() throws SQLException{
+        jTextFieldNameTest.setText("");
+        
+        Subject[] subjects = database.data.GetDataTable.getSubjects();
+        jComboBoxSubject.setEnabled(false);
+        for (Subject subject : subjects) {
+            jComboBoxSubject.addItem(subject);
+        }
+        jComboBoxSubject.setEnabled(true);
+        
+        Teacher[] teachers = database.data.GetDataTable.getTeachers();
+        jComboBoxTeacher.setEnabled(false);
+        for (Teacher teacher : teachers) {
+            jComboBoxTeacher.addItem(teacher);
+        }
+        jComboBoxTeacher.setEnabled(true);
+        
+        TypeWork[] typeWorks = database.data.GetDataTable.getTypeWork();
+        jComboBoxTypeWork.setEnabled(false);
+        for (TypeWork typeWork : typeWorks) {
+            jComboBoxTypeWork.addItem(typeWork);
+        }
+        jComboBoxTypeWork.setEnabled(true);
+        
+        Groups[] groupses = database.data.GetDataTable.getGroupses();
+        jComboBoxGroup.setEnabled(false);
+        for (Groups groups : groupses) {
+            jComboBoxGroup.addItem(groups);
+        }
+        jComboBoxGroup.setEnabled(true);
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -34,10 +77,10 @@ public class RegistTestPanel extends javax.swing.JPanel {
         jComboBoxTypeWork = new javax.swing.JComboBox();
         jSpinnerAsk = new javax.swing.JSpinner();
         jLabel4 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
+        jComboBoxGroup = new javax.swing.JComboBox();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jTextFieldNameTest = new javax.swing.JTextField();
 
         jLabel1.setText("Предмет:");
 
@@ -73,7 +116,7 @@ public class RegistTestPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jComboBoxSubject, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)))
+                            .addComponent(jTextFieldNameTest, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -86,14 +129,14 @@ public class RegistTestPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jComboBoxTeacher, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxGroup, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBoxTypeWork, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldNameTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
                     .addComponent(jComboBoxTeacher, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
@@ -101,7 +144,7 @@ public class RegistTestPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBoxSubject, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxGroup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -117,7 +160,7 @@ public class RegistTestPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jComboBoxSubjectActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JComboBox jComboBoxGroup;
     private javax.swing.JComboBox jComboBoxSubject;
     private javax.swing.JComboBox jComboBoxTeacher;
     private javax.swing.JComboBox jComboBoxTypeWork;
@@ -128,6 +171,6 @@ public class RegistTestPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JSpinner jSpinnerAsk;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextFieldNameTest;
     // End of variables declaration//GEN-END:variables
 }

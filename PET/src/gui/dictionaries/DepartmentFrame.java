@@ -72,7 +72,6 @@ public class DepartmentFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Кафедры");
-        setAlwaysOnTop(true);
         setType(java.awt.Window.Type.POPUP);
 
         jTableDepartment.setModel(new javax.swing.table.DefaultTableModel(
@@ -207,6 +206,8 @@ public class DepartmentFrame extends javax.swing.JFrame {
         } catch (SQLException ex) {
             SMS.error(this, ex.toString());
             Logger.getLogger(DepartmentFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DepartmentFrame.this.setVisible(true);
         }
     }//GEN-LAST:event_jButtonAddActionPerformed
 
@@ -305,6 +306,8 @@ public class DepartmentFrame extends javax.swing.JFrame {
         } catch (SQLException ex) {
             SMS.error(this, ex.toString());
             Logger.getLogger(DepartmentFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            DepartmentFrame.this.setVisible(true);
         }
     }//GEN-LAST:event_jButtonEditActionPerformed
 

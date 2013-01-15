@@ -66,7 +66,6 @@ public class TeacherFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Преподаватели");
-        setAlwaysOnTop(true);
         setType(java.awt.Window.Type.POPUP);
 
         jTableTeacher.setModel(new javax.swing.table.DefaultTableModel(
@@ -153,7 +152,7 @@ public class TeacherFrame extends javax.swing.JFrame {
                 name2,
                 new JLabel("Фамилия:"),
                 surname,
-                new JLabel("Факультет:"),
+                new JLabel("Кафедра:"),
                 boxDepartment
             };
         boolean dialog = false;
@@ -213,7 +212,7 @@ public class TeacherFrame extends javax.swing.JFrame {
                 }
             }
         } while(dialog);
-        
+        TeacherFrame.this.setVisible(true);
     }//GEN-LAST:event_jButtonAddActionPerformed
 
     private void jButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditActionPerformed
@@ -252,7 +251,7 @@ public class TeacherFrame extends javax.swing.JFrame {
                 name2,
                 new JLabel("Фамилия:"),
                 surname,
-                new JLabel("Факультет:"),
+                new JLabel("Кафедра:"),
                 boxDepartment
             };
         boolean dialog = false;
@@ -317,6 +316,7 @@ public class TeacherFrame extends javax.swing.JFrame {
                 }
             }
         } while(dialog);
+        TeacherFrame.this.setVisible(true);
     }//GEN-LAST:event_jButtonEditActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

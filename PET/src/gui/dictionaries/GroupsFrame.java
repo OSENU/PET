@@ -67,7 +67,6 @@ public class GroupsFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Группы");
-        setAlwaysOnTop(true);
         setType(java.awt.Window.Type.POPUP);
 
         jTableGroups.setModel(new javax.swing.table.DefaultTableModel(
@@ -194,6 +193,8 @@ public class GroupsFrame extends javax.swing.JFrame {
             SMS.error(this, ex.toString());
             Logger.getLogger(GroupsFrame.class.getName()).log(Level.SEVERE, null, ex);
             this.dispose();
+        } finally {
+            GroupsFrame.this.setVisible(true);
         }
     }//GEN-LAST:event_jButtonAddActionPerformed
 
@@ -286,6 +287,8 @@ public class GroupsFrame extends javax.swing.JFrame {
             SMS.error(this, ex.toString());
             Logger.getLogger(GroupsFrame.class.getName()).log(Level.SEVERE, null, ex);
             this.dispose();
+        } finally {
+            GroupsFrame.this.setVisible(true);
         }
     }//GEN-LAST:event_jButtonEditActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables

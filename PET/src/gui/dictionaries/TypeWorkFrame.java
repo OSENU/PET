@@ -59,7 +59,6 @@ public class TypeWorkFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Типы работ");
-        setAlwaysOnTop(true);
 
         jTableTypeWork.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -158,7 +157,7 @@ public class TypeWorkFrame extends javax.swing.JFrame {
                 break;
             }
         } while (true);
-        
+        TypeWorkFrame.this.setVisible(true);
     }//GEN-LAST:event_jButtonAddActionPerformed
 
     private void jButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditActionPerformed
@@ -216,7 +215,7 @@ public class TypeWorkFrame extends javax.swing.JFrame {
                 break;
             }
         } while (true);
-        
+        TypeWorkFrame.this.setVisible(true);
     }//GEN-LAST:event_jButtonEditActionPerformed
 
 
