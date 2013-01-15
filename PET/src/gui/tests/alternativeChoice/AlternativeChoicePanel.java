@@ -4,11 +4,13 @@
  */
 package gui.tests.alternativeChoice;
 
+import gui.tests.ItemTest;
+
 /**
  *
  * @author Aleo
  */
-public class AlternativeChoicePanel extends javax.swing.JPanel {
+public class AlternativeChoicePanel extends javax.swing.JPanel implements ItemTest{
 
     /**
      * Creates new form AlternativeChoicePanel

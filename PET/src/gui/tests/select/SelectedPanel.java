@@ -4,6 +4,7 @@
  */
 package gui.tests.select;
 
+import gui.tests.ItemTest;
 import javax.swing.BoxLayout;
 import javax.swing.border.TitledBorder;
 import util.SMS;
@@ -12,7 +13,7 @@ import util.SMS;
  *
  * @author Aleo
  */
-public class SelectedPanel extends javax.swing.JPanel {
+public class SelectedPanel extends javax.swing.JPanel implements ItemTest{
     SelectVariantPanel[] selectVariantPanels;
     /**
      * Creates new form SelectedTest
