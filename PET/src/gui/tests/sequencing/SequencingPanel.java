@@ -5,6 +5,7 @@ package gui.tests.sequencing;
 
 import gui.tests.ItemTest;
 import javax.swing.BoxLayout;
+import javax.swing.JPanel;
 import util.SMS;
 
 /**
@@ -135,4 +136,44 @@ public class SequencingPanel extends javax.swing.JPanel implements ItemTest{
     private javax.swing.JSpinner jSpinner;
     private javax.swing.JTextField jTextField;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void saveItemTest(long idTest) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public JPanel loadItemTest(long idItem) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public String getTask() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public String getTypeTask() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public int getCountVariant() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public int getCountRightVariant() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void removeItemTest() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void removeVariant(int idVariant) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

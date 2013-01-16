@@ -5,6 +5,7 @@
 package gui.tests.alternativeChoice;
 
 import gui.tests.ItemTest;
+import javax.swing.JPanel;
 
 /**
  *
@@ -98,4 +99,44 @@ public class AlternativeChoicePanel extends javax.swing.JPanel implements ItemTe
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JTextField jTextFieldAsk;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void saveItemTest(long idTest) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public JPanel loadItemTest(long idItem) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public String getTask() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public String getTypeTask() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public int getCountVariant() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public int getCountRightVariant() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void removeItemTest() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void removeVariant(int idVariant) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }
