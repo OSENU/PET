@@ -8,12 +8,12 @@ package gui.tests.select;
  *
  * @author Aleo
  */
-public class SelectVariantPanel extends javax.swing.JPanel {
+public class ItemSelectedPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form SelectVariantPanel
+     * Creates new form ItemSelectedPanel
      */
-    public SelectVariantPanel() {
+    public ItemSelectedPanel() {
         initComponents();
     }
 

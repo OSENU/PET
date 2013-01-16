@@ -7,6 +7,7 @@ package gui.tests;
 import gui.tests.alternativeChoice.AlternativeChoicePanel;
 import gui.tests.matched.MatchedPanel;
 import gui.tests.select.SelectedPanel;
+import gui.tests.sequencing.SequencingPanel;
 import java.awt.BorderLayout;
 import util.SMS;
 
@@ -18,6 +19,7 @@ public class SelectedTypeAskPanel extends javax.swing.JPanel {
     SelectedPanel selectedPanel;
     AlternativeChoicePanel alternativeChoicePanel;
     MatchedPanel matchedPanel;
+    SequencingPanel sequencingPanel;
     /**
      * Creates new form SelectedTypeAskPanel
      */
@@ -108,6 +110,12 @@ public class SelectedTypeAskPanel extends javax.swing.JPanel {
                     matchedPanel = new MatchedPanel();
                 }
                 jPanel1.add(matchedPanel);
+                break;
+            case "Sequencing":
+                if(sequencingPanel == null){
+                    sequencingPanel = new SequencingPanel();
+                }
+                jPanel1.add(sequencingPanel);
                 break;
             default:
                 SMS.message("Еще не реализовано!!!");

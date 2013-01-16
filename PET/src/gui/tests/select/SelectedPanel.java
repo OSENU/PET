@@ -14,7 +14,7 @@ import util.SMS;
  * @author Aleo
  */
 public class SelectedPanel extends javax.swing.JPanel implements ItemTest{
-    SelectVariantPanel[] selectVariantPanels;
+    ItemSelectedPanel[] selectVariantPanels;
     /**
      * Creates new form SelectedTest
      */
@@ -116,12 +116,12 @@ public class SelectedPanel extends javax.swing.JPanel implements ItemTest{
               return;
           }
         } 
-        selectVariantPanels = new SelectVariantPanel[countVariant];
+        selectVariantPanels = new ItemSelectedPanel[countVariant];
         jPanel2.removeAll();
         jPanel2.setLayout(new BoxLayout(jPanel2, BoxLayout.PAGE_AXIS));
 
         for (int i = 0; i < countVariant; i++) {
-            selectVariantPanels[i] = new SelectVariantPanel();
+            selectVariantPanels[i] = new ItemSelectedPanel();
             selectVariantPanels[i].setBorder(new TitledBorder("Вариант : " + (i+1)));
             
             jPanel2.add(selectVariantPanels[i]);
