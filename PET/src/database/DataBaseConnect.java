@@ -15,9 +15,10 @@ public class DataBaseConnect {
     private static Connection conn = null;
     private static int countConnection = 0;
     
-    private static String jdbc = "jdbc:h2:~/test";
-    private static String user = "sa";
-    private static String pass = "";
+    private static String jdbc;
+    private static String db_name;
+    private static String user;
+    private static String pass;
     
     private DataBaseConnect(){}
     
@@ -28,7 +29,12 @@ public class DataBaseConnect {
      */
     public static Connection getConnection() throws SQLException{
         if(conn == null){
-            conn = DriverManager.getConnection(jdbc, user, pass);
+            db_name = settings.ConfigureProgramm.getDB_NAME();
+            jdbc = settings.ConfigureProgramm.getJDBC();
+            user = settings.ConfigureProgramm.getDB_USER();
+            pass = settings.ConfigureProgramm.getDB_USER_PASS();
+            
+            conn = DriverManager.getConnection(jdbc+db_name, user, pass);
             countConnection = 0;
         }
         countConnection++;
