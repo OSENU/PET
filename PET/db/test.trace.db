@@ -1,0 +1,4 @@
+01-19 17:01:06 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Таблица "PET_CONFIG" не найдена
+Table "PET_CONFIG" not found; SQL statement:
+SELECT * FROM PET_CONFIG; [42102-170]

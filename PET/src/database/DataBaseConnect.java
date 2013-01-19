@@ -1,8 +1,19 @@
 package database;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import util.SMS;
 
 /**
  *
@@ -56,6 +67,111 @@ public class DataBaseConnect {
     public static void destroyAllConnection() throws SQLException{
         countConnection = 0;
         conn.close();
+    }
+    
+    /*
+     * Метод проверяет на существование главное таблицы, если ее нет то нет и базы данных
+     * Так же этот метод в будущем должен проверять версию базы данных и обновлять ее если это необходимо
+     */
+    public static boolean checkTables(){
+        boolean flag = true;
+        Connection connection;
+        Statement statement = null;
+        ResultSet rs;
+        try {
+            connection = getConnection();
+            statement = connection.createStatement();
+        } catch (SQLException ex) {
+            SMS.error(ex.toString());
+            Logger.getLogger(DataBaseConnect.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            rs = statement.executeQuery("SELECT * FROM PET_CONFIG;");
+        } catch (SQLException ex) {
+            if(ex.toString().indexOf("Table \"PET_CONFIG\" not found;") != -1){
+                flag = false;
+            } else{
+                Logger.getLogger(DataBaseConnect.class.getName()).log(Level.SEVERE, null, ex);
+                SMS.error(ex.toString());
+            }
+        }
+        return flag;
+    }
+    
+    public static void createTables(){
+        // Проверяем на необходимость
+        if(! checkTables()){
+            SMS.warning("База данных не существует. Далее будет попытка ее создать.");
+            String name_file = settings.ConfigureProgramm.getSQL_TABLES_FILE();
+            if(name_file.endsWith(".sql")){
+                File file = new File(name_file);
+                if(file.exists()){
+                    StringBuffer sb = new StringBuffer();
+                    String line;
+                    BufferedReader br = null;
+                    FileReader fr = null;
+                    try {
+                        fr = new FileReader(file);
+                        br = new BufferedReader(fr);
+                        // считываем данные
+                        while( (line = br.readLine()) != null ){
+                            sb.append(line);
+                            sb.append("\r\n");
+                        }
+                        String script = sb.toString();
+                        try {
+                            execute(script);
+                            SMS.message("База данных была успешно создана");
+                        } catch (SQLException ex) {
+                            SMS.error("Ошибка при выполенении скрипта");
+                            Logger.getLogger(DataBaseConnect.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        
+                    } catch (FileNotFoundException ex) {
+                        SMS.error(ex.toString());
+                        Logger.getLogger(DataBaseConnect.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        SMS.error(ex.toString());
+                        Logger.getLogger(DataBaseConnect.class.getName()).log(Level.SEVERE, null, ex);
+                    } finally{
+                        if(fr!= null){
+                            try {
+                                fr.close();
+                                br.close();
+                            } catch (IOException ex) {
+                                SMS.error(ex.toString());
+                                Logger.getLogger(DataBaseConnect.class.getName()).log(Level.SEVERE, null, ex);
+                                return;
+                            }
+                        }
+                    }
+                    
+                    
+                    
+                } else {
+                    SMS.error(name_file + " не существует. Не возможно создать базу данных");
+                    System.exit(-1);
+                }
+            } else {
+                SMS.warning("Не указан файл со скриптами базы данных");
+                System.exit(-1);
+            }
+            
+        }
+    }
+    
+    /**
+     * Метод выполняет в базе данных заданый скрипт
+     * @param script строка, в которую записан скрипт.
+     * @return int количество выполненых операций.
+     * @throws SQLException 
+     */
+    public static boolean execute(String script) throws SQLException{
+        
+        Connection connection = getConnection();
+        Statement statement = connection.createStatement();
+        return statement.execute(script);
+
     }
     
 }

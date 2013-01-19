@@ -2,9 +2,8 @@
 drop all objects;
 
 CREATE TABLE PET_CONFIG(
-	version				CHAR(100)
+	version			CHAR(100),
 	name_version 		CHAR(100)
---	last_teacher		INTEGER
 );
 
 CREATE TABLE Department

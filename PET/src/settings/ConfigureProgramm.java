@@ -30,6 +30,8 @@ public class ConfigureProgramm {
     private static String DB_USER_PASS;
     // Флаг на то что программа в режиме отладки
     private static String DB_DIR;
+    // Файл в котром лежит скрипт с базой данных
+    private static String SQL_TABLES_FILE;
     
     private static boolean DEBAG = false;
     
@@ -47,6 +49,8 @@ public class ConfigureProgramm {
             DB_USER = properties.getProperty("DB_USER", "sa");
             DB_USER_PASS = properties.getProperty("DB_USER_PASS", "");
             DB_DIR = properties.getProperty("DB_DIR", "");
+            SQL_TABLES_FILE = properties.getProperty("SQL_TABLES_FILE", "");
+            
             if(DB_DIR.trim().isEmpty()){
                 // Если путь к базе не указан, 
                 //то пусть будет в папке пользователя
@@ -76,6 +80,8 @@ public class ConfigureProgramm {
         properties.setProperty("DB_USER_PASS", getDB_USER_PASS());
         properties.setProperty("DEBAG", Boolean.toString(DEBAG));
         properties.setProperty("DB_FILE", ((DB_DIR.equals("~/"))? "" : DB_DIR));
+        properties.setProperty("SQL_TABLES_FILE", SQL_TABLES_FILE);
+        
         
         Calendar calendar = Calendar.getInstance();
         try {
@@ -137,6 +143,13 @@ public class ConfigureProgramm {
      */
     public static String getDB_DIR() {
         return DB_DIR;
+    }
+
+    /**
+     * @return the SQL_TABLES_FILE
+     */
+    public static String getSQL_TABLES_FILE() {
+        return SQL_TABLES_FILE;
     }
     
     private ConfigureProgramm(){}

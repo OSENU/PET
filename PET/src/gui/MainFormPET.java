@@ -4,7 +4,6 @@
  */
 package gui;
 
-import database.entity.Subject;
 import gui.dictionaries.DepartmentFrame;
 import gui.dictionaries.FacultyFrame;
 import gui.dictionaries.GroupsFrame;
@@ -219,6 +218,8 @@ public class MainFormPET extends javax.swing.JFrame {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(MainFormPET.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        database.DataBaseConnect.createTables();
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 MainFormPET mf = new MainFormPET();
