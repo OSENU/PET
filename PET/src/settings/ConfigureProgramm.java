@@ -31,6 +31,8 @@ public class ConfigureProgramm {
     // Пароль базы данных
     private static String DB_USER_PASS;
     // Флаг на то что программа в режиме отладки
+    private static String DB_DIR;
+    
     private static boolean DEBAG = false;
     
     
@@ -39,9 +41,15 @@ public class ConfigureProgramm {
         try {
             properties.load(new FileInputStream(CONFIG_FILE));
             DB_NAME = properties.getProperty("DB_NAME", "test");
-            JDBC = properties.getProperty("JDBC", "jdbc:h2:~/");
+            JDBC = properties.getProperty("JDBC", "jdbc:h2:");
             DB_USER = properties.getProperty("DB_USER", "sa");
             DB_USER_PASS = properties.getProperty("DB_USER_PASS", "");
+            DB_DIR = properties.getProperty(getDB_DIR(), "");
+            if(getDB_DIR().trim().isEmpty()){
+                // Если путь к базе не указан, 
+                //то пусть будет в папке пользователя
+                DB_DIR = "~/";
+            }
             DEBAG = Boolean.getBoolean(properties.getProperty("DEBAG", "false"));
             
             
@@ -63,6 +71,7 @@ public class ConfigureProgramm {
         properties.setProperty("DB_USER", getDB_USER());
         properties.setProperty("DB_USER_PASS", getDB_USER_PASS());
         properties.setProperty("DEBAG", Boolean.toString(DEBAG));
+        properties.setProperty("DB_FILE", ((getDB_DIR().equals("~/"))? "" : getDB_DIR()));
         
         Calendar calendar = Calendar.getInstance();
         try {
@@ -117,6 +126,13 @@ public class ConfigureProgramm {
      */
     public static String getDB_USER_PASS() {
         return DB_USER_PASS;
+    }
+
+    /**
+     * @return the DB_DIR
+     */
+    public static String getDB_DIR() {
+        return DB_DIR;
     }
     
     private ConfigureProgramm(){}

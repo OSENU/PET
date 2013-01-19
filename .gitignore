@@ -5,3 +5,4 @@
 *.war
 *.ear
 /PET/nbproject/private/
+/PET/build/

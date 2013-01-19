@@ -19,6 +19,8 @@ public class DataBaseConnect {
     private static String db_name;
     private static String user;
     private static String pass;
+    private static String db_dir;
+    
     
     private DataBaseConnect(){}
     
@@ -33,8 +35,8 @@ public class DataBaseConnect {
             jdbc = settings.ConfigureProgramm.getJDBC();
             user = settings.ConfigureProgramm.getDB_USER();
             pass = settings.ConfigureProgramm.getDB_USER_PASS();
-            
-            conn = DriverManager.getConnection(jdbc+db_name, user, pass);
+            db_dir = settings.ConfigureProgramm.getDB_DIR();
+            conn = DriverManager.getConnection(jdbc + db_dir + db_name, user, pass);
             countConnection = 0;
         }
         countConnection++;
