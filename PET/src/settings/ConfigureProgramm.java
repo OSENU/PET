@@ -46,8 +46,8 @@ public class ConfigureProgramm {
             JDBC = properties.getProperty("JDBC", "jdbc:h2:");
             DB_USER = properties.getProperty("DB_USER", "sa");
             DB_USER_PASS = properties.getProperty("DB_USER_PASS", "");
-            DB_DIR = properties.getProperty(getDB_DIR(), "");
-            if(getDB_DIR().trim().isEmpty()){
+            DB_DIR = properties.getProperty("DB_DIR", "");
+            if(DB_DIR.trim().isEmpty()){
                 // Если путь к базе не указан, 
                 //то пусть будет в папке пользователя
                 DB_DIR = "~/";
@@ -75,7 +75,7 @@ public class ConfigureProgramm {
         properties.setProperty("DB_USER", getDB_USER());
         properties.setProperty("DB_USER_PASS", getDB_USER_PASS());
         properties.setProperty("DEBAG", Boolean.toString(DEBAG));
-        properties.setProperty("DB_FILE", ((getDB_DIR().equals("~/"))? "" : getDB_DIR()));
+        properties.setProperty("DB_FILE", ((DB_DIR.equals("~/"))? "" : DB_DIR));
         
         Calendar calendar = Calendar.getInstance();
         try {
