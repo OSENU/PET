@@ -63,4 +63,11 @@ public interface ItemTest {
      * @param idVariant int номер варианта ответа который необходио удалить
      */
     public void removeVariant(int idVariant);
+    
+    /**
+     * Метод проверяем готовность задания теста. Заполнен ли он или нет.
+     * @return Возращает строку с возражение, 
+     *         если вернет пустую строку, то возражений нет
+     */
+    public String checkToPrepare();
 }

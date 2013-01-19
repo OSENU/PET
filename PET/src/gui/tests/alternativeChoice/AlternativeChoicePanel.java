@@ -139,4 +139,9 @@ public class AlternativeChoicePanel extends javax.swing.JPanel implements ItemTe
     public void removeVariant(int idVariant) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    @Override
+    public String checkToPrepare() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

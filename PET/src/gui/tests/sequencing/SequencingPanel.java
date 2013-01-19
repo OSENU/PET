@@ -176,4 +176,9 @@ public class SequencingPanel extends javax.swing.JPanel implements ItemTest{
     public void removeVariant(int idVariant) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    @Override
+    public String checkToPrepare() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

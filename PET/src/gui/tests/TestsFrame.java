@@ -54,6 +54,11 @@ public class TestsFrame extends javax.swing.JFrame {
         });
 
         jButtonSave.setText("Сохранить");
+        jButtonSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSaveActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -105,6 +110,30 @@ public class TestsFrame extends javax.swing.JFrame {
         }
         jTabbedPane1.setVisible(true);
     }//GEN-LAST:event_jButtonBeginActionPerformed
+
+    private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
+        if(selectedTypeAskPanels != null){
+            // Соберем все в один массив
+            ItemTest[] itemTests = new ItemTest[registTestPanel1.getCountTest()];
+            String warning = null;
+            for (int i = 0; i < selectedTypeAskPanels.length; i++) {
+                // Заполним масив который будет сохраняться.
+                itemTests[i] = selectedTypeAskPanels[i].returnItemTest();
+                // Каждый элимент проверим на его заполненость.
+                warning = itemTests[i].checkToPrepare();
+                if( ! warning.trim().isEmpty() ){
+                    SMS.warning(this, warning);
+                    return;
+                }
+            }
+            
+            
+        } else {
+            SMS.message(this, "Сначало вам необходимо создать тесты.");
+        }
+        
+        
+    }//GEN-LAST:event_jButtonSaveActionPerformed
 
     /**
      * @param args the command line arguments

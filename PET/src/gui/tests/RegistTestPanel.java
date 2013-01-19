@@ -15,12 +15,19 @@ import java.sql.SQLException;
  * @author Aleo
  */
 public class RegistTestPanel extends javax.swing.JPanel {
-
+    
+    private Long id = null;
+    
     /**
      * Creates new form RegistTestPanel
      */
     public RegistTestPanel() {
         initComponents();
+    }
+    
+    public RegistTestPanel(long id){
+        this();
+        this.id = id;
     }
     
     public int getCountTest(){
@@ -173,4 +180,11 @@ public class RegistTestPanel extends javax.swing.JPanel {
     private javax.swing.JSpinner jSpinnerAsk;
     private javax.swing.JTextField jTextFieldNameTest;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the idRand
+     */
+    public Long getIdRand() {
+        return id;
+    }
 }

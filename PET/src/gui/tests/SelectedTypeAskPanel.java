@@ -20,6 +20,15 @@ public class SelectedTypeAskPanel extends javax.swing.JPanel {
     AlternativeChoicePanel alternativeChoicePanel;
     MatchedPanel matchedPanel;
     SequencingPanel sequencingPanel;
+    
+    /**
+     * Метод возращает тот объект который сейчас отображаеться для заполнений
+     * @return ItemTest который можно будет сохранить
+     */
+    public ItemTest returnItemTest(){
+        return (ItemTest) jPanel1.getComponent(0);
+    }
+    
     /**
      * Creates new form SelectedTypeAskPanel
      */
