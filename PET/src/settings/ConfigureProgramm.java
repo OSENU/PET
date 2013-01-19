@@ -1,7 +1,5 @@
 /*
  * Класс занимается сохранением конфигураций
- * На данный помент он проверяет 
- * на запуск программы в режиме отладки
  */
 package settings;
 
@@ -35,10 +33,14 @@ public class ConfigureProgramm {
     
     private static boolean DEBAG = false;
     
-    
+    /*
+     * В начале работы программы дожен вызываться этот метод, 
+     * он загрузить данные настроек
+     */
     public static void loadConfig(){
         Properties properties = new Properties();
         try {
+            
             properties.load(new FileInputStream(CONFIG_FILE));
             DB_NAME = properties.getProperty("DB_NAME", "test");
             JDBC = properties.getProperty("JDBC", "jdbc:h2:");
@@ -52,8 +54,6 @@ public class ConfigureProgramm {
             }
             DEBAG = Boolean.getBoolean(properties.getProperty("DEBAG", "false"));
             
-            
-            
         } catch ( FileNotFoundException ex) {
             SMS.error(ex.getMessage());
             Logger.getLogger(ConfigureProgramm.class.getName()).log(Level.SEVERE, null, ex);
@@ -63,6 +63,10 @@ public class ConfigureProgramm {
         }
     }
     
+    /**
+     * После каких либо изменений в настройках необходимо их сохнанить в файл,
+     * для этого используем этот метод.
+     */
     public static void saveConfig(){
         Properties properties = new Properties();
         
