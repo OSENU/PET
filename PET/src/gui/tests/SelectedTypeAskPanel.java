@@ -26,6 +26,9 @@ public class SelectedTypeAskPanel extends javax.swing.JPanel {
      * @return ItemTest который можно будет сохранить
      */
     public ItemTest returnItemTest(){
+        if(jPanel1.getComponentCount() == 0){
+            return null;
+        }
         return (ItemTest) jPanel1.getComponent(0);
     }
     

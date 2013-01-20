@@ -38,7 +38,6 @@ public class MainFormPET extends javax.swing.JFrame {
 
         jToolBar1 = new javax.swing.JToolBar();
         jButtonNewTest = new javax.swing.JButton();
-        jLayeredPane = new javax.swing.JLayeredPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuDictionaries = new javax.swing.JMenu();
@@ -72,8 +71,6 @@ public class MainFormPET extends javax.swing.JFrame {
             }
         });
         jToolBar1.add(jButtonNewTest);
-
-        jLayeredPane.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -161,18 +158,12 @@ public class MainFormPET extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 891, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLayeredPane)
-                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLayeredPane, javax.swing.GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap(461, Short.MAX_VALUE))
         );
 
         pack();
@@ -251,7 +242,6 @@ public class MainFormPET extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonNewTest;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemIsDebag;
-    private javax.swing.JLayeredPane jLayeredPane;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuDictionaries;

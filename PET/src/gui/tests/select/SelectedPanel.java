@@ -191,6 +191,15 @@ public class SelectedPanel extends javax.swing.JPanel implements ItemTest{
     public String checkToPrepare() {
         String warning = null;
         // Проверим заполненость всех текстовых полей
+        if(selectVariantPanels == null){
+            warning = "Создайте более одного варианта ответа, на данное задание";
+            return warning;
+        }
+        if(this.getTask().trim().isEmpty()){
+            warning = "Не задан вопрос!";
+            return warning;
+        }
+        
         for (int i = 0; i < selectVariantPanels.length; i++) {
             if(selectVariantPanels[i].getFieldText().trim().isEmpty()){
                 warning = "Внимание! " + (i+1) + " вариант ответа не заполнен!";

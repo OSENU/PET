@@ -41,6 +41,7 @@ public class AlternativeChoicePanel extends javax.swing.JPanel implements ItemTe
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Оно правильное?"));
 
         buttonGroup.add(jRadioButton1);
+        jRadioButton1.setSelected(true);
         jRadioButton1.setText("Да");
 
         buttonGroup.add(jRadioButton2);
@@ -112,22 +113,22 @@ public class AlternativeChoicePanel extends javax.swing.JPanel implements ItemTe
 
     @Override
     public String getTask() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.jTextFieldAsk.getText();
     }
 
     @Override
     public String getTypeTask() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return "AlternativeChoice";
     }
 
     @Override
     public int getCountVariant() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return 2;
     }
 
     @Override
     public int getCountRightVariant() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return 1;
     }
 
     @Override
@@ -142,6 +143,10 @@ public class AlternativeChoicePanel extends javax.swing.JPanel implements ItemTe
 
     @Override
     public String checkToPrepare() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        String warning = null;
+        if(this.getTask().trim().isEmpty()){
+            warning = "Не задано утверждение!";
+        }
+        return warning;
     }
 }
