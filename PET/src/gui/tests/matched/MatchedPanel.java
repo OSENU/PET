@@ -161,22 +161,26 @@ public class MatchedPanel extends javax.swing.JPanel implements ItemTest{
 
     @Override
     public String getTask() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.jTextFieldTask.getText();
     }
 
     @Override
     public String getTypeTask() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return "Matched";
     }
 
     @Override
     public int getCountVariant() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if(this.itemA != null){
+            return itemA.length;
+        } else {
+            return 0;
+        }
     }
 
     @Override
     public int getCountRightVariant() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return 1;
     }
 
     @Override
@@ -191,6 +195,23 @@ public class MatchedPanel extends javax.swing.JPanel implements ItemTest{
 
     @Override
     public String checkToPrepare() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        String warning = null;
+        if(itemA == null || itemB == null){
+            warning = "Создайте соответствия!";
+        } else if(this.getTask().trim().isEmpty()){
+            warning = "Введите задание!";
+        } else {
+            for (int i = 0; i < itemA.length; i++) {
+                if(itemA[i].getjTextField1().trim().isEmpty()){
+                    warning =(i+1) + " соответствие не заполнено";
+                    break;
+                }
+                if(itemB[i].getjTextField1().trim().isEmpty()){
+                    warning =(i+1) + " соответствие не заполнено";
+                    break;
+                }
+            }
+        }
+        return warning;
     }
 }
