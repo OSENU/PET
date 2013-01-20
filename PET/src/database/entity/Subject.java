@@ -13,7 +13,7 @@ import java.sql.Statement;
  *
  * @author Aleo
  */
-public class Subject implements Serializable {
+public class Subject implements Serializable, EntryDataBase {
 
     private Integer idSubject;
     private String nameSubject;
@@ -117,8 +117,13 @@ public class Subject implements Serializable {
      *                         Или количество добавленых записей
      * @throws SQLException 
      */
-    public int updateTable(Subject newSubject) throws SQLException{
+    @Override
+    public int updateTable(Object object) throws SQLException{
         int result;
+        if (!(object instanceof Subject)){
+            return -2;
+        }
+        Subject newSubject = (Subject) object;
         Connection conn = database.DataBaseConnect.getConnection();
         Statement st = conn.createStatement();
         // Формируем запрос на проверку

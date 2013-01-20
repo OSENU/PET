@@ -30,5 +30,5 @@ public interface EntryDataBase {
      *                         Или количество добавленых записей
      * @throws SQLException 
      */
-    public int updateTable(Teacher newTeacher) throws SQLException;
+    public int updateTable(Object object) throws SQLException;
 }

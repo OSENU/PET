@@ -13,7 +13,7 @@ import java.sql.Statement;
  *
  * @author Aleo
  */
-public class Mark implements Serializable {
+public class Mark implements Serializable, EntryDataBase {
     private Integer idMark = 0;
     private String nameMark;
     private Integer minPersent = 0;
@@ -83,6 +83,7 @@ public class Mark implements Serializable {
      *                         Или количество добавленых записей 
      * @throws SQLException 
      */
+    @Override
     public int insertInto() throws SQLException{
         int result;
         Connection conn = database.DataBaseConnect.getConnection();
@@ -115,8 +116,13 @@ public class Mark implements Serializable {
      *                         Или количество добавленых записей
      * @throws SQLException 
      */
-    public int updateTable(Mark newMark) throws SQLException{
+    @Override
+    public int updateTable(Object object) throws SQLException{
         int result;
+        if(!(object instanceof Mark)){
+            return -2;
+        }
+        Mark newMark = (Mark) object;
         Connection conn = database.DataBaseConnect.getConnection();
         Statement st = conn.createStatement();
         // Формируем запрос на проверку

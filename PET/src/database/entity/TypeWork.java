@@ -14,7 +14,7 @@ import java.sql.Statement;
  * @author Aleo
  */
 
-public class TypeWork implements Serializable {
+public class TypeWork implements Serializable, EntryDataBase {
     private Integer idTypeWork;
     private String nameTypeWork;
 
@@ -83,6 +83,7 @@ public class TypeWork implements Serializable {
      *                         Или количество добавленых записей 
      * @throws SQLException 
      */
+    @Override
     public int insertInto() throws SQLException{
         int result;
         Connection conn = database.DataBaseConnect.getConnection();
@@ -114,8 +115,13 @@ public class TypeWork implements Serializable {
      *                         Или количество добавленых записей
      * @throws SQLException 
      */
-    public int updateTable(TypeWork newTypeWork) throws SQLException{
+    @Override
+    public int updateTable(Object object) throws SQLException{
         int result;
+        if(!(object instanceof TypeWork)){
+            return -2;
+        }
+        TypeWork newTypeWork = (TypeWork) object;
         Connection conn = database.DataBaseConnect.getConnection();
         Statement st = conn.createStatement();
         // Формируем запрос на проверку

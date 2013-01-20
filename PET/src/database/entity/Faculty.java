@@ -14,7 +14,7 @@ import java.sql.Statement;
  *
  * @author Aleo
  */
-public class Faculty implements Serializable {
+public class Faculty implements Serializable, EntryDataBase {
     private Integer idFaculty;
     private String nameFaculty;
 
@@ -71,7 +71,7 @@ public class Faculty implements Serializable {
         //return "database.entity.Faculty[ idFaculty=" + idFaculty + " ]";
         return nameFaculty;
     }
-        /**
+   /**
      * Метод заносит измененный объект в базу данных.
      * Тоесть данный элимент в базу занесеть переданый элимент
      * @param newFaculty - объект на который надо заменить
@@ -80,8 +80,13 @@ public class Faculty implements Serializable {
      *                         Или количество добавленых записей
      * @throws SQLException 
      */
-    public int updateTable(Faculty newFaculty) throws SQLException{
+    @Override
+    public int updateTable(Object object) throws SQLException{
         int result;
+        if(!(object instanceof Faculty)){
+            return -2;
+        }
+        Faculty newFaculty = (Faculty) object;
         Connection conn = database.DataBaseConnect.getConnection();
         Statement st = conn.createStatement();
         // Формируем запрос на проверку
@@ -103,6 +108,7 @@ public class Faculty implements Serializable {
         return result;
     }
     
+    @Override
     public int insertInto() throws SQLException{
         int result;
         Connection conn = database.DataBaseConnect.getConnection();

@@ -13,7 +13,7 @@ import java.sql.Statement;
  *
  * @author Aleo
  */
-public class Department implements Serializable {
+public class Department implements Serializable, EntryDataBase {
     private Integer idDepartment;
     private String nameDepartment;
     private Faculty idFaculty;
@@ -89,6 +89,7 @@ public class Department implements Serializable {
      *                         Или количество добавленых записей 
      * @throws SQLException 
      */
+    @Override
     public int insertInto() throws SQLException{
         int result;
         Connection conn = database.DataBaseConnect.getConnection();
@@ -122,8 +123,12 @@ public class Department implements Serializable {
      *                         Или количество добавленых записей
      * @throws SQLException 
      */
-    public int updateTable(Department newDepartment) throws SQLException{
+    public int updateTable(Object object) throws SQLException{
         int result;
+        if(!(object instanceof Department)){
+            return -2;
+        }
+        Department newDepartment = (Department) object;
         Connection conn = database.DataBaseConnect.getConnection();
         Statement st = conn.createStatement();
         // Формируем запрос на проверку
