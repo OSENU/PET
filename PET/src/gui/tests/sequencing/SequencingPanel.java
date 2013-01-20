@@ -149,22 +149,22 @@ public class SequencingPanel extends javax.swing.JPanel implements ItemTest{
 
     @Override
     public String getTask() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.jTextField.getText();
     }
 
     @Override
     public String getTypeTask() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return "Sequencing";
     }
 
     @Override
     public int getCountVariant() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return jPanel.getComponentCount();
     }
 
     @Override
     public int getCountRightVariant() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return 1;
     }
 
     @Override
@@ -179,6 +179,19 @@ public class SequencingPanel extends javax.swing.JPanel implements ItemTest{
 
     @Override
     public String checkToPrepare() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        String warning = null;
+        if(this.getTask().trim().isEmpty()){
+            warning = "Введите текст задания";
+        } else if(itemSequencingPanels == null) {
+            warning = "Не создана ни одна последовательность";
+        } else {
+            for (int i = 0; i < itemSequencingPanels.length; i++) {
+                if(itemSequencingPanels[i].getjTextField().trim().isEmpty()){
+                    warning = (i+1) + " участок последовательности не заполнен";
+                    break;
+                }
+            }
+        }
+        return warning;
     }
 }
