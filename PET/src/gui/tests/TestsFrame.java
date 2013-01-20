@@ -135,9 +135,9 @@ public class TestsFrame extends javax.swing.JFrame {
                 }
             }
             // Cохраним сам тест
-//            warning = registTestPanel1.saveTest();
-//            if(warning.trim().isEmpty()){
-//                // Получим код теста
+            warning = registTestPanel1.saveTest();
+            if(warning == null || warning.trim().isEmpty()){
+                // Получим код теста
 //                Long idTest = registTestPanel1.getIdRand();
 //                // Пройдемся по всем заданиям и сохраним их
 //                for (int i = 0; i < itemTests.length; i++) {
@@ -149,10 +149,11 @@ public class TestsFrame extends javax.swing.JFrame {
 //                        return;
 //                    }
 //                }
-//            } else {
-//                SMS.warning(this, warning);
-//                // Тут откат необходимо сделать
-//            }
+                SMS.message("OK");
+            } else {
+                SMS.warning(this, warning);
+                // Тут откат необходимо сделать
+            }
         } else {
             SMS.message(this, "Сначало вам необходимо создать тесты.");
         }

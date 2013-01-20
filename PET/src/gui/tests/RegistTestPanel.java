@@ -7,8 +7,13 @@ package gui.tests;
 import database.entity.Groups;
 import database.entity.Subject;
 import database.entity.Teacher;
+import database.entity.Test;
 import database.entity.TypeWork;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import util.SMS;
 
 /**
  *
@@ -16,7 +21,9 @@ import java.sql.SQLException;
  */
 public class RegistTestPanel extends javax.swing.JPanel {
     
-    private Long id = null;
+    private Integer id = null;
+    private int count = 0;
+    private Test oldTest = null;
     
     /**
      * Creates new form RegistTestPanel
@@ -25,13 +32,17 @@ public class RegistTestPanel extends javax.swing.JPanel {
         initComponents();
     }
     
-    public RegistTestPanel(long id){
+    public RegistTestPanel(Integer id){
         this();
         this.id = id;
     }
+    public RegistTestPanel(Test oldTest){
+        this.oldTest = oldTest;
+    }
     
     public int getCountTest(){
-        return Integer.valueOf(jSpinnerAsk.getValue().toString());
+        count = Integer.valueOf(jSpinnerAsk.getValue().toString());
+        return count;
     }
     
     public void init() throws SQLException{
@@ -101,7 +112,7 @@ public class RegistTestPanel extends javax.swing.JPanel {
 
         jLabel3.setText("Тип работы:");
 
-        jSpinnerAsk.setModel(new javax.swing.SpinnerNumberModel(Byte.valueOf((byte)10), Byte.valueOf((byte)10), Byte.valueOf((byte)100), Byte.valueOf((byte)1)));
+        jSpinnerAsk.setModel(new javax.swing.SpinnerNumberModel(Byte.valueOf((byte)2), Byte.valueOf((byte)2), Byte.valueOf((byte)100), Byte.valueOf((byte)1)));
 
         jLabel4.setText("Количество вопросов:");
 
@@ -184,12 +195,67 @@ public class RegistTestPanel extends javax.swing.JPanel {
     /**
      * @return the idRand
      */
-    public Long getIdRand() {
+    public Integer getIdRand() {
         return id;
     }
     
     public String saveTest(){
-        throw new UnsupportedOperationException("Not supported yet.");
+        String warning = null;
+        
+        Test test = new Test();
+        test.setCount_query(count);
+        test.setNameTest(jTextFieldNameTest.getText());
+        test.setTeacher((Teacher)jComboBoxTeacher.getSelectedItem());
+        test.setGroups((Groups)jComboBoxGroup.getSelectedItem());
+        test.setTypeWork((TypeWork)jComboBoxTypeWork.getSelectedItem());
+        test.setSubject((Subject)jComboBoxSubject.getSelectedItem());
+        Date date = new Date(System.currentTimeMillis());
+        if(id == null){ // Значит тест создаеться, необходима дата создания
+            test.setDateCreate(date);
+            test.setDateLastEdit(date);
+        } else{
+            // значит мы только редактируем
+            test.setDateLastEdit(date);
+        }
+        
+        if(test.getNameTest().trim().isEmpty()){
+            warning = "Име теста не заполнено!";
+        } else if(test.getGroups() == null){
+            warning = "Укажите группу, для которой создан тест";
+        } else if(test.getSubject() == null){
+            warning = "Укажите по какому предмету этот тест";
+        } else if(test.getTeacher() == null){
+            warning = "Укажите создателя теста";
+        } else if(test.getTypeWork() == null){
+            warning = "Укажте тип работы";
+        }
+        
+        // Проверим, бы ли возражения
+        if(warning == null || warning.trim().isEmpty()){
+            // значит возражений небыло, и можно сохранять
+            if(id == null){
+                try {
+                    // Значит необходимо создать новую запись
+                    int ret = test.insertInto();
+                    if(ret == -1){
+                        warning = "Такое значение уже есть";
+                    } else if(ret == -2){
+                        warning = "Ошибка не соответствия типов";
+                    }
+                } catch (SQLException ex) {
+                    SMS.error(ex.toString());
+                    Logger.getLogger(RegistTestPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    warning = ex.toString();
+                }
+            } else {
+                // значит надо бновить запись
+                if(oldTest == null){
+                    oldTest = new Test(id);
+                }
+                //oldTest.updateTable(test);
+            }
+        }
+        return warning;
     }
     
 }
