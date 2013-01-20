@@ -153,22 +153,28 @@ public class SelectedPanel extends javax.swing.JPanel implements ItemTest{
 
     @Override
     public String getTask() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.jTextFieldAsk.getText();
     }
 
     @Override
     public String getTypeTask() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return "Selected";
     }
 
     @Override
     public int getCountVariant() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return jPanel2.getComponentCount();
     }
 
     @Override
     public int getCountRightVariant() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        int count = 0;
+        for (ItemSelectedPanel itemSelectedPanel : selectVariantPanels) {
+            if(itemSelectedPanel.isRightAnswer()){
+                count++;
+            }
+        }
+        return count;
     }
 
     @Override
@@ -183,6 +189,21 @@ public class SelectedPanel extends javax.swing.JPanel implements ItemTest{
 
     @Override
     public String checkToPrepare() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        String warning = null;
+        // Проверим заполненость всех текстовых полей
+        for (int i = 0; i < selectVariantPanels.length; i++) {
+            if(selectVariantPanels[i].getFieldText().trim().isEmpty()){
+                warning = "Внимание! " + (i+1) + " вариант ответа не заполнен!";
+                return warning;
+            }
+        }
+        int countRight = this.getCountRightVariant();
+        if(countRight < 1){
+            warning = "Должен быть хотя бы один правильный ответ!";
+        } else if(countRight == this.getCountVariant()){
+            warning = "Все варианты не могут быть правильными!";
+        }
+        return warning;
+        
     }
 }

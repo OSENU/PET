@@ -16,7 +16,19 @@ public class ItemSelectedPanel extends javax.swing.JPanel {
     public ItemSelectedPanel() {
         initComponents();
     }
-
+    /**
+     * Возращает, правильный ли это ответ или нет
+     * @return true если ответ правильный
+     *         false если ответ лождный
+     */
+    public boolean isRightAnswer(){
+        return jCheckBoxRight.isSelected();
+    }
+    
+    public String getFieldText(){
+        return this.jTextFieldAsk.getText();
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
