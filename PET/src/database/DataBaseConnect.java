@@ -5,11 +5,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Savepoint;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,7 +25,7 @@ public class DataBaseConnect {
      */
     private static Connection conn = null;
     private static int countConnection = 0;
-    
+    private static Savepoint savepoint = null;
     private static String jdbc;
     private static String db_name;
     private static String user;
@@ -48,6 +48,7 @@ public class DataBaseConnect {
             pass = settings.ConfigureProgramm.getDB_USER_PASS();
             db_dir = settings.ConfigureProgramm.getDB_DIR();
             conn = DriverManager.getConnection(jdbc + db_dir + db_name, user, pass);
+            conn.setAutoCommit(false);
             countConnection = 0;
         }
         countConnection++;
@@ -174,4 +175,27 @@ public class DataBaseConnect {
 
     }
     
+    public static Savepoint getSavepoint() throws SQLException{
+        Connection connection = getConnection();
+        return connection.setSavepoint();
+    }
+    
+    public static Savepoint getSavepoint(String save) throws SQLException{
+        Connection connection = getConnection();
+        return connection.setSavepoint(save);
+    }
+
+    public static void setStaticSavepoint() throws SQLException{
+        savepoint = getSavepoint();
+    }
+    
+    public static void rollBackStatic() throws SQLException{
+        Connection connection = getConnection();
+        connection.rollback(savepoint);
+    }
+    
+    public static void rallBack(Savepoint save) throws SQLException{
+        Connection connection = getConnection();
+        connection.rollback(save);
+    }
 }
