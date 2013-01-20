@@ -189,7 +189,7 @@ public class SubjectFrame extends javax.swing.JFrame {
                                 if (ret >= 0) {
                                     updateTable();
                                     break;
-                                } else {
+                                } else if(ret == -1) {
                                     if (SMS.query(this, "Такое значение уже есть.\n"
                                             + "Хотете еще раз ввести значение?")) {
                                         continue;

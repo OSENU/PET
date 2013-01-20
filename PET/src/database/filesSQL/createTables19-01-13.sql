@@ -46,7 +46,7 @@ ALTER TABLE Faculty
 CREATE TABLE Groups
 (
 	id_groups            INTEGER NOT NULL AUTO_INCREMENT(1) ,
-	year_supply          DATE NULL ,
+	year_supply          INTEGER NULL ,
 	num_group            INTEGER NOT NULL ,
 	id_faculty           INTEGER NOT NULL 
 );
