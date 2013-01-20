@@ -187,4 +187,9 @@ public class RegistTestPanel extends javax.swing.JPanel {
     public Long getIdRand() {
         return id;
     }
+    
+    public String saveTest(){
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
 }
