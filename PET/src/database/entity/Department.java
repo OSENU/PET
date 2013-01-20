@@ -139,7 +139,7 @@ public class Department implements Serializable {
                     + "id_faculty = " + newDepartment.idFaculty.getIdFaculty()
                     + " where id_department = " + idDepartment + " ;";
             result = st.executeUpdate(s);
-  
+            conn.commit();
         } else {
             result = -1;
         }

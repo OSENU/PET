@@ -95,7 +95,7 @@ public class Faculty implements Serializable {
                     + "set name_Faculty = '" + newFaculty.nameFaculty + "' "
                     + " where id_Faculty = " + idFaculty + " ;";
             result = st.executeUpdate(s);
-  
+            conn.commit();
         } else {
             result = -1;
         }

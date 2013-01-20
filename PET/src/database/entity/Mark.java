@@ -132,7 +132,7 @@ public class Mark implements Serializable {
                     + "max_persent = " + newMark.maxPersent + " "
                     + " where id_Mark = " + idMark + " ;";
             result = st.executeUpdate(s);
-  
+            conn.commit();
         } else {
             result = -1;
         }

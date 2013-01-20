@@ -10,8 +10,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -169,7 +167,7 @@ public class Groups implements Serializable {
                     + "id_faculty = " + newGroups.faculty.getIdFaculty()
                     + " where id_groups = " + idGroups + " ;";
             result = st.executeUpdate(s);
-  
+            conn.commit();
         } else {
             result = -1;
         }

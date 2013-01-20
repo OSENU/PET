@@ -164,7 +164,7 @@ public class Teacher implements Serializable {
                     + "id_department = " + newTeacher.idDepartment.getIdDepartment()
                     + " where id_teacher = " + idTeacher + " ;";
             result = st.executeUpdate(s);
-  
+            conn.commit();
         } else {
             result = -1;
         }

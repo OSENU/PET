@@ -129,7 +129,7 @@ public class TypeWork implements Serializable {
                     + "set name_type_work = '" + newTypeWork.nameTypeWork + "' "
                     + " where id_type_work = " + idTypeWork + " ;";
             result = st.executeUpdate(s);
-  
+            conn.commit();
         } else {
             result = -1;
         }

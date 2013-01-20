@@ -132,7 +132,7 @@ public class Subject implements Serializable {
                     + "set name_subject = '" + newSubject.nameSubject + "' "
                     + " where id_subject = " + idSubject + " ;";
             result = st.executeUpdate(s);
-  
+            conn.commit();
         } else {
             result = -1;
         }
