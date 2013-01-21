@@ -123,6 +123,7 @@ public class Department implements Serializable, EntryDataBase {
      *                         Или количество добавленых записей
      * @throws SQLException 
      */
+    @Override
     public int updateTable(Object object) throws SQLException{
         int result;
         if(!(object instanceof Department)){
@@ -164,6 +165,25 @@ public class Department implements Serializable, EntryDataBase {
      */
     public void setIdFaculty(Faculty idFaculty) {
         this.idFaculty = idFaculty;
+    }
+
+    @Override
+    public Integer getIdFromDataBase() throws SQLException{
+        Connection connection = database.DataBaseConnect.getConnection();
+        Statement statement = connection.createStatement();
+        if(nameDepartment == null || nameDepartment.isEmpty()){
+            return null;
+        } else if(idFaculty == null || idFaculty.getIdFaculty() == null){
+            return null;
+        }
+        ResultSet rs = statement.executeQuery("Select id_department from Department "
+                + "where name_department = '"+nameDepartment+"' and id_faculty = "+idFaculty.getIdFaculty()+";");
+        if(rs.next()){
+            Integer id = rs.getInt(1);
+            return id;
+        } else {
+            return null;
+        }
     }
 
     

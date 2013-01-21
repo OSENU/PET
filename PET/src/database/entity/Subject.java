@@ -73,20 +73,20 @@ public class Subject implements Serializable, EntryDataBase {
     public String toString() {
         if (nameSubject.length() > 30) {
             return nameSubject.substring(0, 30);
-        }
-        else {
+        } else {
             return nameSubject;
         }
     }
-    
+
     /**
-     * Метод добавляет в базу данных данный объект 
-     * @return код результата: -1 - Такие данные уже есть
-     *                         -2 - Произошла вообще ошибка
-     *                         Или количество добавленых записей 
-     * @throws SQLException 
+     * Метод добавляет в базу данных данный объект
+     *
+     * @return код результата: -1 - Такие данные уже есть -2 - Произошла вообще
+     * ошибка Или количество добавленых записей
+     * @throws SQLException
      */
-    public int insertInto() throws SQLException{
+    @Override
+    public int insertInto() throws SQLException {
         int result;
         Connection conn = database.DataBaseConnect.getConnection();
         Statement st = conn.createStatement();
@@ -95,32 +95,32 @@ public class Subject implements Serializable, EntryDataBase {
                 + "from Subject "
                 + "where name_subject = '" + nameSubject + "';");
         if (!rs.next()) {
-           // Значит в базе такого значения нет
+            // Значит в базе такого значения нет
             result = st.executeUpdate("insert into Subject"
-                + "(name_Subject) "
-                + " values('" + nameSubject + "');");
+                    + "(name_Subject) "
+                    + " values('" + nameSubject + "');");
             conn.commit();
-  
+
         } else {
             result = -1;
         }
-        
+
         return result;
     }
-    
+
     /**
-     * Метод заносит измененный объект в базу данных.
-     * Тоесть данный элимент в базу занесеть переданый элимент
+     * Метод заносит измененный объект в базу данных. Тоесть данный элимент в
+     * базу занесеть переданый элимент
+     *
      * @param newTeacher - объект на который надо заменить
-     * @return код результата: -1 - Такие данные уже есть
-     *                         -2 - Произошла вообще ошибка
-     *                         Или количество добавленых записей
-     * @throws SQLException 
+     * @return код результата: -1 - Такие данные уже есть -2 - Произошла вообще
+     * ошибка Или количество добавленых записей
+     * @throws SQLException
      */
     @Override
-    public int updateTable(Object object) throws SQLException{
+    public int updateTable(Object object) throws SQLException {
         int result;
-        if (!(object instanceof Subject)){
+        if (!(object instanceof Subject)) {
             return -2;
         }
         Subject newSubject = (Subject) object;
@@ -129,10 +129,10 @@ public class Subject implements Serializable, EntryDataBase {
         // Формируем запрос на проверку
         ResultSet rs = st.executeQuery("Select id_subject "
                 + "from subject "
-                + "where name_subject = '" + newSubject.nameSubject +"' " 
+                + "where name_subject = '" + newSubject.nameSubject + "' "
                 + "and id_subject <> " + idSubject + " ;");
         if (!rs.next()) {
-           // Значит в базе такого значения нет
+            // Значит в базе такого значения нет
             String s = "update Subject "
                     + "set name_subject = '" + newSubject.nameSubject + "' "
                     + " where id_subject = " + idSubject + " ;";
@@ -141,8 +141,22 @@ public class Subject implements Serializable, EntryDataBase {
         } else {
             result = -1;
         }
-        
+
         return result;
     }
 
+    @Override
+    public Integer getIdFromDataBase() throws SQLException {
+        if (nameSubject == null || nameSubject.isEmpty()) {
+            return null;
+        }
+        Statement statement = database.DataBaseConnect.getStatement();
+        ResultSet resultSet = statement.executeQuery("Select id_subject from Subject "
+                + "where name_subject='" + nameSubject + "';");
+        Integer id = null;
+        if (resultSet.next()) {
+            id = resultSet.getInt(1);
+        }
+        return id;
+    }
 }

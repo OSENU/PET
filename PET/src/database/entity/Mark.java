@@ -174,4 +174,19 @@ public class Mark implements Serializable, EntryDataBase {
         this.maxPersent = maxPersent;
     }
 
+    @Override
+    public Integer getIdFromDataBase() throws SQLException {
+        if (nameMark == null || nameMark.isEmpty()) {
+            return null;
+        }
+        Statement statement = database.DataBaseConnect.getStatement();
+        ResultSet resultSet = statement.executeQuery("Select id_mark from Mark "
+                + "where name_markt='" + nameMark + "';");
+        Integer id = null;
+        if (resultSet.next()) {
+            id = resultSet.getInt(1);
+        }
+        return id;
+    }
+
 }

@@ -177,5 +177,30 @@ public class Teacher implements Serializable, EntryDataBase {
         
         return result;
     }
+
+    @Override
+    public Integer getIdFromDataBase() throws SQLException {
+        if (name == null || name.isEmpty()) {
+            return null;
+        } else if (name2 == null || name2.isEmpty()){
+            return null;
+        } else if (surname == null || surname.isEmpty()){
+            return null;
+        } else if(idDepartment == null || idDepartment.getIdDepartment() == null){
+            return null;
+        }
+        
+        Statement statement = database.DataBaseConnect.getStatement();
+        ResultSet resultSet = statement.executeQuery("Select id_teacher from teacher "
+                + "where name ='" + name + "' "
+                + "and name2 = '" + name2 +"' "
+                + "and surname = '" + surname + "' "
+                + "and id_department = " + idDepartment.getIdDepartment() + ";");
+        Integer id = null;
+        if (resultSet.next()) {
+            id = resultSet.getInt(1);
+        }
+        return id;
+    }
     
 }

@@ -179,4 +179,25 @@ public class Groups implements Serializable, EntryDataBase {
         }
         return result;
     }
+
+    @Override
+    public Integer getIdFromDataBase() throws SQLException {
+        Integer id = null;
+        if(numGroup == null){
+            return id;
+        } else if(yearSupply == null){
+            return id;
+        } else if (faculty == null || faculty.getIdFaculty() == null){
+            return id;
+        }
+        Statement statement = database.DataBaseConnect.getStatement();
+        ResultSet resultSet = statement.executeQuery("Select id_groups from groups where "
+                + "num_group =" + numGroup + " "
+                + "and id_faculty = " + faculty.getIdFaculty() + " "
+                + "and year_supply = " + yearSupply + " ;");
+        if(resultSet.next()){
+            id  = resultSet.getInt(1);
+        }
+        return id;
+    }
 }

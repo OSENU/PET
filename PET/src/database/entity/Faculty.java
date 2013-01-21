@@ -131,4 +131,19 @@ public class Faculty implements Serializable, EntryDataBase {
         
         return result;
     }
+
+    @Override
+    public Integer getIdFromDataBase() throws SQLException {
+        if(nameFaculty == null || nameFaculty.isEmpty()){
+            return null;
+        }
+        Statement statement = database.DataBaseConnect.getStatement();
+        ResultSet resultSet = statement.executeQuery("Select id_faculty from Faculty "
+                + "where name_faculty='"+nameFaculty+"';");
+        Integer id = null;
+        if(resultSet.next()){
+           id = resultSet.getInt(1);
+        } 
+        return id;
+    }
 }

@@ -247,6 +247,7 @@ public class Test implements EntryDataBase, Serializable {
         Statement st = connection.createStatement();
         ResultSet rs = st.executeQuery("Select * From Test "
                 + "Where name_test ='" + nameTest + "' and "
+                + "id_subject = " + subject.getIdSubject() + " and "
                 + "id_groups = " + groups.getIdGroups() + " and "
                 + "id_teacher = " + teacher.getIdTeacher() + " and "
                 + "id_type_work = " + typeWork.getIdTypeWork() + ";");
@@ -290,5 +291,34 @@ public class Test implements EntryDataBase, Serializable {
      */
     public void setSubject(Subject subject) {
         this.subject = subject;
+    }
+
+    @Override
+    public Integer getIdFromDataBase() throws SQLException {
+        Integer id = null;
+        String sql = "Select id_test from test where ";
+        if(nameTest == null || nameTest.isEmpty()){
+            return id;
+        } else if (subject == null || subject.getIdSubject() == null){
+            return id;
+        } else if (teacher == null || teacher.getIdTeacher() == null){
+            return id;
+        } else if(typeWork == null || typeWork.getIdTypeWork() == null){
+            return id;
+        } else if(groups == null || groups.getIdGroups() == null){
+            return id;
+        }
+        sql += "name_test = '" + nameTest + "' ";
+        sql += "and id_subject = " + subject.getIdSubject() + " ";
+        sql += "and id_teacher = " + teacher.getIdTeacher() + " ";
+        sql += "and id_type_work = " + typeWork.getIdTypeWork() + " ";
+        sql += "and id_groups = " + groups.getIdGroups() + " ";
+        
+        Statement statement = database.DataBaseConnect.getStatement();
+        ResultSet resultSet = statement.executeQuery(sql);
+        if (resultSet.next()){
+            id = resultSet.getInt(1);
+        }
+        return id;
     }
 }

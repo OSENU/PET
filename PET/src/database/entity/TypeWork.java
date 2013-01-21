@@ -142,5 +142,20 @@ public class TypeWork implements Serializable, EntryDataBase {
         
         return result;
     }
+
+    @Override
+    public Integer getIdFromDataBase() throws SQLException {
+        if (nameTypeWork == null || nameTypeWork.isEmpty()) {
+            return null;
+        }
+        Statement statement = database.DataBaseConnect.getStatement();
+        ResultSet resultSet = statement.executeQuery("Select id_type_work from Type_work "
+                + "where name_type_work ='" + nameTypeWork + "';");
+        Integer id = null;
+        if (resultSet.next()) {
+            id = resultSet.getInt(1);
+        }
+        return id;
+    }
     
 }
