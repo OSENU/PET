@@ -198,4 +198,8 @@ public class DataBaseConnect {
         Connection connection = getConnection();
         connection.rollback(save);
     }
+    
+    public static Statement getStatement() throws SQLException{
+        return getConnection().createStatement();
+    }
 }
