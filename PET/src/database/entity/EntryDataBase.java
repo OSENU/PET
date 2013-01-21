@@ -1,6 +1,7 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Интерфейс позволяющий объеденить все сущности базы данных
+ * данный интерфейс говорит о том, что любая сущность должна 
+ * себя добавить в базу, или обновить
  */
 package database.entity;
 
