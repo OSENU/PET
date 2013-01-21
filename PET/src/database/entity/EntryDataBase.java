@@ -5,13 +5,14 @@
  */
 package database.entity;
 
+import java.io.Serializable;
 import java.sql.SQLException;
 
 /**
  *
  * @author Aleo
  */
-public interface EntryDataBase {
+public interface EntryDataBase extends Serializable{
     
     /**
      * Метод добавляет в базу данных данный объект 
@@ -32,4 +33,10 @@ public interface EntryDataBase {
      * @throws SQLException 
      */
     public int updateTable(Object object) throws SQLException;
+    
+    /**
+     * Метод вернет код данного объекта из базы данных 
+     * @return Код объекта, если данного объекта не существует, то вернет null
+     */
+    public Integer getIdFromDataBase() throws SQLException;
 }
