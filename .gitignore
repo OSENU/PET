@@ -7,3 +7,4 @@
 /PET/nbproject/private/
 /PET/build/
 /PET/dist/
+/PET/db/*.lock.db
