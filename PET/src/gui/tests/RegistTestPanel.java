@@ -252,7 +252,13 @@ public class RegistTestPanel extends javax.swing.JPanel {
                 if(oldTest == null){
                     oldTest = new Test(id);
                 }
-                //oldTest.updateTable(test);
+                try {
+                    oldTest.updateTable(test);
+                } catch (SQLException ex) {
+                    SMS.error(ex.toString());
+                    Logger.getLogger(RegistTestPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    warning = ex.toString();
+                }
             }
         }
         return warning;
