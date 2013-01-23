@@ -134,25 +134,39 @@ public class TestsFrame extends javax.swing.JFrame {
                     return;
                 }
             }
-            // Cохраним сам тест
-            warning = registTestPanel1.saveTest();
-            if(warning == null || warning.trim().isEmpty()){
-                // Получим код теста
-//                Long idTest = registTestPanel1.getIdRand();
-//                // Пройдемся по всем заданиям и сохраним их
-//                for (int i = 0; i < itemTests.length; i++) {
-//                    warning = itemTests[i].saveItemTest(idTest);
-//                    // Если были ошибки то прервем сохранение
-//                    if(!warning.trim().isEmpty()){
-//                        SMS.warning(this, "В задании " + (i + 1) + " : " + warning);
-//                        // Тут по идее откат....
-//                        return;
-//                    }
-//                }
-                SMS.message("OK");
-            } else {
-                SMS.warning(this, warning);
-                // Тут откат необходимо сделать
+            
+            try {
+                //Создадим точку возврата
+                database.DataBaseConnect.setStaticSavepoint();
+                // Cохраним сам тест
+                warning = registTestPanel1.saveTest();
+                if(warning == null || warning.trim().isEmpty()){
+                    // Получим код теста
+                    Integer idTest = registTestPanel1.getIdTest();
+                    // Пройдемся по всем заданиям и сохраним их
+                    for (int i = 0; i < itemTests.length; i++) {
+                        warning = itemTests[i].saveItemTest(idTest);
+                        // Если были ошибки то прервем сохранение
+                        if(!warning.trim().isEmpty()){
+                            SMS.warning(this, "В задании " + (i + 1) + " : " + warning);
+                            // Тут по идее откат....
+                            database.DataBaseConnect.rollBackStatic();
+                            return;
+                        }
+                    }
+                    SMS.message("Тест успешно сохранен");
+                    this.dispose();
+                } else {
+                    SMS.warning(this, warning);
+                    //Откат изменений
+                    database.DataBaseConnect.rollBackStatic();
+                    // Тут откат необходимо сделать
+                }
+            }
+            catch (SQLException ex) {
+                SMS.error(this, ex.toString());
+                Logger.getLogger(TestsFrame.class.getName()).log(Level.SEVERE, null, ex);
+                SMS.error("Произошла ошибка сохранение отменено");
             }
         } else {
             SMS.message(this, "Сначало вам необходимо создать тесты.");

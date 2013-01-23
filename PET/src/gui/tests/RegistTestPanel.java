@@ -195,7 +195,7 @@ public class RegistTestPanel extends javax.swing.JPanel {
     /**
      * @return the idRand
      */
-    public Integer getIdRand() {
+    public Integer getIdTest() {
         return id;
     }
     
@@ -241,6 +241,11 @@ public class RegistTestPanel extends javax.swing.JPanel {
                         warning = "Такое значение уже есть";
                     } else if(ret == -2){
                         warning = "Ошибка не соответствия типов";
+                    } else if(ret >= 0){
+                        this.id = test.getIdFromDataBase();
+                        if (this.id == null){
+                            warning = "Произошла ошибка, не смогли найти этот тест в базе данных";
+                        }
                     }
                 } catch (SQLException ex) {
                     SMS.error(ex.toString());
