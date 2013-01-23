@@ -145,7 +145,13 @@ public class TestsFrame extends javax.swing.JFrame {
                     Integer idTest = registTestPanel1.getIdTest();
                     // Пройдемся по всем заданиям и сохраним их
                     for (int i = 0; i < itemTests.length; i++) {
-                        warning = itemTests[i].saveItemTest(idTest);
+                        try{
+                            warning = itemTests[i].saveItemTest(idTest);
+                        } catch (Exception ex){
+                            SMS.error(ex.toString());
+                            database.DataBaseConnect.rollBackStatic();
+                            return;
+                        }
                         // Если были ошибки то прервем сохранение
                         if(!warning.trim().isEmpty()){
                             SMS.warning(this, "В задании " + (i + 1) + " : " + warning);
