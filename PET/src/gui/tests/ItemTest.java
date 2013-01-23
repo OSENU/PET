@@ -20,7 +20,7 @@ public interface ItemTest {
      * @param idTest код теста к которому будет приписан вопрос
      * @return вернет строку с возражениями, если она пуста, то все ОК
      */
-    public String saveItemTest(Long idTest);
+    public String saveItemTest(Integer idTest);
     
     /**
      * Метод должен загрузить с базы данные, по переданому ему коду вопроса

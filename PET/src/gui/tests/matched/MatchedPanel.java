@@ -150,7 +150,7 @@ public class MatchedPanel extends javax.swing.JPanel implements ItemTest{
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public String saveItemTest(Long idTest) {
+    public String saveItemTest(Integer idTest) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
