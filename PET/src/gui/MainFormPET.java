@@ -36,6 +36,7 @@ public class MainFormPET extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenu2 = new javax.swing.JMenu();
         jToolBar1 = new javax.swing.JToolBar();
         jButtonNewTest = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -51,6 +52,8 @@ public class MainFormPET extends javax.swing.JFrame {
         jMenuItemStudent = new javax.swing.JMenuItem();
         jMenuSettings = new javax.swing.JMenu();
         jCheckBoxMenuItemIsDebag = new javax.swing.JCheckBoxMenuItem();
+
+        jMenu2.setText("jMenu2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("PET");
@@ -157,13 +160,13 @@ public class MainFormPET extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 891, Short.MAX_VALUE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 590, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(461, Short.MAX_VALUE))
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 406, Short.MAX_VALUE))
         );
 
         pack();
@@ -231,7 +234,7 @@ public class MainFormPET extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 MainFormPET mf = new MainFormPET();
-                mf.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                
                 
                 mf.setVisible(true);
                 mf.jCheckBoxMenuItemIsDebag.setState(false);
@@ -243,6 +246,7 @@ public class MainFormPET extends javax.swing.JFrame {
     private javax.swing.JButton jButtonNewTest;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemIsDebag;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuDictionaries;
     private javax.swing.JMenuItem jMenuItemDepartment;
