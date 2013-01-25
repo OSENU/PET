@@ -36,7 +36,7 @@ public class TypeWorkInternalFrame extends PetJInternalFrame {
             modal = new TypeWorkTableModal();
         } catch (SQLException ex) {
             SMS.error(this, ex.toString());
-            Logger.getLogger(TypeWorkFrame.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TypeWorkInternalFrame.class.getName()).log(Level.SEVERE, null, ex);
             return;
         }
         jTableTypeWork.setModel(modal);
@@ -77,7 +77,7 @@ public class TypeWorkInternalFrame extends PetJInternalFrame {
                         }
                     } catch (SQLException ex) {
                         SMS.error(this, ex.toString());
-                        Logger.getLogger(TypeWorkFrame.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(TypeWorkInternalFrame.class.getName()).log(Level.SEVERE, null, ex);
                         break;
                     }
                 } else {
@@ -135,7 +135,7 @@ public class TypeWorkInternalFrame extends PetJInternalFrame {
                         }
                     } catch (SQLException ex) {
                         SMS.error(this, ex.toString());
-                        Logger.getLogger(TypeWorkFrame.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(TypeWorkInternalFrame.class.getName()).log(Level.SEVERE, null, ex);
                         break;
                     }
                 } else {
@@ -164,6 +164,8 @@ public class TypeWorkInternalFrame extends PetJInternalFrame {
         jTableTypeWork = new javax.swing.JTable();
 
         setTitle("Справочник типов работ");
+        setMinimumSize(new java.awt.Dimension(400, 400));
+        setPreferredSize(new java.awt.Dimension(400, 400));
 
         jButtonAdd.setText("Добавить");
         jButtonAdd.setToolTipText("");
@@ -216,7 +218,7 @@ public class TypeWorkInternalFrame extends PetJInternalFrame {
                     .addComponent(jButtonAdd)
                     .addComponent(jButtonEdit))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 427, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 431, Short.MAX_VALUE)
                 .addContainerGap())
         );
 

@@ -39,7 +39,7 @@ public class TeacherInternalFrame extends PetJInternalFrame {
             jTableTeacher.setModel(modal);
         } catch (SQLException ex) {
             SMS.error(this, ex.toString());
-            Logger.getLogger(DepartmentFrame.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TeacherInternalFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         if (!ConfigureProgramm.isDEBAG()) {
@@ -61,7 +61,7 @@ public class TeacherInternalFrame extends PetJInternalFrame {
             departments = GetDataTable.getDepartments();
         } catch (SQLException ex) {
             SMS.error(this, ex.toString());
-            Logger.getLogger(TeacherFrame.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TeacherInternalFrame.class.getName()).log(Level.SEVERE, null, ex);
             return ret;
         }
         JComboBox<Department> boxDepartment = new JComboBox<Department>(departments);
@@ -128,7 +128,7 @@ public class TeacherInternalFrame extends PetJInternalFrame {
                     }
                 } catch (SQLException ex) {
                     SMS.error(this, ex.toString());
-                    Logger.getLogger(TeacherFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(TeacherInternalFrame.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         } while (dialog);
@@ -159,7 +159,7 @@ public class TeacherInternalFrame extends PetJInternalFrame {
             departments = GetDataTable.getDepartments();
         } catch (SQLException ex) {
             SMS.error(this, ex.toString());
-            Logger.getLogger(TeacherFrame.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TeacherInternalFrame.class.getName()).log(Level.SEVERE, null, ex);
             return ret;
         }
         JComboBox<Department> boxDepartment = new JComboBox<Department>(departments);
@@ -231,7 +231,7 @@ public class TeacherInternalFrame extends PetJInternalFrame {
                     }
                 } catch (SQLException ex) {
                     SMS.error(this, ex.toString());
-                    Logger.getLogger(TeacherFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(TeacherInternalFrame.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         } while (dialog);
@@ -252,6 +252,8 @@ public class TeacherInternalFrame extends PetJInternalFrame {
         jTableTeacher = new javax.swing.JTable();
 
         setTitle("Справочник преподавателей");
+        setMinimumSize(new java.awt.Dimension(400, 400));
+        setPreferredSize(new java.awt.Dimension(400, 400));
 
         jButtonAdd.setText("Добавить");
         jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -303,7 +305,7 @@ public class TeacherInternalFrame extends PetJInternalFrame {
                     .addComponent(jButtonAdd)
                     .addComponent(jButtonEdit))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 431, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 435, Short.MAX_VALUE)
                 .addContainerGap())
         );
 

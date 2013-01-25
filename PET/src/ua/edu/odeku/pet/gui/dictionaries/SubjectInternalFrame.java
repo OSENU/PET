@@ -33,7 +33,7 @@ public class SubjectInternalFrame extends PetJInternalFrame {
             jTableSubject.setModel(modal);
         } catch (SQLException ex) {
             SMS.error(this, ex.toString());
-            Logger.getLogger(DepartmentFrame.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SubjectInternalFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         if (!ConfigureProgramm.isDEBAG()) {
@@ -69,7 +69,7 @@ public class SubjectInternalFrame extends PetJInternalFrame {
                         }
                     } catch (SQLException ex) {
                         SMS.error(this, ex.toString());
-                        Logger.getLogger(FacultyFrame.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(SubjectInternalFrame.class.getName()).log(Level.SEVERE, null, ex);
                         break;
                     }
                 } else {
@@ -130,7 +130,7 @@ public class SubjectInternalFrame extends PetJInternalFrame {
                                 }
                             } catch (SQLException ex) {
                                 SMS.error(this, ex.toString());
-                                Logger.getLogger(FacultyFrame.class.getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(SubjectInternalFrame.class.getName()).log(Level.SEVERE, null, ex);
                                 break;
                             }
                         } else {
@@ -164,6 +164,8 @@ public class SubjectInternalFrame extends PetJInternalFrame {
         jButtonEdit = new javax.swing.JButton();
 
         setTitle("Справочник предметов");
+        setMinimumSize(new java.awt.Dimension(400, 400));
+        setPreferredSize(new java.awt.Dimension(400, 400));
 
         jTableSubject.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -215,7 +217,7 @@ public class SubjectInternalFrame extends PetJInternalFrame {
                     .addComponent(jButtonAdd)
                     .addComponent(jButtonEdit))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
                 .addContainerGap())
         );
 

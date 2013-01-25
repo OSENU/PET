@@ -37,7 +37,7 @@ public class FacultyInternalFrame extends ua.edu.odeku.pet.gui.PetJInternalFrame
             jTableFaculty.setModel(modal);
         } catch (SQLException ex) {
             SMS.error(ex.toString());
-            Logger.getLogger(DepartmentFrame.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FacultyInternalFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         if (!ConfigureProgramm.isDEBAG()) {
@@ -74,7 +74,7 @@ public class FacultyInternalFrame extends ua.edu.odeku.pet.gui.PetJInternalFrame
                         }
                     } catch (SQLException ex) {
                         SMS.error(ex.toString());
-                        Logger.getLogger(FacultyFrame.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FacultyInternalFrame.class.getName()).log(Level.SEVERE, null, ex);
                         break;
                     }
                 } else {
@@ -138,7 +138,7 @@ public class FacultyInternalFrame extends ua.edu.odeku.pet.gui.PetJInternalFrame
                                 }
                             } catch (SQLException ex) {
                                 SMS.error(ex.toString());
-                                Logger.getLogger(FacultyFrame.class.getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(FacultyInternalFrame.class.getName()).log(Level.SEVERE, null, ex);
                                 break;
                             }
                         } else {
@@ -175,6 +175,8 @@ public class FacultyInternalFrame extends ua.edu.odeku.pet.gui.PetJInternalFrame
         jMenuBar1 = new javax.swing.JMenuBar();
 
         setTitle("Справочник факультетов");
+        setMinimumSize(new java.awt.Dimension(400, 400));
+        setPreferredSize(new java.awt.Dimension(400, 400));
 
         jButtonAdd.setText("Добавить");
         jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -213,8 +215,8 @@ public class FacultyInternalFrame extends ua.edu.odeku.pet.gui.PetJInternalFrame
                         .addComponent(jButtonAdd)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonEdit)
-                        .addGap(0, 391, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(0, 232, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -225,7 +227,7 @@ public class FacultyInternalFrame extends ua.edu.odeku.pet.gui.PetJInternalFrame
                     .addComponent(jButtonAdd)
                     .addComponent(jButtonEdit))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
                 .addContainerGap())
         );
 

@@ -80,7 +80,7 @@ public class DepartmentInternalFrame extends PetJInternalFrame {
                                     }
                                 } catch (SQLException ex) {
                                     SMS.error(this, ex.toString());
-                                    Logger.getLogger(DepartmentFrame.class.getName()).log(Level.SEVERE, null, ex);
+                                    Logger.getLogger(DepartmentInternalFrame.class.getName()).log(Level.SEVERE, null, ex);
                                     break;
                                 }
 
@@ -98,7 +98,7 @@ public class DepartmentInternalFrame extends PetJInternalFrame {
             } while (true);
         } catch (SQLException ex) {
             SMS.error(ex.toString());
-            Logger.getLogger(DepartmentFrame.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DepartmentInternalFrame.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             return ret;
         }
@@ -174,7 +174,7 @@ public class DepartmentInternalFrame extends PetJInternalFrame {
                                         }
                                     } catch (SQLException ex) {
                                         SMS.error(this, ex.toString());
-                                        Logger.getLogger(DepartmentFrame.class.getName()).log(Level.SEVERE, null, ex);
+                                        Logger.getLogger(DepartmentInternalFrame.class.getName()).log(Level.SEVERE, null, ex);
                                         break;
                                     }
                                 } else {
@@ -196,7 +196,7 @@ public class DepartmentInternalFrame extends PetJInternalFrame {
             }
         } catch (SQLException ex) {
             SMS.error(this, ex.toString());
-            Logger.getLogger(DepartmentFrame.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DepartmentInternalFrame.class.getName()).log(Level.SEVERE, null, ex);
         } finally{
             return ret;
         }
@@ -212,7 +212,7 @@ public class DepartmentInternalFrame extends PetJInternalFrame {
             jTableDepartment.setModel(modal);
         } catch (SQLException ex) {
             SMS.error(this, ex.toString());
-            Logger.getLogger(DepartmentFrame.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DepartmentInternalFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         if (!ConfigureProgramm.isDEBAG()) {
@@ -237,6 +237,8 @@ public class DepartmentInternalFrame extends PetJInternalFrame {
         jTableDepartment = new javax.swing.JTable();
 
         setTitle("Справочник кафедр");
+        setMinimumSize(new java.awt.Dimension(400, 400));
+        setPreferredSize(new java.awt.Dimension(400, 400));
 
         jButtonAdd.setText("Добавить");
         jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -277,7 +279,7 @@ public class DepartmentInternalFrame extends PetJInternalFrame {
                         .addComponent(jButtonAdd)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonEdit)
-                        .addGap(0, 114, Short.MAX_VALUE)))
+                        .addGap(0, 144, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -288,7 +290,7 @@ public class DepartmentInternalFrame extends PetJInternalFrame {
                     .addComponent(jButtonAdd)
                     .addComponent(jButtonEdit))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)
                 .addContainerGap())
         );
 

@@ -86,6 +86,21 @@
             </MenuItem>
           </SubComponents>
         </Menu>
+        <Menu class="javax.swing.JMenu" name="jMenuTestsAdd">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="&#x422;&#x435;&#x441;&#x442;&#x44b;"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem2">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="&#x41d;&#x43e;&#x432;&#x44b;&#x439; &#x442;&#x435;&#x441;&#x442;"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem2ActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
         <Menu class="javax.swing.JMenu" name="jMenuSettings">
           <Properties>
             <Property name="text" type="java.lang.String" value="&#x41d;&#x430;&#x441;&#x442;&#x440;&#x43e;&#x439;&#x43a;&#x438;"/>
@@ -131,12 +146,12 @@
                 </MenuItem>
               </SubComponents>
             </Menu>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuFull">
               <Properties>
-                <Property name="text" type="java.lang.String" value="&#x420;&#x43e;&#x434;&#x438;&#x442;&#x435;&#x43b;&#x44c;"/>
+                <Property name="text" type="java.lang.String" value="&#x412; &#x43f;&#x43e;&#x43b;&#x43d;&#x44b;&#x439; &#x44d;&#x43a;&#x440;&#x430;&#x43d;"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuFullActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>

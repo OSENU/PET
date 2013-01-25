@@ -45,7 +45,7 @@ public class GroupsInternalFrame extends PetJInternalFrame {
             }
         } catch (SQLException ex) {
             SMS.error(this, ex.toString());
-            Logger.getLogger(GroupsFrame.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GroupsInternalFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -119,7 +119,7 @@ public class GroupsInternalFrame extends PetJInternalFrame {
             } while (true);
         } catch (SQLException ex) {
             SMS.error(this, ex.toString());
-            Logger.getLogger(GroupsFrame.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GroupsInternalFrame.class.getName()).log(Level.SEVERE, null, ex);
             this.dispose();
         } finally {
             return ret;
@@ -214,7 +214,7 @@ public class GroupsInternalFrame extends PetJInternalFrame {
             } while (true);
         } catch (SQLException ex) {
             SMS.error(this, ex.toString());
-            Logger.getLogger(GroupsFrame.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GroupsInternalFrame.class.getName()).log(Level.SEVERE, null, ex);
             this.dispose();
         } finally {
             return ret;
@@ -236,6 +236,8 @@ public class GroupsInternalFrame extends PetJInternalFrame {
         jTableGroups = new javax.swing.JTable();
 
         setTitle("Справочник групп");
+        setMinimumSize(new java.awt.Dimension(400, 400));
+        setPreferredSize(new java.awt.Dimension(400, 400));
 
         jButtonAdd.setText("Добавить");
         jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -287,7 +289,7 @@ public class GroupsInternalFrame extends PetJInternalFrame {
                     .addComponent(jButtonAdd)
                     .addComponent(jButtonEdit))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
