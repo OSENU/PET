@@ -11,6 +11,7 @@ import java.util.Calendar;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import ua.edu.odeku.pet.gui.MainFormPET;
 import ua.edu.odeku.pet.util.SMS;
 
 /**
@@ -18,6 +19,9 @@ import ua.edu.odeku.pet.util.SMS;
  * @author Aleos
  */
 public class ConfigureProgramm {
+    
+    final private static MainFormPET progFrame = new MainFormPET();
+    
     // Файл где будет храниться настройки
     final private static String CONFIG_FILE = "pet.properties";
     // Имя базы данных которая будет использоваться
@@ -150,6 +154,13 @@ public class ConfigureProgramm {
      */
     public static String getSQL_TABLES_FILE() {
         return SQL_TABLES_FILE;
+    }
+
+    /**
+     * @return the progFrame
+     */
+    public static MainFormPET getProgFrame() {
+        return progFrame;
     }
     
     private ConfigureProgramm(){}

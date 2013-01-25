@@ -4,11 +4,13 @@
  */
 package ua.edu.odeku.pet.util;
 
+import java.awt.Component;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import ua.edu.odeku.pet.gui.MainFormPET;
+import ua.edu.odeku.pet.settings.ConfigureProgramm;
 
 /**
  *
@@ -18,13 +20,13 @@ public class SMS {
     
     private SMS(){}
     
-    public static void message(JFrame parent, String message, String title){
+    public static void message(Component parent, String message, String title){
         enableParent(parent, false);
         JOptionPane.showMessageDialog(parent, message, title, JOptionPane.INFORMATION_MESSAGE);
         enableParent(parent, true);
     }
     
-    public static void message(JFrame parent, String message){
+    public static void message(Component parent, String message){
         message(parent, message, "Сообщение");
     }
     
@@ -36,43 +38,43 @@ public class SMS {
         message(null, message, title);
     }
     
-    public static void error(JFrame parent, String message, String title){
+    public static void error(Component parent, String message, String title){
         enableParent(parent, false);
         JOptionPane.showMessageDialog(parent, message, title, JOptionPane.ERROR_MESSAGE);
         enableParent(parent, true);
     }
     
-    public static void error(JFrame parent, String message){
-        message(parent, message, "Ошибка!");
+    public static void error(Component parent, String message){
+        error(parent, message, "Ошибка!");
     }
     
     public static void error(String message){
-        message(null, message, "Ошибка!");
+        error(null, message, "Ошибка!");
     }
     
     public static void error(String message, String title){
-        message(null, message, title);
+        error(null, message, title);
     }
         
-    public static void warning(JFrame parent, String message, String title){
+    public static void warning(Component parent, String message, String title){
         enableParent(parent, false);
         JOptionPane.showMessageDialog(parent, message, title, JOptionPane.WARNING_MESSAGE);
         enableParent(parent, true);
     }
     
-    public static void warning(JFrame parent, String message){
-        message(parent, message, "Внимание!");
+    public static void warning(Component parent, String message){
+        warning(parent, message, "Внимание!");
     }
     
     public static void warning(String message){
-        message(null, message, "Внимание!");
+        warning(null, message, "Внимание!");
     }
     
     public static void warning(String message, String title){
-        message(null, message, title);
+        warning(null, message, title);
     }
         
-    public static boolean query(JFrame parent, String message, String title, Object variant[]){
+    public static boolean query(Component parent, String message, String title, Object variant[]){
         boolean result = true;
         enableParent(parent, false);
         
@@ -91,11 +93,11 @@ public class SMS {
         return result;
     }
     
-    public static boolean query(JFrame parent, String message, String title){
+    public static boolean query(Component parent, String message, String title){
         return query(parent, message, title, new Object[] {"Да", "Нет"});
     }
     
-    public static boolean query(JFrame parent, String message){
+    public static boolean query(Component parent, String message){
         return query(parent, message, "Внимание");
     }
     
@@ -119,7 +121,7 @@ public class SMS {
      * @param values - Значения вопросов
      * @return 
      */
-    public static int bigQuery(JFrame parent, String message, String title, Object[] values){
+    public static int bigQuery(Component parent, String message, String title, Object[] values){
         enableParent(parent, false);
         
         int resalt = JOptionPane.showOptionDialog(parent,
@@ -138,7 +140,7 @@ public class SMS {
      * @param values - Значения вопросов
      * @return 
      */
-    public static int bigQuery(JFrame parent, String message, Object[] values){
+    public static int bigQuery(Component parent, String message, Object[] values){
         return bigQuery(parent, message, "Сообщение", values);
     }
     
@@ -172,7 +174,7 @@ public class SMS {
      * @param values - Значения кнопок
      * @return - id кнопки
      */
-    public static int dialog(JFrame parent, String title, 
+    public static int dialog(Component parent, String title, 
             JComponent[] components, Object[] values){
         
         enableParent(parent, false);
@@ -193,7 +195,7 @@ public class SMS {
      * @param components - Компоненты которые должны быть в диалоге
      * @return - id кнопки
      */
-    public static boolean dialog(JFrame parent, String title, 
+    public static boolean dialog(Component parent, String title, 
             JComponent[] components){
         
         enableParent(parent, false);
@@ -246,7 +248,7 @@ public class SMS {
      * @param value - Значение по умолчанию в диалоге
      * @return 
      */
-    public static String input(JFrame parent, String message, String title, String value){
+    public static String input(Component parent, String message, String title, String value){
         enableParent(parent, false);
         JTextField text = new JTextField();
             // Создаем компоненты, для диалога
@@ -278,7 +280,7 @@ public class SMS {
      * @param title - заголовок диалога
      * @return 
      */
-    public static String input(JFrame parent, String message, String title ){
+    public static String input(Component parent, String message, String title ){
         return input(parent, message, title, null);
     }
     
@@ -289,7 +291,7 @@ public class SMS {
      * @param message - Сообщение диалога
      * @return 
      */
-    public static String input(JFrame parent, String message){
+    public static String input(Component parent, String message){
         return input(parent, message, "Ввод данных");
     }
     
@@ -314,10 +316,12 @@ public class SMS {
         return input(null, message, "Ввод данных:");
     }
     
-    private static void enableParent(JFrame parent, boolean flag){
+    private static void enableParent(Component parent, boolean flag){
         if(parent != null){
             parent.setEnabled(flag);
         }
+        ConfigureProgramm.getProgFrame().setEnabled(flag);
+        ConfigureProgramm.getProgFrame().setVisible(true);
     }
     
     

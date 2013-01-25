@@ -4,13 +4,11 @@
  */
 package ua.edu.odeku.pet.gui.dictionaries;
 
-import ua.edu.odeku.pet.database.entry.Department;
-import ua.edu.odeku.pet.database.entry.Faculty;
-import ua.edu.odeku.pet.database.tableModal.DepartmentTableModal;
-import ua.edu.odeku.pet.database.tableModal.FacultyTableModal;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import ua.edu.odeku.pet.database.entry.Faculty;
+import ua.edu.odeku.pet.database.tableModal.FacultyTableModal;
 import ua.edu.odeku.pet.settings.ConfigureProgramm;
 import ua.edu.odeku.pet.util.SMS;
 

@@ -4,15 +4,20 @@
  */
 package ua.edu.odeku.pet.gui;
 
-import ua.edu.odeku.pet.gui.dictionaries.DepartmentFrame;
-import ua.edu.odeku.pet.gui.dictionaries.FacultyFrame;
-import ua.edu.odeku.pet.gui.dictionaries.GroupsFrame;
-import ua.edu.odeku.pet.gui.dictionaries.SubjectFrame;
-import ua.edu.odeku.pet.gui.dictionaries.TeacherFrame;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.SwingUtilities;
+import javax.swing.UnsupportedLookAndFeelException;
+import ua.edu.odeku.pet.gui.dictionaries.DepartmentInternalFrame;
+import ua.edu.odeku.pet.gui.dictionaries.FacultyInternalFrame;
+import ua.edu.odeku.pet.gui.dictionaries.GroupsInternalFrame;
+import ua.edu.odeku.pet.gui.dictionaries.SubjectInternalFrame;
+import ua.edu.odeku.pet.gui.dictionaries.TeacherInternalFrame;
 import ua.edu.odeku.pet.gui.dictionaries.TypeWorkFrame;
+import ua.edu.odeku.pet.gui.dictionaries.TypeWorkInternalFrame;
 import ua.edu.odeku.pet.gui.tests.TestsFrame;
-import javax.swing.JFrame;
 import ua.edu.odeku.pet.settings.ConfigureProgramm;
+import ua.edu.odeku.pet.util.SMS;
 
 /**
  *
@@ -53,13 +58,17 @@ public class MainFormPET extends javax.swing.JFrame {
         jMenuItemStudent = new javax.swing.JMenuItem();
         jMenuSettings = new javax.swing.JMenu();
         jCheckBoxMenuItemIsDebag = new javax.swing.JCheckBoxMenuItem();
+        jMenuChangeTheLookAndFeel = new javax.swing.JMenu();
+        jMenuItemStandart = new javax.swing.JMenuItem();
+        jMenuItemMetal = new javax.swing.JMenuItem();
+        jMenuItemNimbus = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         jMenu2.setText("jMenu2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("PET");
         setAutoRequestFocus(false);
-        setLocationByPlatform(true);
         setMinimumSize(new java.awt.Dimension(40, 40));
         setModalExclusionType(java.awt.Dialog.ModalExclusionType.TOOLKIT_EXCLUDE);
 
@@ -75,6 +84,8 @@ public class MainFormPET extends javax.swing.JFrame {
             }
         });
         jToolBar1.add(jButtonNewTest);
+
+        jDesktopPane1.setBackground(new java.awt.Color(240, 240, 240));
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -153,6 +164,42 @@ public class MainFormPET extends javax.swing.JFrame {
         });
         jMenuSettings.add(jCheckBoxMenuItemIsDebag);
 
+        jMenuChangeTheLookAndFeel.setText("Оформление");
+
+        jMenuItemStandart.setText("Система");
+        jMenuItemStandart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemStandartActionPerformed(evt);
+            }
+        });
+        jMenuChangeTheLookAndFeel.add(jMenuItemStandart);
+
+        jMenuItemMetal.setText("Метал");
+        jMenuItemMetal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemMetalActionPerformed(evt);
+            }
+        });
+        jMenuChangeTheLookAndFeel.add(jMenuItemMetal);
+
+        jMenuItemNimbus.setText("Nimbus");
+        jMenuItemNimbus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemNimbusActionPerformed(evt);
+            }
+        });
+        jMenuChangeTheLookAndFeel.add(jMenuItemNimbus);
+
+        jMenuSettings.add(jMenuChangeTheLookAndFeel);
+
+        jMenuItem1.setText("Родитель");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenuSettings.add(jMenuItem1);
+
         jMenuBar1.add(jMenuSettings);
 
         setJMenuBar(jMenuBar1);
@@ -161,7 +208,7 @@ public class MainFormPET extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 590, Short.MAX_VALUE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 623, Short.MAX_VALUE)
             .addComponent(jDesktopPane1)
         );
         layout.setVerticalGroup(
@@ -169,20 +216,22 @@ public class MainFormPET extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE))
+                .addComponent(jDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItemDepartmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemDepartmentActionPerformed
-        DepartmentFrame df = new DepartmentFrame();
-        df.setVisible(true);
+        DepartmentInternalFrame departmentInternalFrame = new DepartmentInternalFrame();
+        jDesktopPane1.add(departmentInternalFrame);
+        departmentInternalFrame.setVisible(true);
     }//GEN-LAST:event_jMenuItemDepartmentActionPerformed
 
     private void jMenuItemTeachersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemTeachersActionPerformed
-        TeacherFrame tf = new TeacherFrame();
-        tf.setVisible(true);
+        TeacherInternalFrame teacherInternalFrame = new TeacherInternalFrame();
+        jDesktopPane1.add(teacherInternalFrame);
+        teacherInternalFrame.setVisible(true);
     }//GEN-LAST:event_jMenuItemTeachersActionPerformed
 
     private void jCheckBoxMenuItemIsDebagActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItemIsDebagActionPerformed
@@ -190,26 +239,28 @@ public class MainFormPET extends javax.swing.JFrame {
     }//GEN-LAST:event_jCheckBoxMenuItemIsDebagActionPerformed
 
     private void jMenuItemFacultyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemFacultyActionPerformed
-        FacultyFrame ff = new FacultyFrame();
-        ff.setVisible(true);
+        FacultyInternalFrame facultyInternalFrame = new FacultyInternalFrame();
+        jDesktopPane1.add(facultyInternalFrame);
+        facultyInternalFrame.setVisible(true);
+        
     }//GEN-LAST:event_jMenuItemFacultyActionPerformed
 
     private void jMenuItemGroupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemGroupActionPerformed
-        GroupsFrame frame = new GroupsFrame();
-        frame.setVisible(true);
-        frame.updateTable();
+        GroupsInternalFrame groupsInternalFrame = new GroupsInternalFrame();
+        jDesktopPane1.add(groupsInternalFrame);
+        groupsInternalFrame.setVisible(true);
     }//GEN-LAST:event_jMenuItemGroupActionPerformed
 
     private void jMenuItemTypeWorkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemTypeWorkActionPerformed
-        TypeWorkFrame frame = new TypeWorkFrame();
-        frame.setVisible(true);
-        frame.updateTable();
+        TypeWorkInternalFrame typeWorkInternalFrame = new TypeWorkInternalFrame();
+        jDesktopPane1.add(typeWorkInternalFrame);
+        typeWorkInternalFrame.setVisible(true);
     }//GEN-LAST:event_jMenuItemTypeWorkActionPerformed
 
     private void jMenuItemSubjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSubjectActionPerformed
-        SubjectFrame frame = new SubjectFrame();
-        frame.setVisible(true);
-        frame.updateTable();
+        SubjectInternalFrame subjectInternalFrame = new SubjectInternalFrame();
+        jDesktopPane1.add(subjectInternalFrame);
+        subjectInternalFrame.setVisible(true);
     }//GEN-LAST:event_jMenuItemSubjectActionPerformed
 
     private void jButtonNewTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNewTestActionPerformed
@@ -220,6 +271,52 @@ public class MainFormPET extends javax.swing.JFrame {
     private void jMenuItemMarkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMarkActionPerformed
 
     }//GEN-LAST:event_jMenuItemMarkActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        PetJInternalFrame petJInternalFrame = new DepartmentInternalFrame();
+        jDesktopPane1.add(petJInternalFrame);
+        petJInternalFrame.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItemStandartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemStandartActionPerformed
+        try {
+            javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
+            SwingUtilities.updateComponentTreeUI(ConfigureProgramm.getProgFrame());
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(MainFormPET.class.getName()).log(Level.SEVERE, null, ex);
+            SMS.error("Не получилось применить!");
+        }
+    }//GEN-LAST:event_jMenuItemStandartActionPerformed
+
+    private void jMenuItemMetalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMetalActionPerformed
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Metal".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    SwingUtilities.updateComponentTreeUI(ConfigureProgramm.getProgFrame());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(MainFormPET.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            SMS.error("Не получилось применить!");
+        }
+    }//GEN-LAST:event_jMenuItemMetalActionPerformed
+
+    private void jMenuItemNimbusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemNimbusActionPerformed
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    SwingUtilities.updateComponentTreeUI(ConfigureProgramm.getProgFrame());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            SMS.error("Не получилось применить!");
+            java.util.logging.Logger.getLogger(MainFormPET.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuItemNimbusActionPerformed
 
     /**
      * @param args the command line arguments
@@ -241,9 +338,9 @@ public class MainFormPET extends javax.swing.JFrame {
         
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                MainFormPET mf = new MainFormPET();
-                
-                
+                MainFormPET mf = ConfigureProgramm.getProgFrame();
+                SwingUtilities.updateComponentTreeUI(mf);
+                mf.setExtendedState(MAXIMIZED_BOTH);
                 mf.setVisible(true);
                 mf.jCheckBoxMenuItemIsDebag.setState(false);
                 ConfigureProgramm.setDEBAG(false);
@@ -257,11 +354,16 @@ public class MainFormPET extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenu jMenuChangeTheLookAndFeel;
     private javax.swing.JMenu jMenuDictionaries;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItemDepartment;
     private javax.swing.JMenuItem jMenuItemFaculty;
     private javax.swing.JMenuItem jMenuItemGroup;
     private javax.swing.JMenuItem jMenuItemMark;
+    private javax.swing.JMenuItem jMenuItemMetal;
+    private javax.swing.JMenuItem jMenuItemNimbus;
+    private javax.swing.JMenuItem jMenuItemStandart;
     private javax.swing.JMenuItem jMenuItemStudent;
     private javax.swing.JMenuItem jMenuItemSubject;
     private javax.swing.JMenuItem jMenuItemTeachers;

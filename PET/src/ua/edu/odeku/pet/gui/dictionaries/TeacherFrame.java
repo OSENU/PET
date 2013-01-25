@@ -32,8 +32,8 @@ public class TeacherFrame extends javax.swing.JFrame {
         initComponents();
         updateTableTeacher();
     }
-    
-        private void updateTableTeacher() {
+
+    private void updateTableTeacher() {
 
         try {
             TeacherTableModal modal = new TeacherTableModal();
@@ -49,7 +49,7 @@ public class TeacherFrame extends javax.swing.JFrame {
             ua.edu.odeku.pet.util.TablesUtil.hideColumn(jTableTeacher, 4);
         }
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -136,7 +136,7 @@ public class TeacherFrame extends javax.swing.JFrame {
         JTextField name = new JTextField();
         JTextField name2 = new JTextField();
         JTextField surname = new JTextField();
-        Department[] departments; 
+        Department[] departments;
         try {
             departments = GetDataTable.getDepartments();
         } catch (SQLException ex) {
@@ -146,46 +146,46 @@ public class TeacherFrame extends javax.swing.JFrame {
         }
         JComboBox<Department> boxDepartment = new JComboBox<Department>(departments);
         JComponent[] componets = new JComponent[]{
-                new JLabel("Имя:"),
-                name,
-                new JLabel("Отчество:"),
-                name2,
-                new JLabel("Фамилия:"),
-                surname,
-                new JLabel("Кафедра:"),
-                boxDepartment
-            };
+            new JLabel("Имя:"),
+            name,
+            new JLabel("Отчество:"),
+            name2,
+            new JLabel("Фамилия:"),
+            surname,
+            new JLabel("Кафедра:"),
+            boxDepartment
+        };
         boolean dialog = false;
-        
-        do{ /*
-         * Цикл будет продолжаться до тех пор пока не нажмут отмена
-         * Или будут введены неправильно данные
-         */ 
+
+        do { /*
+             * Цикл будет продолжаться до тех пор пока не нажмут отмена
+             * Или будут введены неправильно данные
+             */
             dialog = SMS.dialog(this, "Введите данные о преподавателе", componets);
-            if(dialog){ // Если подтвердили ввод данных
+            if (dialog) { // Если подтвердили ввод данных
                 // Проверим наличие имени
-                if(dialog && name.getText().trim().length() > 0){
+                if (dialog && name.getText().trim().length() > 0) {
                     teacher.setName(name.getText());
                 } else {
                     SMS.warning(this, "Пожалуйста введите имя!");
                     continue;
-                } 
+                }
                 // Проверим наличие отчества
-                if (dialog && name2.getText().trim().length() > 0 ){
+                if (dialog && name2.getText().trim().length() > 0) {
                     teacher.setName2(name2.getText());
                 } else {
                     SMS.warning(this, "Пожалуйста введите отчество!");
                     continue;
                 }
                 // Проверим наличие фамилии
-                if (dialog && surname.getText().length() > 0){
+                if (dialog && surname.getText().length() > 0) {
                     teacher.setSurname(surname.getText());
                 } else {
                     SMS.warning(this, "Пожалуйста введите фамилию!");
                     continue;
                 }
                 // Проверим указаный факульет
-                if (dialog && boxDepartment.getSelectedItem() != null){
+                if (dialog && boxDepartment.getSelectedItem() != null) {
                     teacher.setIdDepartment((Department) boxDepartment.getSelectedItem());
                 } else {
                     SMS.warning(this, "Пожалуйста укажите факультет!");
@@ -194,14 +194,14 @@ public class TeacherFrame extends javax.swing.JFrame {
                 // Прошли все проверки
                 try {
                     int res = teacher.insertInto();
-                    if(res == -1){
+                    if (res == -1) {
                         if (SMS.query(this, "Такое значение уже есть.\n"
-                                        + "Хотете еще раз ввести значение?")) {
+                                + "Хотете еще раз ввести значение?")) {
                             dialog = true;
                         } else {
                             dialog = false;
                         }
-                    } else if (res >= 0){
+                    } else if (res >= 0) {
                         // Все прошло нормально и мы можем выйти с цикла
                         updateTableTeacher();
                         break;
@@ -211,7 +211,7 @@ public class TeacherFrame extends javax.swing.JFrame {
                     Logger.getLogger(TeacherFrame.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-        } while(dialog);
+        } while (dialog);
         TeacherFrame.this.setVisible(true);
     }//GEN-LAST:event_jButtonAddActionPerformed
 
@@ -220,7 +220,7 @@ public class TeacherFrame extends javax.swing.JFrame {
         Teacher teacher = new Teacher();
         Teacher newTeacher = new Teacher();
         int row = jTableTeacher.getSelectedRow();
-        if(row < 0){
+        if (row < 0) {
             SMS.warning(this, "Выберите запись, которую необходимо редактировать");
         }
         teacher.setIdTeacher((Integer) jTableTeacher.getValueAt(row, 0));
@@ -228,14 +228,13 @@ public class TeacherFrame extends javax.swing.JFrame {
         teacher.setName2((String) jTableTeacher.getValueAt(row, 2));
         teacher.setSurname((String) jTableTeacher.getValueAt(row, 3));
         teacher.setIdDepartment(
-                new Department((Integer)jTableTeacher.getValueAt(row, 4),
-                                (String) jTableTeacher.getValueAt(row, 5))
-                );
-        
+                new Department((Integer) jTableTeacher.getValueAt(row, 4),
+                (String) jTableTeacher.getValueAt(row, 5)));
+
         JTextField name = new JTextField();
         JTextField name2 = new JTextField();
         JTextField surname = new JTextField();
-        Department[] departments; 
+        Department[] departments;
         try {
             departments = GetDataTable.getDepartments();
         } catch (SQLException ex) {
@@ -245,51 +244,51 @@ public class TeacherFrame extends javax.swing.JFrame {
         }
         JComboBox<Department> boxDepartment = new JComboBox<Department>(departments);
         JComponent[] componets = new JComponent[]{
-                new JLabel("Имя:"),
-                name,
-                new JLabel("Отчество:"),
-                name2,
-                new JLabel("Фамилия:"),
-                surname,
-                new JLabel("Кафедра:"),
-                boxDepartment
-            };
+            new JLabel("Имя:"),
+            name,
+            new JLabel("Отчество:"),
+            name2,
+            new JLabel("Фамилия:"),
+            surname,
+            new JLabel("Кафедра:"),
+            boxDepartment
+        };
         boolean dialog = false;
-        
-        do{ /*
-         * Цикл будет продолжаться до тех пор пока не нажмут отмена
-         * Или будут введены неправильно данные
-         */ 
+
+        do { /*
+             * Цикл будет продолжаться до тех пор пока не нажмут отмена
+             * Или будут введены неправильно данные
+             */
             name.setText(teacher.getName());
             name2.setText(teacher.getName2());
             surname.setText(teacher.getSurname());
             boxDepartment.setSelectedItem(teacher.getIdDepartment());
-            
+
             dialog = SMS.dialog(this, "Введите данные о преподавателе", componets);
-            if(dialog){ // Если подтвердили ввод данных
+            if (dialog) { // Если подтвердили ввод данных
                 // Проверим наличие имени
-                if(dialog && name.getText().trim().length() > 0){
+                if (dialog && name.getText().trim().length() > 0) {
                     newTeacher.setName(name.getText());
                 } else {
                     SMS.warning(this, "Пожалуйста введите имя!");
                     continue;
-                } 
+                }
                 // Проверим наличие отчества
-                if (dialog && name2.getText().trim().length() > 0 ){
+                if (dialog && name2.getText().trim().length() > 0) {
                     newTeacher.setName2(name2.getText());
                 } else {
                     SMS.warning(this, "Пожалуйста введите отчество!");
                     continue;
                 }
                 // Проверим наличие фамилии
-                if (dialog && surname.getText().length() > 0){
+                if (dialog && surname.getText().length() > 0) {
                     newTeacher.setSurname(surname.getText());
                 } else {
                     SMS.warning(this, "Пожалуйста введите фамилию!");
                     continue;
                 }
                 // Проверим указаный факульет
-                if (dialog && boxDepartment.getSelectedItem() != null){
+                if (dialog && boxDepartment.getSelectedItem() != null) {
                     newTeacher.setIdDepartment((Department) boxDepartment.getSelectedItem());
                 } else {
                     SMS.warning(this, "Пожалуйста укажите факультет!");
@@ -298,14 +297,14 @@ public class TeacherFrame extends javax.swing.JFrame {
                 // Прошли все проверки
                 try {
                     int res = teacher.updateTable(newTeacher);
-                    if(res == -1){
+                    if (res == -1) {
                         if (SMS.query(this, "Такое значение уже есть.\n"
-                                        + "Хотете еще раз ввести значение?")) {
+                                + "Хотете еще раз ввести значение?")) {
                             dialog = true;
                         } else {
                             dialog = false;
                         }
-                    } else if (res >= 0){
+                    } else if (res >= 0) {
                         // Все прошло нормально и мы можем выйти с цикла
                         updateTableTeacher();
                         break;
@@ -315,10 +314,9 @@ public class TeacherFrame extends javax.swing.JFrame {
                     Logger.getLogger(TeacherFrame.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-        } while(dialog);
+        } while (dialog);
         TeacherFrame.this.setVisible(true);
     }//GEN-LAST:event_jButtonEditActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAdd;
     private javax.swing.JButton jButtonEdit;

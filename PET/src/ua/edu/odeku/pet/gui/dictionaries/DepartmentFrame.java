@@ -4,9 +4,6 @@
  */
 package ua.edu.odeku.pet.gui.dictionaries;
 
-import ua.edu.odeku.pet.database.entry.Department;
-import ua.edu.odeku.pet.database.entry.Faculty;
-import ua.edu.odeku.pet.database.tableModal.DepartmentTableModal;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,6 +11,9 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import ua.edu.odeku.pet.database.entry.Department;
+import ua.edu.odeku.pet.database.entry.Faculty;
+import ua.edu.odeku.pet.database.tableModal.DepartmentTableModal;
 import ua.edu.odeku.pet.settings.ConfigureProgramm;
 import ua.edu.odeku.pet.util.SMS;
 
