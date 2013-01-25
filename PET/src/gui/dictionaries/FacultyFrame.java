@@ -4,7 +4,9 @@
  */
 package gui.dictionaries;
 
+import database.entity.Department;
 import database.entity.Faculty;
+import database.tableModal.DepartmentTableModal;
 import database.tableModal.FacultyTableModal;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -57,6 +59,7 @@ public class FacultyFrame extends javax.swing.JFrame {
                         int res = faculty.insertInto();
                         if (res >= 0) {
                             // все успешно
+                            updateTable();
                             ret = true;
                             break;
                         } else {
@@ -68,7 +71,7 @@ public class FacultyFrame extends javax.swing.JFrame {
                             }
                         }
                     } catch (SQLException ex) {
-                        SMS.error(ex.toString());
+                        SMS.error(this, ex.toString());
                         Logger.getLogger(FacultyFrame.class.getName()).log(Level.SEVERE, null, ex);
                         break;
                     }
@@ -77,6 +80,7 @@ public class FacultyFrame extends javax.swing.JFrame {
                 }
             }
         } while (name != null);
+        FacultyFrame.this.setVisible(true);
         return ret;
     }
 
@@ -119,6 +123,7 @@ public class FacultyFrame extends javax.swing.JFrame {
                                 int result = faculty.updateTable(newFaculty);
                                 if (result >= 0) {
                                     ret = true;
+                                    updateTable();
                                     break;
                                 } else if (result == -1) {
                                     if (SMS.query(this, "Такое значение уже есть.\n"
@@ -146,6 +151,7 @@ public class FacultyFrame extends javax.swing.JFrame {
                     break;
                 }
             } while (true);
+            FacultyFrame.this.setVisible(true);
         }
         return ret;
     }
@@ -161,12 +167,12 @@ public class FacultyFrame extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableFaculty = new javax.swing.JTable();
-        jButtonAdd = new javax.swing.JButton();
-        jButtonEdit = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuWindow = new javax.swing.JMenu();
         jCheckBoxMenuAlwaysOnTop = new javax.swing.JCheckBoxMenuItem();
         jMenuItemClose = new javax.swing.JMenuItem();
+        jMenuAdd = new javax.swing.JMenu();
+        jMenuEdit = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Факультеты");
@@ -180,20 +186,6 @@ public class FacultyFrame extends javax.swing.JFrame {
             }
         ));
         jScrollPane1.setViewportView(jTableFaculty);
-
-        jButtonAdd.setText("Добавить");
-        jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAddActionPerformed(evt);
-            }
-        });
-
-        jButtonEdit.setText("Изменить");
-        jButtonEdit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonEditActionPerformed(evt);
-            }
-        });
 
         jMenuWindow.setText("Окно");
 
@@ -215,37 +207,45 @@ public class FacultyFrame extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenuWindow);
 
+        jMenuAdd.setText("Добавить");
+        jMenuAdd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuAddMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMenuAdd);
+
+        jMenuEdit.setText("Изменить");
+        jMenuEdit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuEditMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMenuEdit);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButtonAdd)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonEdit)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 542, Short.MAX_VALUE))
-                .addContainerGap())
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 502, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonAdd)
-                    .addComponent(jButtonEdit))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 494, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jMenuAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuAddMouseClicked
+        this.addFaultyFrame();
+    }//GEN-LAST:event_jMenuAddMouseClicked
+
+    private void jMenuEditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuEditMouseClicked
+        this.editFacultyFrame();
+    }//GEN-LAST:event_jMenuEditMouseClicked
 
     private void jCheckBoxMenuAlwaysOnTopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuAlwaysOnTopActionPerformed
         this.setAlwaysOnTop(jCheckBoxMenuAlwaysOnTop.isSelected());
@@ -255,25 +255,11 @@ public class FacultyFrame extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jMenuItemCloseActionPerformed
 
-    private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
-        if(this.addFaultyFrame()){
-            updateTable();
-        }
-        FacultyFrame.this.setVisible(true);
-    }//GEN-LAST:event_jButtonAddActionPerformed
-
-    private void jButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditActionPerformed
-        if(this.editFacultyFrame()){
-            updateTable();
-        }
-        FacultyFrame.this.setVisible(true);
-    }//GEN-LAST:event_jButtonEditActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonAdd;
-    private javax.swing.JButton jButtonEdit;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuAlwaysOnTop;
+    private javax.swing.JMenu jMenuAdd;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenu jMenuEdit;
     private javax.swing.JMenuItem jMenuItemClose;
     private javax.swing.JMenu jMenuWindow;
     private javax.swing.JScrollPane jScrollPane1;
