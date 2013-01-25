@@ -52,7 +52,7 @@ public class DepartmentFrame extends javax.swing.JFrame {
             };
             // Цыкл необходим для того, что бы было несколько попыток у пользователя
             do {
-                boolean flag = SMS.dialog("Укажите данные о кафедре:", components);
+                boolean flag = SMS.dialog(this, "Укажите данные о кафедре:", components);
                 if(flag){
                     nameDepartment = name.getText();
                     if (nameDepartment != null) {
@@ -95,7 +95,7 @@ public class DepartmentFrame extends javax.swing.JFrame {
                 }
             } while (true);
         } catch (SQLException ex) {
-            SMS.error(ex.toString());
+            SMS.error(this, ex.toString());
             Logger.getLogger(DepartmentFrame.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             return ret;
@@ -144,7 +144,7 @@ public class DepartmentFrame extends javax.swing.JFrame {
                     name.setText(nameDepartment);
                     box.setSelectedItem(department.getIdFaculty());
                     
-                    boolean flag = SMS.dialog("Измените данные о кафедре", components);
+                    boolean flag = SMS.dialog(this, "Измените данные о кафедре", components);
                     if(flag){
                         newNameDepartment = name.getText();
                         Faculty f =(Faculty) box.getSelectedItem();
@@ -163,7 +163,7 @@ public class DepartmentFrame extends javax.swing.JFrame {
                                             ret = true;
                                             break;
                                         } else if(result == -1) {
-                                            if (SMS.query("Такое значение уже есть.\n"
+                                            if (SMS.query(this, "Такое значение уже есть.\n"
                                                     + "Хотете еще раз ввести значение?")) {
                                                 continue;
                                             } else {
@@ -232,12 +232,12 @@ public class DepartmentFrame extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableDepartment = new javax.swing.JTable();
+        jButtonAdd = new javax.swing.JButton();
+        jButtonEdit = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuWindow = new javax.swing.JMenu();
         jCheckBoxMenuAlwaysOnTop = new javax.swing.JCheckBoxMenuItem();
         jMenuItemClose = new javax.swing.JMenuItem();
-        jMenuAdd = new javax.swing.JMenu();
-        jMenuEdit = new javax.swing.JMenu();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -256,6 +256,20 @@ public class DepartmentFrame extends javax.swing.JFrame {
             }
         ));
         jScrollPane1.setViewportView(jTableDepartment);
+
+        jButtonAdd.setText("Добавить");
+        jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAddActionPerformed(evt);
+            }
+        });
+
+        jButtonEdit.setText("Изменить");
+        jButtonEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEditActionPerformed(evt);
+            }
+        });
 
         jMenuWindow.setText("Окно");
 
@@ -277,53 +291,37 @@ public class DepartmentFrame extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenuWindow);
 
-        jMenuAdd.setText("Добавить");
-        jMenuAdd.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenuAddMouseClicked(evt);
-            }
-        });
-        jMenuBar1.add(jMenuAdd);
-
-        jMenuEdit.setText("Изменить");
-        jMenuEdit.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenuEditMouseClicked(evt);
-            }
-        });
-        jMenuBar1.add(jMenuEdit);
-
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 536, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButtonAdd)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonEdit)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonAdd)
+                    .addComponent(jButtonEdit))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 533, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jMenuAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuAddMouseClicked
-        boolean ret = this.addDepartmentFrame();
-        if (ret){
-            this.updateTableDepartment();
-        }
-        DepartmentFrame.this.setVisible(true);
-    }//GEN-LAST:event_jMenuAddMouseClicked
-
-    private void jMenuEditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuEditMouseClicked
-        boolean ret = this.editDepartmentFrame();
-        if (ret){
-            this.updateTableDepartment();
-        }
-        DepartmentFrame.this.setVisible(true);
-    }//GEN-LAST:event_jMenuEditMouseClicked
 
     private void jCheckBoxMenuAlwaysOnTopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuAlwaysOnTopActionPerformed
         this.setAlwaysOnTop(this.jCheckBoxMenuAlwaysOnTop.isSelected());    
@@ -333,12 +331,28 @@ public class DepartmentFrame extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jMenuItemCloseActionPerformed
 
+    private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
+        boolean ret = this.addDepartmentFrame();
+        if (ret){
+            this.updateTableDepartment();
+        }
+        DepartmentFrame.this.setVisible(true);
+    }//GEN-LAST:event_jButtonAddActionPerformed
+
+    private void jButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditActionPerformed
+        boolean ret = this.editDepartmentFrame();
+        if (ret){
+            this.updateTableDepartment();
+        }
+        DepartmentFrame.this.setVisible(true);
+    }//GEN-LAST:event_jButtonEditActionPerformed
+
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonAdd;
+    private javax.swing.JButton jButtonEdit;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuAlwaysOnTop;
-    private javax.swing.JMenu jMenuAdd;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenu jMenuEdit;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItemClose;
     private javax.swing.JMenu jMenuWindow;

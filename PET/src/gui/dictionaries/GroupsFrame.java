@@ -120,11 +120,10 @@ public class GroupsFrame extends javax.swing.JFrame {
                 }
             } while (true);
         } catch (SQLException ex) {
-            SMS.error(this, ex.toString());
+            SMS.error(ex.toString());
             Logger.getLogger(GroupsFrame.class.getName()).log(Level.SEVERE, null, ex);
             this.dispose();
         } finally {
-            GroupsFrame.this.setVisible(true);
             return ret;
         }
     }
@@ -221,7 +220,6 @@ public class GroupsFrame extends javax.swing.JFrame {
             Logger.getLogger(GroupsFrame.class.getName()).log(Level.SEVERE, null, ex);
             this.dispose();
         } finally {
-            GroupsFrame.this.setVisible(true);
             return ret;
         }
     }
@@ -238,12 +236,12 @@ public class GroupsFrame extends javax.swing.JFrame {
         jCheckBoxMenuItem2 = new javax.swing.JCheckBoxMenuItem();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableGroups = new javax.swing.JTable();
+        jButtonAdd = new javax.swing.JButton();
+        jButtonEdit = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuWindow = new javax.swing.JMenu();
         jCheckBoxMenuAlwaysOnTop = new javax.swing.JCheckBoxMenuItem();
         jMenuItemClose = new javax.swing.JMenuItem();
-        jMenuAdd = new javax.swing.JMenu();
-        jMenuEdit = new javax.swing.JMenu();
 
         jCheckBoxMenuItem2.setSelected(true);
         jCheckBoxMenuItem2.setText("jCheckBoxMenuItem2");
@@ -263,6 +261,20 @@ public class GroupsFrame extends javax.swing.JFrame {
             }
         ));
         jScrollPane1.setViewportView(jTableGroups);
+
+        jButtonAdd.setText("Добавить");
+        jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAddActionPerformed(evt);
+            }
+        });
+
+        jButtonEdit.setText("Изменить");
+        jButtonEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEditActionPerformed(evt);
+            }
+        });
 
         jMenuWindow.setText("Окно");
 
@@ -284,45 +296,37 @@ public class GroupsFrame extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenuWindow);
 
-        jMenuAdd.setText("Добавить");
-        jMenuAdd.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenuAddMouseClicked(evt);
-            }
-        });
-        jMenuBar1.add(jMenuAdd);
-
-        jMenuEdit.setText("Изменить");
-        jMenuEdit.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenuEditMouseClicked(evt);
-            }
-        });
-        jMenuBar1.add(jMenuEdit);
-
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 545, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButtonAdd)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonEdit)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 381, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonAdd)
+                    .addComponent(jButtonEdit))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jMenuAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuAddMouseClicked
-        this.addGroupsFrame();
-    }//GEN-LAST:event_jMenuAddMouseClicked
-
-    private void jMenuEditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuEditMouseClicked
-        this.editGroupsFrame();
-    }//GEN-LAST:event_jMenuEditMouseClicked
 
     private void jCheckBoxMenuAlwaysOnTopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuAlwaysOnTopActionPerformed
         this.setAlwaysOnTop(this.jCheckBoxMenuAlwaysOnTop.isSelected());
@@ -332,12 +336,26 @@ public class GroupsFrame extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jMenuItemCloseActionPerformed
 
+    private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
+        if (this.addGroupsFrame()){
+            updateTable();
+        }
+        GroupsFrame.this.setVisible(true);
+    }//GEN-LAST:event_jButtonAddActionPerformed
+
+    private void jButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditActionPerformed
+        if (this.editGroupsFrame()){
+            updateTable();
+        }
+        GroupsFrame.this.setVisible(true);
+    }//GEN-LAST:event_jButtonEditActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonAdd;
+    private javax.swing.JButton jButtonEdit;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuAlwaysOnTop;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem2;
-    private javax.swing.JMenu jMenuAdd;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenu jMenuEdit;
     private javax.swing.JMenuItem jMenuItemClose;
     private javax.swing.JMenu jMenuWindow;
     private javax.swing.JScrollPane jScrollPane1;
