@@ -65,7 +65,6 @@ public class DepartmentFrame extends javax.swing.JFrame {
                                     int res = department.insertInto();
                                     if (res >= 0) {
                                         // все успешно
-                                        updateTableDepartment();
                                         ret = true;
                                         break;
                                     } else {
@@ -99,7 +98,6 @@ public class DepartmentFrame extends javax.swing.JFrame {
             SMS.error(ex.toString());
             Logger.getLogger(DepartmentFrame.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            DepartmentFrame.this.setVisible(true);
             return ret;
         }
     }
@@ -146,7 +144,7 @@ public class DepartmentFrame extends javax.swing.JFrame {
                     name.setText(nameDepartment);
                     box.setSelectedItem(department.getIdFaculty());
                     
-                    boolean flag = SMS.dialog(this, "Измените данные о кафедре", components);
+                    boolean flag = SMS.dialog("Измените данные о кафедре", components);
                     if(flag){
                         newNameDepartment = name.getText();
                         Faculty f =(Faculty) box.getSelectedItem();
@@ -162,11 +160,10 @@ public class DepartmentFrame extends javax.swing.JFrame {
                                     try {
                                         int result = department.updateTable(newDepartment);
                                         if (result >= 0) {
-                                            updateTableDepartment();
                                             ret = true;
                                             break;
                                         } else if(result == -1) {
-                                            if (SMS.query(this, "Такое значение уже есть.\n"
+                                            if (SMS.query("Такое значение уже есть.\n"
                                                     + "Хотете еще раз ввести значение?")) {
                                                 continue;
                                             } else {
@@ -199,7 +196,6 @@ public class DepartmentFrame extends javax.swing.JFrame {
             SMS.error(this, ex.toString());
             Logger.getLogger(DepartmentFrame.class.getName()).log(Level.SEVERE, null, ex);
         } finally{
-            DepartmentFrame.this.setVisible(true);
             return ret;
         }
     }
@@ -221,10 +217,6 @@ public class DepartmentFrame extends javax.swing.JFrame {
             // Если программа не врежиме отладки, то скроем колонку с id
             util.TablesUtil.hideColumn(jTableDepartment, 0);
             util.TablesUtil.hideColumn(jTableDepartment, 2);
-//            jTableDepartment.getColumnModel().getColumn(0).setMaxWidth(0);
-//            jTableDepartment.getColumnModel().getColumn(0).setMinWidth(0);
-//            jTableDepartment.getColumnModel().getColumn(0).setPreferredWidth(0);
-//            jTableDepartment.getColumnModel().getColumn(0).setResizable(false);
         }
     }
 
@@ -319,10 +311,18 @@ public class DepartmentFrame extends javax.swing.JFrame {
 
     private void jMenuAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuAddMouseClicked
         boolean ret = this.addDepartmentFrame();
+        if (ret){
+            this.updateTableDepartment();
+        }
+        DepartmentFrame.this.setVisible(true);
     }//GEN-LAST:event_jMenuAddMouseClicked
 
     private void jMenuEditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuEditMouseClicked
         boolean ret = this.editDepartmentFrame();
+        if (ret){
+            this.updateTableDepartment();
+        }
+        DepartmentFrame.this.setVisible(true);
     }//GEN-LAST:event_jMenuEditMouseClicked
 
     private void jCheckBoxMenuAlwaysOnTopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuAlwaysOnTopActionPerformed
