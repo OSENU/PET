@@ -15,6 +15,7 @@ import ua.edu.odeku.pet.gui.dictionaries.SubjectInternalFrame;
 import ua.edu.odeku.pet.gui.dictionaries.TeacherInternalFrame;
 import ua.edu.odeku.pet.gui.dictionaries.TypeWorkFrame;
 import ua.edu.odeku.pet.gui.dictionaries.TypeWorkInternalFrame;
+import ua.edu.odeku.pet.gui.tests.AddTestInternalFrame;
 import ua.edu.odeku.pet.gui.tests.TestsFrame;
 import ua.edu.odeku.pet.settings.ConfigureProgramm;
 import ua.edu.odeku.pet.util.SMS;
@@ -264,8 +265,9 @@ public class MainFormPET extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemSubjectActionPerformed
 
     private void jButtonNewTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNewTestActionPerformed
-        TestsFrame frame = new TestsFrame();
-        frame.setVisible(true);
+        AddTestInternalFrame addTestInternalFrame = new AddTestInternalFrame();
+        jDesktopPane1.add(addTestInternalFrame);
+        addTestInternalFrame.setVisible(true);
     }//GEN-LAST:event_jButtonNewTestActionPerformed
 
     private void jMenuItemMarkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMarkActionPerformed
