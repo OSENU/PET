@@ -4,8 +4,8 @@
  */
 package ua.edu.odeku.pet.gui.tests;
 
-import ua.edu.odeku.pet.gui.tests.alternativeChoice.AlternativeChoicePanel;
 import java.awt.BorderLayout;
+import ua.edu.odeku.pet.gui.tests.alternativeChoice.AlternativePanel;
 import ua.edu.odeku.pet.gui.tests.matched.MatchedPanel;
 import ua.edu.odeku.pet.gui.tests.select.SelectedPanel;
 import ua.edu.odeku.pet.gui.tests.sequencing.SequencingPanel;
@@ -17,7 +17,7 @@ import ua.edu.odeku.pet.util.SMS;
  */
 public class SelectedTypeAskPanel extends javax.swing.JPanel {
     SelectedPanel selectedPanel;
-    AlternativeChoicePanel alternativeChoicePanel;
+    AlternativePanel alternativeChoicePanel;
     MatchedPanel matchedPanel;
     SequencingPanel sequencingPanel;
     
@@ -48,9 +48,9 @@ public class SelectedTypeAskPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        typeAskPanel1 = new ua.edu.odeku.pet.gui.tests.TypeAskPanel();
         jButtonApply = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
+        typeAskPanel1 = new ua.edu.odeku.pet.gui.tests.TypeAskPanel();
 
         jButtonApply.setText("Применить");
         jButtonApply.addActionListener(new java.awt.event.ActionListener() {
@@ -63,11 +63,11 @@ public class SelectedTypeAskPanel extends javax.swing.JPanel {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 599, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 467, Short.MAX_VALUE)
+            .addGap(0, 421, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -78,11 +78,10 @@ public class SelectedTypeAskPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(typeAskPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonApply)
-                        .addGap(0, 197, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonApply)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -90,8 +89,8 @@ public class SelectedTypeAskPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(typeAskPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonApply))
+                    .addComponent(jButtonApply)
+                    .addComponent(typeAskPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -112,7 +111,7 @@ public class SelectedTypeAskPanel extends javax.swing.JPanel {
                 break;
             case "AlternativeChoice":
                 if(alternativeChoicePanel == null){
-                    alternativeChoicePanel = new AlternativeChoicePanel();
+                    alternativeChoicePanel = new AlternativePanel();
                 }
                 //alternativeChoicePanel.setSize(jPanel1.getSize());
                 jPanel1.add(alternativeChoicePanel, BorderLayout.NORTH);
