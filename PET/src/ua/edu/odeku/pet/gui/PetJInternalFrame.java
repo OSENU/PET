@@ -4,6 +4,10 @@
  */
 package ua.edu.odeku.pet.gui;
 
+import java.awt.Dimension;
+import ua.edu.odeku.pet.settings.ConfigureProgramm;
+import ua.edu.odeku.pet.settings.DimensionEntry;
+
 /**
  *
  * @author Aleo
@@ -16,7 +20,25 @@ public class PetJInternalFrame extends javax.swing.JInternalFrame {
     public PetJInternalFrame() {
         initComponents();
     }
-
+    
+    private void saveDimension(){
+        Dimension dimension = this.getSize(); 
+        DimensionEntry dimensionEntry;
+        String name = this.getName();
+        if(name == null || name.trim().isEmpty()){
+            name = null;
+        }
+        dimensionEntry = new DimensionEntry(name, this.getX(), this.getY(), dimension.width, dimension.height);
+        ConfigureProgramm.saveDimension(dimensionEntry);
+    }
+    private void loadDimesion(){
+        DimensionEntry dimensionEntry = ConfigureProgramm.loadDimension(this.getName());
+        if(dimensionEntry.width != -1 && dimensionEntry.height != -1){
+            this.setSize(dimensionEntry.width, dimensionEntry.height);
+        }
+        this.setLocation(dimensionEntry.x, dimensionEntry.y);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -31,20 +53,48 @@ public class PetJInternalFrame extends javax.swing.JInternalFrame {
         setMaximizable(true);
         setResizable(true);
         setToolTipText("");
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameOpened(evt);
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+                saveDimensionListener(evt);
+            }
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+        });
 
-        // javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        // getContentPane().setLayout(layout);
-        // layout.setHorizontalGroup(
-        //     layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        //     .addGap(0, 394, Short.MAX_VALUE)
-        // );
-        // layout.setVerticalGroup(
-        //     layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        //     .addGap(0, 282, Short.MAX_VALUE)
-        // );
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 394, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 286, Short.MAX_VALUE)
+        );
 
-        // pack();
+        pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void saveDimensionListener(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_saveDimensionListener
+        saveDimension();
+        System.out.println("SAVE");
+    }//GEN-LAST:event_saveDimensionListener
+
+    private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
+        loadDimesion();
+        System.out.println("Load");
+    }//GEN-LAST:event_formInternalFrameOpened
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

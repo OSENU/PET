@@ -80,6 +80,14 @@ public class MainFormPET extends javax.swing.JFrame {
         setAutoRequestFocus(false);
         setMinimumSize(new java.awt.Dimension(40, 40));
         setModalExclusionType(java.awt.Dialog.ModalExclusionType.TOOLKIT_EXCLUDE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                saveConfigure(evt);
+            }
+        });
 
         jToolBar1.setRollover(true);
 
@@ -346,6 +354,16 @@ public class MainFormPET extends javax.swing.JFrame {
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         addNewTest();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void saveConfigure(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_saveConfigure
+        ConfigureProgramm.saveConfig();
+        System.out.println("save");
+    }//GEN-LAST:event_saveConfigure
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        ConfigureProgramm.saveConfig();
+        System.out.println("formWindowClosing");
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
