@@ -588,3 +588,78 @@ Select * From TestWhere name_test ='hgfhg' and id_groups = 1 and id_teacher = 1 
 org.h2.jdbc.JdbcSQLException: Синтаксическая ошибка в выражении SQL "INSERT INTO TEST (NAME_TEST, ID_TEACHER, ID_GROUPS, ID_TYPE_WORK, ID_SUBJECT, COUNT_QUERY) VALUES('sdfsdf', 1, 1, 1, 3 10[*]); "; ожидалось "[, ::, *, /, %, +, -, ||, ~, !~, NOT, LIKE, REGEXP, IS, IN, BETWEEN, AND, OR, ,, )"
 Syntax error in SQL statement "INSERT INTO TEST (NAME_TEST, ID_TEACHER, ID_GROUPS, ID_TYPE_WORK, ID_SUBJECT, COUNT_QUERY) VALUES('sdfsdf', 1, 1, 1, 3 10[*]); "; expected "[, ::, *, /, %, +, -, ||, ~, !~, NOT, LIKE, REGEXP, IS, IN, BETWEEN, AND, OR, ,, )"; SQL statement:
 insert into Test (name_test, id_teacher, id_groups, id_type_work, id_subject, count_query) values('sdfsdf', 1, 1, 1, 3 10); [42001-170]
+01-25 09:57:09 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Синтаксическая ошибка в выражении SQL "CREATE TABLE TEST
+(
+	ID_TEST              INTEGER NOT NULL AUTO_INCREMENT(1) ,
+	ID_TEACHER           INTEGER NOT NULL ,
+	ID_TYPE_WORK         INTEGER NOT NULL ,
+	ID_SUBJECT           INTEGER NOT NULL ,
+	ID_GROUPS            INTEGER NOT NULL ,
+	DATE_CREATE          DATE NULL DEFAULT ,[*]
+	DATE_LAST_EDIT       DATE NULL ,
+	DATE_LAST_USED       DATE NULL ,
+	NAME_TEST            VARCHAR(1000) NOT NULL ,
+	COUNT_QUERY          INTEGER NOT NULL 
+) "; ожидалось "NOT, EXISTS, SELECT, FROM"
+Syntax error in SQL statement "CREATE TABLE TEST
+(
+	ID_TEST              INTEGER NOT NULL AUTO_INCREMENT(1) ,
+	ID_TEACHER           INTEGER NOT NULL ,
+	ID_TYPE_WORK         INTEGER NOT NULL ,
+	ID_SUBJECT           INTEGER NOT NULL ,
+	ID_GROUPS            INTEGER NOT NULL ,
+	DATE_CREATE          DATE NULL DEFAULT ,[*]
+	DATE_LAST_EDIT       DATE NULL ,
+	DATE_LAST_USED       DATE NULL ,
+	NAME_TEST            VARCHAR(1000) NOT NULL ,
+	COUNT_QUERY          INTEGER NOT NULL 
+) "; expected "NOT, EXISTS, SELECT, FROM"; SQL statement:
+CREATE TABLE Test
+(
+	id_test              INTEGER NOT NULL AUTO_INCREMENT(1) ,
+	id_teacher           INTEGER NOT NULL ,
+	id_type_work         INTEGER NOT NULL ,
+	id_subject           INTEGER NOT NULL ,
+	id_groups            INTEGER NOT NULL ,
+	date_create          DATE NULL default ,
+	date_last_edit       DATE NULL ,
+	date_last_used       DATE NULL ,
+	name_test            VARCHAR(1000) NOT NULL ,
+	count_query          INTEGER NOT NULL 
+) [42001-170]
+01-25 09:57:09 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Таблица "TEST" не найдена
+Table "TEST" not found; SQL statement:
+CREATE UNIQUE INDEX XPKTest ON Test
+(id_test   ASC) [42102-170]
+01-25 09:57:09 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Таблица "TEST" не найдена
+Table "TEST" not found; SQL statement:
+ALTER TABLE Test
+	ADD CONSTRAINT  XPKTest PRIMARY KEY (id_test) [42102-170]
+01-25 09:57:09 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Таблица "TEST" не найдена
+Table "TEST" not found; SQL statement:
+ALTER TABLE Question
+	ADD CONSTRAINT R_20 FOREIGN KEY (id_test) REFERENCES Test (id_test) [42102-170]
+01-25 09:57:09 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Таблица "TEST" не найдена
+Table "TEST" not found; SQL statement:
+ALTER TABLE Test
+	ADD CONSTRAINT R_13 FOREIGN KEY (id_teacher) REFERENCES Teacher (id_teacher) [42102-170]
+01-25 09:57:09 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Таблица "TEST" не найдена
+Table "TEST" not found; SQL statement:
+ALTER TABLE Test
+	ADD CONSTRAINT R_14 FOREIGN KEY (id_type_work) REFERENCES Type_Work (id_type_work) [42102-170]
+01-25 09:57:09 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Таблица "TEST" не найдена
+Table "TEST" not found; SQL statement:
+ALTER TABLE Test
+	ADD CONSTRAINT R_15 FOREIGN KEY (id_subject) REFERENCES Subject (id_subject) [42102-170]
+01-25 09:57:09 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Таблица "TEST" не найдена
+Table "TEST" not found; SQL statement:
+ALTER TABLE Test
+	ADD CONSTRAINT R_16 FOREIGN KEY (id_groups) REFERENCES Groups (id_groups) [42102-170]
