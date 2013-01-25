@@ -165,6 +165,7 @@ public class TypeWorkInternalFrame extends PetJInternalFrame {
 
         setTitle("Справочник типов работ");
         setMinimumSize(new java.awt.Dimension(400, 400));
+        setName("dictionaries_type_work"); // NOI18N
         setPreferredSize(new java.awt.Dimension(400, 400));
 
         jButtonAdd.setText("Добавить");
@@ -202,7 +203,7 @@ public class TypeWorkInternalFrame extends PetJInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButtonAdd)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -218,7 +219,7 @@ public class TypeWorkInternalFrame extends PetJInternalFrame {
                     .addComponent(jButtonAdd)
                     .addComponent(jButtonEdit))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 431, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
                 .addContainerGap())
         );
 

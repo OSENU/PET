@@ -34,6 +34,7 @@ public class MainFormPET extends javax.swing.JFrame {
 
     public void addNewTest() {
         AddTestInternalFrame addTestInternalFrame = new AddTestInternalFrame();
+        addTestInternalFrame.setTitle("Создание теста");
         jDesktopPane1.add(addTestInternalFrame);
         addTestInternalFrame.setVisible(true);
     }

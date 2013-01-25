@@ -176,6 +176,7 @@ public class FacultyInternalFrame extends ua.edu.odeku.pet.gui.PetJInternalFrame
 
         setTitle("Справочник факультетов");
         setMinimumSize(new java.awt.Dimension(400, 400));
+        setName("dictionaries_faculty"); // NOI18N
         setPreferredSize(new java.awt.Dimension(400, 400));
 
         jButtonAdd.setText("Добавить");
@@ -216,7 +217,7 @@ public class FacultyInternalFrame extends ua.edu.odeku.pet.gui.PetJInternalFrame
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonEdit)
                         .addGap(0, 232, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -227,7 +228,7 @@ public class FacultyInternalFrame extends ua.edu.odeku.pet.gui.PetJInternalFrame
                     .addComponent(jButtonAdd)
                     .addComponent(jButtonEdit))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
                 .addContainerGap())
         );
 

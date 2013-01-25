@@ -165,6 +165,7 @@ public class SubjectInternalFrame extends PetJInternalFrame {
 
         setTitle("Справочник предметов");
         setMinimumSize(new java.awt.Dimension(400, 400));
+        setName("dictionaries_subject"); // NOI18N
         setPreferredSize(new java.awt.Dimension(400, 400));
 
         jTableSubject.setModel(new javax.swing.table.DefaultTableModel(
@@ -201,7 +202,7 @@ public class SubjectInternalFrame extends PetJInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButtonAdd)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -217,7 +218,7 @@ public class SubjectInternalFrame extends PetJInternalFrame {
                     .addComponent(jButtonAdd)
                     .addComponent(jButtonEdit))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
