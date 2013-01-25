@@ -7,7 +7,6 @@ package ua.edu.odeku.pet.gui.tests.matched;
 import java.awt.BorderLayout;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
-import ua.edu.odeku.pet.gui.matched.ItemMatchedPanel;
 import ua.edu.odeku.pet.gui.tests.ItemTest;
 import ua.edu.odeku.pet.util.SMS;
 
