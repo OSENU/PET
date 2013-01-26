@@ -22,7 +22,7 @@ public class GroupsTableModal extends AbstractTableModel{
     private ArrayList<Groups> groups;
     
     public GroupsTableModal() throws SQLException {
-        Connection conn = ua.edu.odeku.pet.database.DataBaseConnect.getConnection();
+        Connection conn = ua.edu.odeku.pet.database.ConnectionDataBase.getConnection();
         Statement st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, 
                 ResultSet.CONCUR_READ_ONLY);
         ResultSet rs = st.executeQuery(

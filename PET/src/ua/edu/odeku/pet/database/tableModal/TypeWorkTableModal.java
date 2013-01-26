@@ -22,7 +22,7 @@ public class TypeWorkTableModal extends AbstractTableModel{
     ArrayList<TypeWork> works;
     
     public TypeWorkTableModal() throws SQLException {
-        Connection conn = ua.edu.odeku.pet.database.DataBaseConnect.getConnection();
+        Connection conn = ua.edu.odeku.pet.database.ConnectionDataBase.getConnection();
         Statement st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         ResultSet rs = st.executeQuery("Select * from type_work;");
         rs.last();

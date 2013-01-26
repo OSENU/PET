@@ -86,7 +86,7 @@ public class TypeWork implements Serializable, EntryDataBase {
     @Override
     public int insertInto() throws SQLException{
         int result;
-        Connection conn = ua.edu.odeku.pet.database.DataBaseConnect.getConnection();
+        Connection conn = ua.edu.odeku.pet.database.ConnectionDataBase.getConnection();
         Statement st = conn.createStatement();
         // Формируем запрос на проверку
         ResultSet rs = st.executeQuery("Select id_type_work "
@@ -122,7 +122,7 @@ public class TypeWork implements Serializable, EntryDataBase {
             return -2;
         }
         TypeWork newTypeWork = (TypeWork) object;
-        Connection conn = ua.edu.odeku.pet.database.DataBaseConnect.getConnection();
+        Connection conn = ua.edu.odeku.pet.database.ConnectionDataBase.getConnection();
         Statement st = conn.createStatement();
         // Формируем запрос на проверку
         ResultSet rs = st.executeQuery("Select id_type_work "
@@ -148,7 +148,7 @@ public class TypeWork implements Serializable, EntryDataBase {
         if (nameTypeWork == null || nameTypeWork.isEmpty()) {
             return null;
         }
-        Statement statement = ua.edu.odeku.pet.database.DataBaseConnect.getStatement();
+        Statement statement = ua.edu.odeku.pet.database.ConnectionDataBase.getStatement();
         ResultSet resultSet = statement.executeQuery("Select id_type_work from Type_work "
                 + "where name_type_work ='" + nameTypeWork + "';");
         Integer id = null;

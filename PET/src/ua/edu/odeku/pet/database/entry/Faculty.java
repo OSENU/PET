@@ -87,7 +87,7 @@ public class Faculty implements Serializable, EntryDataBase {
             return -2;
         }
         Faculty newFaculty = (Faculty) object;
-        Connection conn = ua.edu.odeku.pet.database.DataBaseConnect.getConnection();
+        Connection conn = ua.edu.odeku.pet.database.ConnectionDataBase.getConnection();
         Statement st = conn.createStatement();
         // Формируем запрос на проверку
         ResultSet rs = st.executeQuery("Select id_Faculty "
@@ -111,7 +111,7 @@ public class Faculty implements Serializable, EntryDataBase {
     @Override
     public int insertInto() throws SQLException{
         int result;
-        Connection conn = ua.edu.odeku.pet.database.DataBaseConnect.getConnection();
+        Connection conn = ua.edu.odeku.pet.database.ConnectionDataBase.getConnection();
         Statement st = conn.createStatement();
         // Формируем запрос на проверку
         ResultSet rs = st.executeQuery("Select id_Faculty "
@@ -137,7 +137,7 @@ public class Faculty implements Serializable, EntryDataBase {
         if(nameFaculty == null || nameFaculty.isEmpty()){
             return null;
         }
-        Statement statement = ua.edu.odeku.pet.database.DataBaseConnect.getStatement();
+        Statement statement = ua.edu.odeku.pet.database.ConnectionDataBase.getStatement();
         ResultSet resultSet = statement.executeQuery("Select id_faculty from Faculty "
                 + "where name_faculty='"+nameFaculty+"';");
         Integer id = null;

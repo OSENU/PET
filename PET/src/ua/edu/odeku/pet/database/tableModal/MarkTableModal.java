@@ -20,7 +20,7 @@ public class MarkTableModal extends AbstractTableModel {
     private ArrayList<Mark> marks;
     
     public MarkTableModal() throws SQLException {
-        Connection conn = ua.edu.odeku.pet.database.DataBaseConnect.getConnection();
+        Connection conn = ua.edu.odeku.pet.database.ConnectionDataBase.getConnection();
         Statement st;
         st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         ResultSet rs = st.executeQuery(

@@ -381,7 +381,7 @@ public class MainFormPET extends javax.swing.JFrame {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(MainFormPET.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        ua.edu.odeku.pet.database.DataBaseConnect.createTables();
+        ua.edu.odeku.pet.database.ConnectionDataBase.createTables();
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

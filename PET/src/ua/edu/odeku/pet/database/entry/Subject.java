@@ -88,7 +88,7 @@ public class Subject implements Serializable, EntryDataBase {
     @Override
     public int insertInto() throws SQLException {
         int result;
-        Connection conn = ua.edu.odeku.pet.database.DataBaseConnect.getConnection();
+        Connection conn = ua.edu.odeku.pet.database.ConnectionDataBase.getConnection();
         Statement st = conn.createStatement();
         // Формируем запрос на проверку
         ResultSet rs = st.executeQuery("Select id_subject "
@@ -124,7 +124,7 @@ public class Subject implements Serializable, EntryDataBase {
             return -2;
         }
         Subject newSubject = (Subject) object;
-        Connection conn = ua.edu.odeku.pet.database.DataBaseConnect.getConnection();
+        Connection conn = ua.edu.odeku.pet.database.ConnectionDataBase.getConnection();
         Statement st = conn.createStatement();
         // Формируем запрос на проверку
         ResultSet rs = st.executeQuery("Select id_subject "
@@ -150,7 +150,7 @@ public class Subject implements Serializable, EntryDataBase {
         if (nameSubject == null || nameSubject.isEmpty()) {
             return null;
         }
-        Statement statement = ua.edu.odeku.pet.database.DataBaseConnect.getStatement();
+        Statement statement = ua.edu.odeku.pet.database.ConnectionDataBase.getStatement();
         ResultSet resultSet = statement.executeQuery("Select id_subject from Subject "
                 + "where name_subject='" + nameSubject + "';");
         Integer id = null;

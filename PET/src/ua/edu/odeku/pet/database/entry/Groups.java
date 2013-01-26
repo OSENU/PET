@@ -116,7 +116,7 @@ public class Groups implements Serializable, EntryDataBase {
     @Override
     public int insertInto() throws SQLException{
         int result;
-        Connection conn = ua.edu.odeku.pet.database.DataBaseConnect.getConnection();
+        Connection conn = ua.edu.odeku.pet.database.ConnectionDataBase.getConnection();
         Statement st = conn.createStatement();
         // Формируем запрос на проверку
         ResultSet rs = st.executeQuery("Select id_groups "
@@ -156,7 +156,7 @@ public class Groups implements Serializable, EntryDataBase {
             return -2;
         }
         Groups newGroups = (Groups) object;
-        Connection conn = ua.edu.odeku.pet.database.DataBaseConnect.getConnection();
+        Connection conn = ua.edu.odeku.pet.database.ConnectionDataBase.getConnection();
         Statement st = conn.createStatement();
         // Формируем запрос на проверку
         ResultSet rs = st.executeQuery("Select id_groups "
@@ -190,7 +190,7 @@ public class Groups implements Serializable, EntryDataBase {
         } else if (faculty == null || faculty.getIdFaculty() == null){
             return id;
         }
-        Statement statement = ua.edu.odeku.pet.database.DataBaseConnect.getStatement();
+        Statement statement = ua.edu.odeku.pet.database.ConnectionDataBase.getStatement();
         ResultSet resultSet = statement.executeQuery("Select id_groups from groups where "
                 + "num_group =" + numGroup + " "
                 + "and id_faculty = " + faculty.getIdFaculty() + " "

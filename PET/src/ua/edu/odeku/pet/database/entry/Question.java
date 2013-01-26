@@ -93,7 +93,7 @@ public class Question implements EntryDataBase{
     @Override
     public int insertInto() throws SQLException {
         int result = -1;
-        Connection connection = ua.edu.odeku.pet.database.DataBaseConnect.getConnection();
+        Connection connection = ua.edu.odeku.pet.database.ConnectionDataBase.getConnection();
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("Select id_question "
                 + "from Question "
@@ -117,7 +117,7 @@ public class Question implements EntryDataBase{
         }
         Question newQuestion = (Question) object;
         
-        Connection conn = ua.edu.odeku.pet.database.DataBaseConnect.getConnection();
+        Connection conn = ua.edu.odeku.pet.database.ConnectionDataBase.getConnection();
         Statement st = conn.createStatement();
         // Формируем запрос на проверку
         ResultSet rs = st.executeQuery("Select id__question "
@@ -144,7 +144,7 @@ public class Question implements EntryDataBase{
 
     @Override
     public Integer getIdFromDataBase() throws SQLException {
-        Statement statement = ua.edu.odeku.pet.database.DataBaseConnect.getStatement();
+        Statement statement = ua.edu.odeku.pet.database.ConnectionDataBase.getStatement();
         if(nameQuestion == null || nameQuestion.isEmpty()){
             return null;
         } else if(test == null || test.getId_test() == null){

@@ -1,6 +1,6 @@
 package ua.edu.odeku.pet.database.tableModal;
 
-import ua.edu.odeku.pet.database.DataBaseConnect;
+import ua.edu.odeku.pet.database.ConnectionDataBase;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,7 +18,7 @@ public class DepartmentTableModal extends AbstractTableModel {
     private int countRow, countColumn;
     private ArrayList<Department> departments;
     public DepartmentTableModal() throws SQLException{
-        Connection conn = DataBaseConnect.getConnection();
+        Connection conn = ConnectionDataBase.getConnection();
         Statement st;
         st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         ResultSet rs = st.executeQuery(
@@ -47,7 +47,7 @@ public class DepartmentTableModal extends AbstractTableModel {
         
         rs.close();
         st.close();
-//      DataBaseConnect.destroyConnection();
+//      ConnectionDataBase.destroyConnection();
     }
     
     @Override

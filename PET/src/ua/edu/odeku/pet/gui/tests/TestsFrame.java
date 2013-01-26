@@ -137,7 +137,7 @@ public class TestsFrame extends javax.swing.JFrame {
             
             try {
                 //Создадим точку возврата
-                ua.edu.odeku.pet.database.DataBaseConnect.setStaticSavepoint();
+                ua.edu.odeku.pet.database.ConnectionDataBase.setStaticSavepoint();
                 // Cохраним сам тест
                 warning = registTestPanel1.saveTest();
                 if(warning == null || warning.trim().isEmpty()){
@@ -149,14 +149,14 @@ public class TestsFrame extends javax.swing.JFrame {
                             warning = itemTests[i].saveItemTest(idTest);
                         } catch (Exception ex){
                             SMS.error(ex.toString());
-                            ua.edu.odeku.pet.database.DataBaseConnect.rollBackStatic();
+                            ua.edu.odeku.pet.database.ConnectionDataBase.rollBackStatic();
                             return;
                         }
                         // Если были ошибки то прервем сохранение
                         if(!warning.trim().isEmpty()){
                             SMS.warning(this, "В задании " + (i + 1) + " : " + warning);
                             // Тут по идее откат....
-                            ua.edu.odeku.pet.database.DataBaseConnect.rollBackStatic();
+                            ua.edu.odeku.pet.database.ConnectionDataBase.rollBackStatic();
                             return;
                         }
                     }
@@ -165,7 +165,7 @@ public class TestsFrame extends javax.swing.JFrame {
                 } else {
                     SMS.warning(this, warning);
                     //Откат изменений
-                    ua.edu.odeku.pet.database.DataBaseConnect.rollBackStatic();
+                    ua.edu.odeku.pet.database.ConnectionDataBase.rollBackStatic();
                     // Тут откат необходимо сделать
                 }
             }

@@ -4,7 +4,7 @@
  */
 package ua.edu.odeku.pet.database.data;
 
-import ua.edu.odeku.pet.database.DataBaseConnect;
+import ua.edu.odeku.pet.database.ConnectionDataBase;
 import ua.edu.odeku.pet.database.entry.Department;
 import ua.edu.odeku.pet.database.entry.Faculty;
 import ua.edu.odeku.pet.database.entry.Groups;
@@ -32,7 +32,7 @@ public class GetDataTable {
      * @throws SQLException 
      */
     public static Department[] getDepartments() throws SQLException{
-        Connection conn = DataBaseConnect.getConnection();
+        Connection conn = ConnectionDataBase.getConnection();
         Statement st;
         st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         ResultSet rs = st.executeQuery(
@@ -70,7 +70,7 @@ public class GetDataTable {
      * @throws SQLException 
      */
     public static Teacher[] getTeachers() throws SQLException{
-        Connection conn = DataBaseConnect.getConnection();
+        Connection conn = ConnectionDataBase.getConnection();
         Statement st;
         st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         ResultSet rs = st.executeQuery(
@@ -109,7 +109,7 @@ public class GetDataTable {
     }
     
     public static Faculty[] getFacultys() throws SQLException{
-        Connection conn = DataBaseConnect.getConnection();
+        Connection conn = ConnectionDataBase.getConnection();
         Statement st;
         st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         ResultSet rs = st.executeQuery(
@@ -139,7 +139,7 @@ public class GetDataTable {
     }
     
     public static Subject[] getSubjects() throws SQLException{
-        Connection conn = DataBaseConnect.getConnection();
+        Connection conn = ConnectionDataBase.getConnection();
         Statement st;
         st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         ResultSet rs = st.executeQuery(
@@ -169,7 +169,7 @@ public class GetDataTable {
     }
     
     public static TypeWork[] getTypeWork() throws SQLException{
-        Connection conn = DataBaseConnect.getConnection();
+        Connection conn = ConnectionDataBase.getConnection();
         Statement st;
         st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         ResultSet rs = st.executeQuery(
@@ -199,7 +199,7 @@ public class GetDataTable {
     }
     
     public static Groups[] getGroupses() throws SQLException{
-        Connection conn = DataBaseConnect.getConnection();
+        Connection conn = ConnectionDataBase.getConnection();
         Statement st;
         st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         ResultSet rs = st.executeQuery(

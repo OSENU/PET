@@ -92,7 +92,7 @@ public class Department implements Serializable, EntryDataBase {
     @Override
     public int insertInto() throws SQLException{
         int result;
-        Connection conn = ua.edu.odeku.pet.database.DataBaseConnect.getConnection();
+        Connection conn = ua.edu.odeku.pet.database.ConnectionDataBase.getConnection();
         Statement st = conn.createStatement();
         // Формируем запрос на проверку
         ResultSet rs = st.executeQuery("Select id_department "
@@ -130,7 +130,7 @@ public class Department implements Serializable, EntryDataBase {
             return -2;
         }
         Department newDepartment = (Department) object;
-        Connection conn = ua.edu.odeku.pet.database.DataBaseConnect.getConnection();
+        Connection conn = ua.edu.odeku.pet.database.ConnectionDataBase.getConnection();
         Statement st = conn.createStatement();
         // Формируем запрос на проверку
         ResultSet rs = st.executeQuery("Select id_department "
@@ -169,7 +169,7 @@ public class Department implements Serializable, EntryDataBase {
 
     @Override
     public Integer getIdFromDataBase() throws SQLException{
-        Connection connection = ua.edu.odeku.pet.database.DataBaseConnect.getConnection();
+        Connection connection = ua.edu.odeku.pet.database.ConnectionDataBase.getConnection();
         Statement statement = connection.createStatement();
         if(nameDepartment == null || nameDepartment.isEmpty()){
             return null;

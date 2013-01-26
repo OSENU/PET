@@ -243,7 +243,7 @@ public class Test implements EntryDataBase, Serializable {
     @Override
     public int insertInto() throws SQLException {
         int result = 0;
-        Connection connection = ua.edu.odeku.pet.database.DataBaseConnect.getConnection();
+        Connection connection = ua.edu.odeku.pet.database.ConnectionDataBase.getConnection();
         Statement st = connection.createStatement();
         ResultSet rs = st.executeQuery("Select * From Test "
                 + "Where name_test ='" + nameTest + "' and "
@@ -314,7 +314,7 @@ public class Test implements EntryDataBase, Serializable {
         sql += "and id_type_work = " + typeWork.getIdTypeWork() + " ";
         sql += "and id_groups = " + groups.getIdGroups() + " ";
         
-        Statement statement = ua.edu.odeku.pet.database.DataBaseConnect.getStatement();
+        Statement statement = ua.edu.odeku.pet.database.ConnectionDataBase.getStatement();
         ResultSet resultSet = statement.executeQuery(sql);
         if (resultSet.next()){
             id = resultSet.getInt(1);

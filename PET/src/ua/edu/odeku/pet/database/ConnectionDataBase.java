@@ -19,7 +19,7 @@ import ua.edu.odeku.pet.util.SMS;
  *
  * @author Aleo
  */
-public class DataBaseConnect {
+public class ConnectionDataBase {
     /**
      * Этот класс сингелтон он дает обїект в эденичном экземпляре
      */
@@ -33,7 +33,7 @@ public class DataBaseConnect {
     private static String db_dir;
     
     
-    private DataBaseConnect(){}
+    private ConnectionDataBase(){}
     
     /**
      * Возращает соединение с базой
@@ -84,7 +84,7 @@ public class DataBaseConnect {
             statement = connection.createStatement();
         } catch (SQLException ex) {
             SMS.error(ex.toString());
-            Logger.getLogger(DataBaseConnect.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ConnectionDataBase.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
             rs = statement.executeQuery("SELECT * FROM PET_CONFIG;");
@@ -92,7 +92,7 @@ public class DataBaseConnect {
             if(ex.toString().indexOf("Table \"PET_CONFIG\" not found;") != -1){
                 flag = false;
             } else{
-                Logger.getLogger(DataBaseConnect.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ConnectionDataBase.class.getName()).log(Level.SEVERE, null, ex);
                 SMS.error(ex.toString());
             }
         }
@@ -107,7 +107,7 @@ public class DataBaseConnect {
             if(name_file.endsWith(".sql")){
                 File file = new File(name_file);
                 if(file.exists()){
-                    StringBuffer sb = new StringBuffer();
+                    StringBuilder sb = new StringBuilder();
                     String line;
                     BufferedReader br = null;
                     FileReader fr = null;
@@ -125,15 +125,15 @@ public class DataBaseConnect {
                             SMS.message("База данных была успешно создана");
                         } catch (SQLException ex) {
                             SMS.error("Ошибка при выполенении скрипта");
-                            Logger.getLogger(DataBaseConnect.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(ConnectionDataBase.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         
                     } catch (FileNotFoundException ex) {
                         SMS.error(ex.toString());
-                        Logger.getLogger(DataBaseConnect.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(ConnectionDataBase.class.getName()).log(Level.SEVERE, null, ex);
                     } catch (IOException ex) {
                         SMS.error(ex.toString());
-                        Logger.getLogger(DataBaseConnect.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(ConnectionDataBase.class.getName()).log(Level.SEVERE, null, ex);
                     } finally{
                         if(fr!= null){
                             try {
@@ -141,7 +141,7 @@ public class DataBaseConnect {
                                 br.close();
                             } catch (IOException ex) {
                                 SMS.error(ex.toString());
-                                Logger.getLogger(DataBaseConnect.class.getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(ConnectionDataBase.class.getName()).log(Level.SEVERE, null, ex);
                                 return;
                             }
                         }

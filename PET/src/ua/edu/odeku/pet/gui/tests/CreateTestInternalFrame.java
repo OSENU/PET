@@ -153,7 +153,7 @@ public class CreateTestInternalFrame extends PetJInternalFrame {
 
             try {
                 //Создадим точку возврата
-                ua.edu.odeku.pet.database.DataBaseConnect.setStaticSavepoint();
+                ua.edu.odeku.pet.database.ConnectionDataBase.setStaticSavepoint();
                 // Cохраним сам тест
                 warning = registTestPanel.saveTest();
                 if (warning == null || warning.trim().isEmpty()) {
@@ -165,7 +165,7 @@ public class CreateTestInternalFrame extends PetJInternalFrame {
                             warning = itemTests[i].saveItemTest(idTest);
                         } catch (Exception ex) {
                             SMS.error(ex.toString());
-                            ua.edu.odeku.pet.database.DataBaseConnect.rollBackStatic();
+                            ua.edu.odeku.pet.database.ConnectionDataBase.rollBackStatic();
                             jProgressBar.setIndeterminate(false);
                             return;
                         }
@@ -173,7 +173,7 @@ public class CreateTestInternalFrame extends PetJInternalFrame {
                         if (!warning.trim().isEmpty()) {
                             SMS.warning(this, "В задании " + (i + 1) + " : " + warning);
                             // Тут по идее откат....
-                            ua.edu.odeku.pet.database.DataBaseConnect.rollBackStatic();
+                            ua.edu.odeku.pet.database.ConnectionDataBase.rollBackStatic();
                             jProgressBar.setIndeterminate(false);
                             return;
                         }
@@ -183,7 +183,7 @@ public class CreateTestInternalFrame extends PetJInternalFrame {
                 } else {
                     SMS.warning(this, warning);
                     //Откат изменений
-                    ua.edu.odeku.pet.database.DataBaseConnect.rollBackStatic();
+                    ua.edu.odeku.pet.database.ConnectionDataBase.rollBackStatic();
                     // Тут откат необходимо сделать
                 }
             } catch (SQLException ex) {

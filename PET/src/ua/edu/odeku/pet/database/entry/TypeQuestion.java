@@ -101,7 +101,7 @@ public class TypeQuestion implements EntryDataBase {
     @Override
     public int insertInto() throws SQLException {
         int result = -1;
-        Connection connection = ua.edu.odeku.pet.database.DataBaseConnect.getConnection();
+        Connection connection = ua.edu.odeku.pet.database.ConnectionDataBase.getConnection();
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("Select id_type_question "
                 + "from Question_Type "
@@ -124,7 +124,7 @@ public class TypeQuestion implements EntryDataBase {
         }
         TypeQuestion newTypeQuestion = (TypeQuestion) object;
         
-        Connection conn = ua.edu.odeku.pet.database.DataBaseConnect.getConnection();
+        Connection conn = ua.edu.odeku.pet.database.ConnectionDataBase.getConnection();
         Statement st = conn.createStatement();
         // Формируем запрос на проверку
         ResultSet rs = st.executeQuery("Select id_type_question "
@@ -153,7 +153,7 @@ public class TypeQuestion implements EntryDataBase {
 
     @Override
     public Integer getIdFromDataBase() throws SQLException {
-        Connection connection = ua.edu.odeku.pet.database.DataBaseConnect.getConnection();
+        Connection connection = ua.edu.odeku.pet.database.ConnectionDataBase.getConnection();
         Statement statement = connection.createStatement();
         if(nameProgQuestionType == null || nameProgQuestionType.isEmpty()){
             return null;

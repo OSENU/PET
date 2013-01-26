@@ -4,7 +4,7 @@
  */
 package ua.edu.odeku.pet.database.tableModal;
 
-import ua.edu.odeku.pet.database.DataBaseConnect;
+import ua.edu.odeku.pet.database.ConnectionDataBase;
 import ua.edu.odeku.pet.database.entry.Faculty;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -22,7 +22,7 @@ public class FacultyTableModal extends AbstractTableModel{
     private ArrayList<Faculty> facultys;
 
     public FacultyTableModal() throws SQLException {
-        Connection conn = DataBaseConnect.getConnection();
+        Connection conn = ConnectionDataBase.getConnection();
         Statement st;
         st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         ResultSet rs = st.executeQuery("select * from Faculty;");
