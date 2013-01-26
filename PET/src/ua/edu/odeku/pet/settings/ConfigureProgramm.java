@@ -52,7 +52,7 @@ public class ConfigureProgramm {
             JDBC = properties.getProperty("JDBC", "jdbc:h2:");
             DB_USER = properties.getProperty("DB_USER", "sa");
             DB_USER_PASS = properties.getProperty("DB_USER_PASS", "");
-            DB_DIR = properties.getProperty("DB_DIR", "");
+            DB_DIR = properties.getProperty("DB_DIR", "db/");
             SQL_TABLES_FILE = properties.getProperty("SQL_TABLES_FILE", "");
 
             if (DB_DIR.trim().isEmpty()) {
