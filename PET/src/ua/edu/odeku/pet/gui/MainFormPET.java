@@ -16,6 +16,7 @@ import ua.edu.odeku.pet.gui.dictionaries.SubjectInternalFrame;
 import ua.edu.odeku.pet.gui.dictionaries.TeacherInternalFrame;
 import ua.edu.odeku.pet.gui.dictionaries.TypeWorkInternalFrame;
 import ua.edu.odeku.pet.gui.tests.AddTestInternalFrame;
+import ua.edu.odeku.pet.gui.tests.CreateTestInternalFrame;
 import ua.edu.odeku.pet.settings.ConfigureProgramm;
 import ua.edu.odeku.pet.util.SMS;
 
@@ -33,10 +34,10 @@ public class MainFormPET extends javax.swing.JFrame {
     }
 
     public void addNewTest() {
-        AddTestInternalFrame addTestInternalFrame = new AddTestInternalFrame();
-        addTestInternalFrame.setTitle("Создание теста");
-        jDesktopPane1.add(addTestInternalFrame);
-        addTestInternalFrame.setVisible(true);
+        CreateTestInternalFrame createTestInternalFrame = new CreateTestInternalFrame();
+        createTestInternalFrame.setTitle("Создание теста");
+        jDesktopPane1.add(createTestInternalFrame);
+        createTestInternalFrame.setVisible(true);
     }
 
     /**
