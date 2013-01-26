@@ -99,6 +99,10 @@ public class ConnectionDataBase {
         return flag;
     }
     
+    /**
+     * Метод проверяет наличие таблиц в базе денных, если их не существует 
+     * то от их создаст
+     */
     public static void createTables(){
         // Проверяем на необходимость
         if(! checkTables()){
@@ -175,25 +179,51 @@ public class ConnectionDataBase {
 
     }
     
+    /**
+     * Вернет точку возрата, для возможность сделать откат
+     * @return точка возврата
+     * @throws SQLException 
+     */
     public static Savepoint getSavepoint() throws SQLException{
         Connection connection = getConnection();
         return connection.setSavepoint();
     }
     
+    /**
+     * Создаст точку возврата с указаным именем
+     * @param save имя точки возврата
+     * @return точку возврата
+     * @throws SQLException 
+     */
     public static Savepoint getSavepoint(String save) throws SQLException{
         Connection connection = getConnection();
         return connection.setSavepoint(save);
     }
-
+    
+    /**
+     * Установит глобальную точку отката
+     * @throws SQLException 
+     */
     public static void setStaticSavepoint() throws SQLException{
         savepoint = getSavepoint();
     }
     
+    /**
+     * Откат до созданой ранее глобальной точки отката
+     * @throws SQLException 
+     */
     public static void rollBackStatic() throws SQLException{
         Connection connection = getConnection();
-        connection.rollback(savepoint);
+        if (savepoint != null){
+            connection.rollback(savepoint);
+        }
     }
     
+    /**
+     * Произведет откат до указаной точки
+     * @param save Точка отката
+     * @throws SQLException 
+     */
     public static void rallBack(Savepoint save) throws SQLException{
         Connection connection = getConnection();
         connection.rollback(save);
@@ -201,5 +231,19 @@ public class ConnectionDataBase {
     
     public static Statement getStatement() throws SQLException{
         return getConnection().createStatement();
+    }
+    
+    /**
+     * Вызвав этот метод вы зафиксируете все изменения в базе данных
+     * @return 
+     */
+    public static boolean commit(){
+        try{
+            getConnection().commit();
+            return true;
+        } catch(SQLException ex){
+            SMS.error(ex.toString());
+            return false;
+        }
     }
 }
