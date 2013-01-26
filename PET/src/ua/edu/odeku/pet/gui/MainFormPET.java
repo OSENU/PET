@@ -15,7 +15,6 @@ import ua.edu.odeku.pet.gui.dictionaries.GroupsInternalFrame;
 import ua.edu.odeku.pet.gui.dictionaries.SubjectInternalFrame;
 import ua.edu.odeku.pet.gui.dictionaries.TeacherInternalFrame;
 import ua.edu.odeku.pet.gui.dictionaries.TypeWorkInternalFrame;
-import ua.edu.odeku.pet.gui.tests.AddTestInternalFrame;
 import ua.edu.odeku.pet.gui.tests.CreateTestInternalFrame;
 import ua.edu.odeku.pet.settings.ConfigureProgramm;
 import ua.edu.odeku.pet.util.SMS;
