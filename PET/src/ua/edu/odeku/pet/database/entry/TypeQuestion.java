@@ -128,7 +128,7 @@ public class TypeQuestion implements EntryDataBase {
         Statement st = conn.createStatement();
         // Формируем запрос на проверку
         ResultSet rs = st.executeQuery("Select id_type_question "
-                + "from Question_Typet "
+                + "from Question_Type "
                 + "where name_prog_question_type = '" + newTypeQuestion.nameProgQuestionType + "' "
                 + "and id_type_question <> " + idTypeQuestion + " ;");
         if (!rs.next()) {

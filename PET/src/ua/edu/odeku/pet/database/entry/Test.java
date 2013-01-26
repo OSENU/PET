@@ -110,7 +110,7 @@ public class Test implements EntryDataBase, Serializable {
     /**
      * @return the id_test
      */
-    public int getId_test() {
+    public Integer getId_test() {
         return id_test;
     }
 
