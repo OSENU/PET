@@ -4,7 +4,7 @@ drop all objects;
 CREATE TABLE Department
 (
 	id_department        INTEGER NOT NULL AUTO_INCREMENT(1) ,
-	name_department      CHAR(100) NOT NULL ,
+	name_department      VARCHAR(100) NOT NULL ,
 	id_faculty           INTEGER NOT NULL 
 );
 
@@ -23,7 +23,7 @@ ALTER TABLE Department
 CREATE TABLE Faculty
 (
 	id_faculty           INTEGER NOT NULL AUTO_INCREMENT(1) ,
-	name_faculty         CHAR(100) NOT NULL 
+	name_faculty         VARCHAR(100) NOT NULL 
 );
 
 
@@ -84,7 +84,7 @@ ALTER TABLE Journal
 CREATE TABLE Mark
 (
 	id_mark              INTEGER NOT NULL AUTO_INCREMENT(1) ,
-	name_mark            CHAR(100) NOT NULL ,
+	name_mark            VARCHAR(100) NOT NULL ,
 	min_persent          INTEGER NOT NULL ,
 	max_persent          INTEGER NOT NULL 
 );
@@ -104,10 +104,10 @@ ALTER TABLE Mark
 CREATE TABLE Question
 (
 	id_question          INTEGER NOT NULL AUTO_INCREMENT(1) ,
-	name_question        CHAR(100) NOT NULL ,
+	name_question        VARCHAR(100) NOT NULL ,
 	id_test              INTEGER NOT NULL ,
 	id_type_question     INTEGER NOT NULL ,
-	from_question        CHAR(100) NOT NULL 
+	from_question        VARCHAR(100) NOT NULL 
 );
 
 
@@ -125,9 +125,9 @@ ALTER TABLE Question
 CREATE TABLE Question_Type
 (
 	id_type_question     INTEGER NOT NULL AUTO_INCREMENT(1) ,
-	name_question_type   CHAR(100) NOT NULL ,
-	description_question_type CHAR(100) NOT NULL ,
-	name_prog_question_type CHAR(100) NOT NULL 
+	name_question_type   VARCHAR(100) NOT NULL ,
+	description_question_type VARCHAR(100) NOT NULL ,
+	name_prog_question_type VARCHAR(100) NOT NULL 
 );
 
 
@@ -147,10 +147,10 @@ CREATE TABLE Student
 	id_student           INTEGER NOT NULL AUTO_INCREMENT(1) ,
 	id_faculty           INTEGER NOT NULL ,
 	id_groups            INTEGER NOT NULL ,
-	name_student         CHAR(100) NOT NULL ,
-	name2_student        CHAR(100) NOT NULL ,
+	name_student         VARCHAR(100) NOT NULL ,
+	name2_student        VARCHAR(100) NOT NULL ,
 	birthday             DATE NULL ,
-	surname_student      CHAR(100) NOT NULL 
+	surname_student      VARCHAR(100) NOT NULL 
 );
 
 
@@ -168,7 +168,7 @@ ALTER TABLE Student
 CREATE TABLE Subject
 (
 	id_subject           INTEGER NOT NULL AUTO_INCREMENT(1) ,
-	name_subject         CHAR(100) NOT NULL 
+	name_subject         VARCHAR(100) NOT NULL 
 );
 
 
@@ -186,9 +186,9 @@ ALTER TABLE Subject
 CREATE TABLE Teacher
 (
 	id_teacher           INTEGER NOT NULL AUTO_INCREMENT(1) ,
-	name                 CHAR(100) NOT NULL ,
-	name2                CHAR(100) NOT NULL ,
-	surname              CHAR(100) NOT NULL ,
+	name                 VARCHAR(100) NOT NULL ,
+	name2                VARCHAR(100) NOT NULL ,
+	surname              VARCHAR(100) NOT NULL ,
 	id_department        INTEGER NOT NULL 
 );
 
@@ -233,7 +233,7 @@ CREATE TABLE Test
 	date_create          DATE NULL ,
 	date_last_edit       DATE NULL ,
 	date_last_used       DATE NULL ,
-	name_test            CHAR(100) NOT NULL ,
+	name_test            VARCHAR(100) NOT NULL ,
 	count_query          INTEGER NOT NULL 
 );
 
@@ -252,7 +252,7 @@ ALTER TABLE Test
 CREATE TABLE Type_Work
 (
 	id_type_work         INTEGER NOT NULL AUTO_INCREMENT(1) ,
-	name_type_work       CHAR(100) NOT NULL 
+	name_type_work       VARCHAR(100) NOT NULL 
 );
 
 
@@ -270,7 +270,7 @@ ALTER TABLE Type_Work
 CREATE TABLE Ànswer
 (
 	id_answer            INTEGER NOT NULL AUTO_INCREMENT(1) ,
-	name_answer          CHAR(100) NOT NULL ,
+	name_answer          VARCHAR(100) NOT NULL ,
 	is_Picture           INTEGER NOT NULL ,
 	picture              BLOB NULL ,
 	is_right_answer      INTEGER NOT NULL ,
