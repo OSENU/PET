@@ -106,8 +106,7 @@ CREATE TABLE Question
 	id_question          INTEGER NOT NULL AUTO_INCREMENT(1) ,
 	name_question        VARCHAR(100) NOT NULL ,
 	id_test              INTEGER NOT NULL ,
-	id_type_question     INTEGER NOT NULL ,
-	from_question        VARCHAR(100) NOT NULL 
+	id_type_question     INTEGER NOT NULL 
 );
 
 
@@ -267,27 +266,25 @@ ALTER TABLE Type_Work
 
 
 
-CREATE TABLE Ànswer
+CREATE TABLE Answer
 (
 	id_answer            INTEGER NOT NULL AUTO_INCREMENT(1) ,
 	name_answer          VARCHAR(100) NOT NULL ,
 	is_Picture           INTEGER NOT NULL ,
 	picture              BLOB NULL ,
 	is_right_answer      INTEGER NOT NULL ,
-	id_question          INTEGER NOT NULL ,
-	id_test              INTEGER NOT NULL ,
-	id_type_question     INTEGER NOT NULL 
+	id_question          INTEGER NOT NULL 
 );
 
 
 
-CREATE UNIQUE INDEX XPKÀnswer ON Ànswer
-(id_answer   ASC,id_question   ASC,id_test   ASC,id_type_question   ASC);
+CREATE UNIQUE INDEX XPKAnswer ON Answer
+(id_answer   ASC,id_question   ASC);
 
 
 
-ALTER TABLE Ànswer
-	ADD CONSTRAINT  XPKÀnswer PRIMARY KEY (id_answer,id_question,id_test,id_type_question);
+ALTER TABLE Answer
+	ADD CONSTRAINT  XPKAnswer PRIMARY KEY (id_answer,id_question);
 
 
 
@@ -386,7 +383,7 @@ ALTER TABLE Test
 
 
 
-ALTER TABLE Ànswer
+ALTER TABLE Answer
 	ADD CONSTRAINT R_22 FOREIGN KEY (id_question, id_test, id_type_question) REFERENCES Question (id_question, id_test, id_type_question);
 
 
