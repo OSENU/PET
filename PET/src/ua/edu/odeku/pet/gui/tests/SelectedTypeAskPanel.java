@@ -23,13 +23,13 @@ public class SelectedTypeAskPanel extends javax.swing.JPanel {
     
     /**
      * Метод возращает тот объект который сейчас отображаеться для заполнений
-     * @return ItemTest который можно будет сохранить
+     * @return Questionable который можно будет сохранить
      */
-    public ItemTest returnItemTest(){
+    public Questionable returnItemTest(){
         if(jPanel1.getComponentCount() == 0){
             return null;
         }
-        return (ItemTest) jPanel1.getComponent(0);
+        return (Questionable) jPanel1.getComponent(0);
     }
     
     /**

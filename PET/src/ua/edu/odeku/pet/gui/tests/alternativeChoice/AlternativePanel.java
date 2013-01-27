@@ -5,13 +5,13 @@
 package ua.edu.odeku.pet.gui.tests.alternativeChoice;
 
 import javax.swing.JPanel;
-import ua.edu.odeku.pet.gui.tests.ItemTest;
+import ua.edu.odeku.pet.gui.tests.Questionable;
 
 /**
  *
  * @author Aleo
  */
-public class AlternativePanel extends javax.swing.JPanel implements ItemTest{
+public class AlternativePanel extends javax.swing.JPanel implements Questionable{
 
     /**
      * Creates new form AlternativePanel

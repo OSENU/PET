@@ -7,14 +7,14 @@ package ua.edu.odeku.pet.gui.tests.matched;
 import java.awt.BorderLayout;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
-import ua.edu.odeku.pet.gui.tests.ItemTest;
+import ua.edu.odeku.pet.gui.tests.Questionable;
 import ua.edu.odeku.pet.util.SMS;
 
 /**
  *
  * @author Aleo
  */
-public class MatchedPanel extends javax.swing.JPanel implements ItemTest{
+public class MatchedPanel extends javax.swing.JPanel implements Questionable{
     private ItemMatchedPanel[] itemA , itemB;
     /**
      * Creates new form MatchedPanel

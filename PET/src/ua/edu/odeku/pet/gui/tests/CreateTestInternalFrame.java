@@ -128,7 +128,7 @@ public class CreateTestInternalFrame extends PetJInternalFrame {
         jProgressBar.setIndeterminate(true);
         if (selectedTypeAskPanels != null) {
             // Соберем все в один массив
-            ItemTest[] itemTests = new ItemTest[registTestPanel.getCountTest()];
+            Questionable[] itemTests = new Questionable[registTestPanel.getCountTest()];
             String warning = null;
             for (int i = 0; i < selectedTypeAskPanels.length; i++) {
                 // Заполним масив который будет сохраняться.

@@ -11,7 +11,7 @@ import javax.swing.JPanel;
  *
  * @author Aleo
  */
-public interface ItemTest {
+public interface Questionable {
     
     /**
      * Метод должен вызываться для сохранения этого задания в базу данных.

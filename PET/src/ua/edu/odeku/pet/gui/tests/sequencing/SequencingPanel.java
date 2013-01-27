@@ -5,14 +5,14 @@ package ua.edu.odeku.pet.gui.tests.sequencing;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
-import ua.edu.odeku.pet.gui.tests.ItemTest;
+import ua.edu.odeku.pet.gui.tests.Questionable;
 import ua.edu.odeku.pet.util.SMS;
 
 /**
  *
  * @author Aleo
  */
-public class SequencingPanel extends javax.swing.JPanel implements ItemTest{
+public class SequencingPanel extends javax.swing.JPanel implements Questionable{
     ItemSequencingPanel[] itemSequencingPanels;
     /**
      * Creates new form SequencingPanel

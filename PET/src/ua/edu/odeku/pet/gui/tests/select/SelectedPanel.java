@@ -5,7 +5,7 @@
 package ua.edu.odeku.pet.gui.tests.select;
 
 import ua.edu.odeku.pet.gui.tests.select.ItemSelectedPanel;
-import ua.edu.odeku.pet.gui.tests.ItemTest;
+import ua.edu.odeku.pet.gui.tests.Questionable;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
@@ -15,7 +15,7 @@ import ua.edu.odeku.pet.util.SMS;
  *
  * @author Aleo
  */
-public class SelectedPanel extends javax.swing.JPanel implements ItemTest{
+public class SelectedPanel extends javax.swing.JPanel implements Questionable{
     ItemSelectedPanel[] selectVariantPanels;
     /**
      * Creates new form SelectedTest

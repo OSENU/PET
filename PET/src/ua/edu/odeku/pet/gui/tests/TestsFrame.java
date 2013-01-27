@@ -114,7 +114,7 @@ public class TestsFrame extends javax.swing.JFrame {
     private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
         if(selectedTypeAskPanels != null){
             // Соберем все в один массив
-            ItemTest[] itemTests = new ItemTest[registTestPanel1.getCountTest()];
+            Questionable[] itemTests = new Questionable[registTestPanel1.getCountTest()];
             String warning = null;
             for (int i = 0; i < selectedTypeAskPanels.length; i++) {
                 // Заполним масив который будет сохраняться.
