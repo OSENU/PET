@@ -4,14 +4,20 @@
  */
 package ua.edu.odeku.pet.gui.tests.alternativeChoice;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JPanel;
+import ua.edu.odeku.pet.database.entry.Answer;
+import ua.edu.odeku.pet.database.entry.Question;
+import ua.edu.odeku.pet.gui.tests.Answerable;
 import ua.edu.odeku.pet.gui.tests.Questionable;
 
 /**
  *
  * @author Aleo
  */
-public class AlternativePanel extends javax.swing.JPanel implements Questionable{
+public class AlternativePanel extends javax.swing.JPanel implements Questionable, Answerable{
 
     /**
      * Creates new form AlternativePanel
@@ -139,7 +145,7 @@ public class AlternativePanel extends javax.swing.JPanel implements Questionable
 
     @Override
     public void removeAnswer(int idVariant) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        this.removeAnswer();
     }
 
     @Override
@@ -149,5 +155,60 @@ public class AlternativePanel extends javax.swing.JPanel implements Questionable
             warning = "Укажите утверждение!";
         }
         return warning;
+    }
+
+    @Override
+    public String saveAnswer(Question question) {
+        if(question == null){
+            return "Не передан объект вопроса";
+        }
+        if (question.getIdTest() == null){
+            return "В переданом объекте отсутствует ссылка на тест";
+        }
+        if (question.getIdQuestion() == null){
+            return "В переданом объекте вопроса нет его кода";
+        }
+        Answer answer = new Answer();
+        answer.setQuestion(question);
+        answer.setIsRightAnswer(this.isRightAnswer());
+        answer.setNameAnswer(this.getTextAnswer());
+        try {
+            int ret = answer.insertInto();
+            if (ret == -1) {
+                return "Такой Ответ на вопрос уже есть";
+            }
+        } catch (SQLException ex) {
+            return ex.toString();
+        }
+        return null;
+    }
+
+    @Override
+    public String loadAnswer(Integer idAnswer) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public String getTextAnswer() {
+        if (isRightAnswer()){
+            return "Да";
+        } else {
+            return "Нет";
+        }
+    }
+
+    @Override
+    public String removeAnswer() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public String checkToPrepareAnswer() {
+        return null;
+    }
+
+    @Override
+    public boolean isRightAnswer() {
+        return jRadioButtonYes.isSelected();
     }
 }
