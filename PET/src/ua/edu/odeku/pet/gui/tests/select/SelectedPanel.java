@@ -10,7 +10,6 @@ import java.util.logging.Logger;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
-import ua.edu.odeku.pet.database.entry.Answer;
 import ua.edu.odeku.pet.database.entry.Question;
 import ua.edu.odeku.pet.database.entry.TypeQuestion;
 import ua.edu.odeku.pet.gui.tests.Answerable;
