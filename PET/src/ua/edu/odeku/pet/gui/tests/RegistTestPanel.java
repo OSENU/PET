@@ -24,6 +24,7 @@ public class RegistTestPanel extends javax.swing.JPanel {
     private Integer id = null;
     private int count = 0;
     private Test oldTest = null;
+    private Test test = null;
     
     /**
      * Creates new form RegistTestPanel
@@ -205,31 +206,31 @@ public class RegistTestPanel extends javax.swing.JPanel {
     public String saveTest(){
         String warning = null;
         
-        Test test = new Test();
-        test.setCount_query(count);
-        test.setNameTest(jTextFieldNameTest.getText());
-        test.setTeacher((Teacher)jComboBoxTeacher.getSelectedItem());
-        test.setGroups((Groups)jComboBoxGroup.getSelectedItem());
-        test.setTypeWork((TypeWork)jComboBoxTypeWork.getSelectedItem());
-        test.setSubject((Subject)jComboBoxSubject.getSelectedItem());
+        test = new Test();
+        getTest().setCount_query(count);
+        getTest().setNameTest(jTextFieldNameTest.getText());
+        getTest().setTeacher((Teacher)jComboBoxTeacher.getSelectedItem());
+        getTest().setGroups((Groups)jComboBoxGroup.getSelectedItem());
+        getTest().setTypeWork((TypeWork)jComboBoxTypeWork.getSelectedItem());
+        getTest().setSubject((Subject)jComboBoxSubject.getSelectedItem());
         Date date = new Date(System.currentTimeMillis());
         if(id == null){ // Значит тест создаеться, необходима дата создания
-            test.setDateCreate(date);
-            test.setDateLastEdit(date);
+            getTest().setDateCreate(date);
+            getTest().setDateLastEdit(date);
         } else{
             // значит мы только редактируем
-            test.setDateLastEdit(date);
+            getTest().setDateLastEdit(date);
         }
         
-        if(test.getNameTest().trim().isEmpty()){
+        if(getTest().getNameTest().trim().isEmpty()){
             warning = "Име теста не заполнено!";
-        } else if(test.getGroups() == null){
+        } else if(getTest().getGroups() == null){
             warning = "Укажите группу, для которой создан тест";
-        } else if(test.getSubject() == null){
+        } else if(getTest().getSubject() == null){
             warning = "Укажите по какому предмету этот тест";
-        } else if(test.getTeacher() == null){
+        } else if(getTest().getTeacher() == null){
             warning = "Укажите создателя теста";
-        } else if(test.getTypeWork() == null){
+        } else if(getTest().getTypeWork() == null){
             warning = "Укажте тип работы";
         }
         
@@ -239,13 +240,14 @@ public class RegistTestPanel extends javax.swing.JPanel {
             if(id == null){
                 try {
                     // Значит необходимо создать новую запись
-                    int ret = test.insertInto();
+                    int ret = getTest().insertInto();
                     if(ret == -1){
                         warning = "Такое значение уже есть";
                     } else if(ret == -2){
                         warning = "Ошибка не соответствия типов";
                     } else if(ret >= 0){
-                        this.id = test.getIdFromDataBase();
+                        this.id = getTest().getIdFromDataBase();
+                        this.test.setId_test(this.id);
                         if (this.id == null){
                             warning = "Произошла ошибка, не смогли найти этот тест в базе данных";
                         }
@@ -261,7 +263,7 @@ public class RegistTestPanel extends javax.swing.JPanel {
                     oldTest = new Test(id);
                 }
                 try {
-                    oldTest.updateTable(test);
+                    oldTest.updateTable(getTest());
                 } catch (SQLException ex) {
                     SMS.error(ex.toString());
                     Logger.getLogger(RegistTestPanel.class.getName()).log(Level.SEVERE, null, ex);
@@ -270,6 +272,13 @@ public class RegistTestPanel extends javax.swing.JPanel {
             }
         }
         return warning;
+    }
+
+    /**
+     * @return the test
+     */
+    public Test getTest() {
+        return test;
     }
     
 }

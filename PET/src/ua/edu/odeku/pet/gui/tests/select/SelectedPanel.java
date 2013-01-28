@@ -9,6 +9,7 @@ import ua.edu.odeku.pet.gui.tests.Questionable;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
+import ua.edu.odeku.pet.database.entry.TypeQuestion;
 import ua.edu.odeku.pet.util.SMS;
 
 /**
@@ -143,7 +144,7 @@ public class SelectedPanel extends javax.swing.JPanel implements Questionable{
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public String saveQuestion(Integer idTest) {
+    public String saveQuestion(ua.edu.odeku.pet.database.entry.Test idTest) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -158,8 +159,11 @@ public class SelectedPanel extends javax.swing.JPanel implements Questionable{
     }
 
     @Override
-    public String getTypeQuestion() {
-        return "Selected";
+    public TypeQuestion getTypeQuestion() {
+        TypeQuestion typeQuestion = new TypeQuestion();
+        typeQuestion.setIdTypeQuestion(1);
+        typeQuestion.setNameProgQuestionType("Selected");
+        return typeQuestion;
     }
 
     @Override

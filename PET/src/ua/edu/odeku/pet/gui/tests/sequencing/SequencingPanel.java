@@ -5,6 +5,7 @@ package ua.edu.odeku.pet.gui.tests.sequencing;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
+import ua.edu.odeku.pet.database.entry.TypeQuestion;
 import ua.edu.odeku.pet.gui.tests.Questionable;
 import ua.edu.odeku.pet.util.SMS;
 
@@ -138,7 +139,7 @@ public class SequencingPanel extends javax.swing.JPanel implements Questionable{
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public String saveQuestion(Integer idTest) {
+    public String saveQuestion(ua.edu.odeku.pet.database.entry.Test idTest) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -153,8 +154,11 @@ public class SequencingPanel extends javax.swing.JPanel implements Questionable{
     }
 
     @Override
-    public String getTypeQuestion() {
-        return "Sequencing";
+    public TypeQuestion getTypeQuestion() {
+        TypeQuestion typeQuestion = new TypeQuestion();
+        typeQuestion.setIdTypeQuestion(3);
+        typeQuestion.setNameProgQuestionType("Sequencing");
+        return typeQuestion;
     }
 
     @Override

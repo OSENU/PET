@@ -6,6 +6,7 @@
 package ua.edu.odeku.pet.gui.tests;
 
 import javax.swing.JPanel;
+import ua.edu.odeku.pet.database.entry.TypeQuestion;
 
 /**
  *
@@ -17,10 +18,10 @@ public interface Questionable {
      * Метод должен вызываться для сохранения этого задания в базу данных.
      * Для сохранения необходимо передать код теста которому будет приписан 
      * этот вопрос.
-     * @param idTest код теста к которому будет приписан вопрос
+     * @param test код теста к которому будет приписан вопрос
      * @return вернет строку с возражениями, если она пуста, то все ОК
      */
-    public String saveQuestion(Integer idTest);
+    public String saveQuestion(ua.edu.odeku.pet.database.entry.Test test);
     
     /**
      * Метод должен загрузить с базы данные, по переданому ему коду вопроса
@@ -40,7 +41,7 @@ public interface Questionable {
      * Метод вернет строку которая содержит тип данного теста
      * @return String тип данного теста
      */
-    public String getTypeQuestion();
+    public TypeQuestion getTypeQuestion();
     
     /**
      * Метод вернет количество вариантов для данного теста

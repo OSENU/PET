@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import javax.swing.JPanel;
 import ua.edu.odeku.pet.database.entry.Answer;
 import ua.edu.odeku.pet.database.entry.Question;
+import ua.edu.odeku.pet.database.entry.TypeQuestion;
 import ua.edu.odeku.pet.gui.tests.Answerable;
 import ua.edu.odeku.pet.gui.tests.Questionable;
 
@@ -18,7 +19,8 @@ import ua.edu.odeku.pet.gui.tests.Questionable;
  * @author Aleo
  */
 public class AlternativePanel extends javax.swing.JPanel implements Questionable, Answerable{
-
+    Question question;
+    Answer answer;
     /**
      * Creates new form AlternativePanel
      */
@@ -109,8 +111,32 @@ public class AlternativePanel extends javax.swing.JPanel implements Questionable
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public String saveQuestion(Integer idTest) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public String saveQuestion(ua.edu.odeku.pet.database.entry.Test test) {
+        if (test == null || test.getId_test() == null){
+            return "Для сохранения вопроса необходимо передать объект теста";
+        }
+        question = new Question();
+        question.setIdTest(test);
+        question.setNameQuestion(this.getTask());
+        question.setTypeQuestion(this.getTypeQuestion());
+        try {
+            // Сохраним тест
+            int ret = question.insertInto();
+            if (ret == -1){
+                return "Такое значение уже есть в базе";
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AlternativePanel.class.getName()).log(Level.SEVERE, null, ex);
+            return ex.toString();
+        }
+        try {
+            // Получим код теста
+            question.setIdQuestion(question.getIdFromDataBase());
+        } catch (SQLException ex) {
+            Logger.getLogger(AlternativePanel.class.getName()).log(Level.SEVERE, null, ex);
+            return ex.toString();
+        }
+        return null;
     }
 
     @Override
@@ -124,8 +150,11 @@ public class AlternativePanel extends javax.swing.JPanel implements Questionable
     }
 
     @Override
-    public String getTypeQuestion() {
-        return "AlternativeChoice";
+    public TypeQuestion getTypeQuestion() {
+        TypeQuestion typeQuestion = new TypeQuestion();
+        typeQuestion.setIdTypeQuestion(2);
+        typeQuestion.setNameProgQuestionType("AlternativeChoice");
+        return typeQuestion;
     }
 
     @Override
@@ -168,7 +197,7 @@ public class AlternativePanel extends javax.swing.JPanel implements Questionable
         if (question.getIdQuestion() == null){
             return "В переданом объекте вопроса нет его кода";
         }
-        Answer answer = new Answer();
+        answer = new Answer();
         answer.setQuestion(question);
         answer.setIsRightAnswer(this.isRightAnswer());
         answer.setNameAnswer(this.getTextAnswer());
@@ -178,6 +207,12 @@ public class AlternativePanel extends javax.swing.JPanel implements Questionable
                 return "Такой Ответ на вопрос уже есть";
             }
         } catch (SQLException ex) {
+            return ex.toString();
+        }
+        try {
+            answer.setIdAnswer(answer.getIdFromDataBase());
+        } catch (SQLException ex) {
+            Logger.getLogger(AlternativePanel.class.getName()).log(Level.SEVERE, null, ex);
             return ex.toString();
         }
         return null;

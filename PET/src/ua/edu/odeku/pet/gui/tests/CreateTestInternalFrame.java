@@ -7,6 +7,7 @@ package ua.edu.odeku.pet.gui.tests;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import ua.edu.odeku.pet.database.entry.Test;
 import ua.edu.odeku.pet.gui.PetJInternalFrame;
 import ua.edu.odeku.pet.util.SMS;
 
@@ -28,7 +29,7 @@ public class CreateTestInternalFrame extends PetJInternalFrame {
             registTestPanel.init();
         } catch (SQLException ex) {
             SMS.error(ex.getMessage());
-            Logger.getLogger(TestsFrame.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CreateTestInternalFrame.class.getName()).log(Level.SEVERE, null, ex);
             this.dispose();
         }
     }
@@ -158,11 +159,11 @@ public class CreateTestInternalFrame extends PetJInternalFrame {
                 warning = registTestPanel.saveTest();
                 if (warning == null || warning.trim().isEmpty()) {
                     // Получим код теста
-                    Integer idTest = registTestPanel.getIdTest();
+                    Test test = registTestPanel.getTest();
                     // Пройдемся по всем заданиям и сохраним их
                     for (int i = 0; i < itemTests.length; i++) {
                         try {
-                            warning = itemTests[i].saveQuestion(idTest);
+                            warning = itemTests[i].saveQuestion(test);
                         } catch (Exception ex) {
                             SMS.error(ex.toString());
                             ua.edu.odeku.pet.database.ConnectionDataBase.rollBackStatic();
@@ -188,7 +189,7 @@ public class CreateTestInternalFrame extends PetJInternalFrame {
                 }
             } catch (SQLException ex) {
                 SMS.error(this, ex.toString());
-                Logger.getLogger(TestsFrame.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CreateTestInternalFrame.class.getName()).log(Level.SEVERE, null, ex);
                 SMS.error("Произошла ошибка сохранение отменено");
             }
         } else {
