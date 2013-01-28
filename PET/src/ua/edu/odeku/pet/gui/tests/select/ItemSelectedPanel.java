@@ -4,11 +4,19 @@
  */
 package ua.edu.odeku.pet.gui.tests.select;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import ua.edu.odeku.pet.database.entry.Answer;
+import ua.edu.odeku.pet.database.entry.Question;
+import ua.edu.odeku.pet.gui.tests.Answerable;
 /**
  *
  * @author Aleo
  */
-public class ItemSelectedPanel extends javax.swing.JPanel {
+public class ItemSelectedPanel extends javax.swing.JPanel implements Answerable {
+
+    Answer answer;
 
     /**
      * Creates new form ItemSelectedPanel
@@ -16,19 +24,21 @@ public class ItemSelectedPanel extends javax.swing.JPanel {
     public ItemSelectedPanel() {
         initComponents();
     }
+
     /**
      * Возращает, правильный ли это ответ или нет
-     * @return true если ответ правильный
-     *         false если ответ лождный
+     *
+     * @return true если ответ правильный false если ответ лождный
      */
-    public boolean isRightAnswer(){
+    @Override
+    public boolean isRightAnswer() {
         return jCheckBoxRight.isSelected();
     }
-    
-    public String getFieldText(){
+
+    public String getFieldText() {
         return this.jTextFieldAsk.getText();
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -79,4 +89,62 @@ public class ItemSelectedPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JTextField jTextFieldAsk;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public String saveAnswer(Question question) {
+        if (question == null) {
+            return "Не передан объект вопроса";
+        }
+        if (question.getIdTest() == null) {
+            return "В переданом объекте отсутствует ссылка на тест";
+        }
+        if (question.getIdQuestion() == null) {
+            return "В переданом объекте вопроса нет его кода";
+        }
+        answer = new Answer();
+        answer.setQuestion(question);
+        answer.setIsRightAnswer(this.isRightAnswer());
+        answer.setNameAnswer(this.getTextAnswer());
+        try {
+            int ret = answer.insertInto();
+            if (ret == -1) {
+                return "Такой Ответ на вопрос уже есть";
+            }
+        } catch (SQLException ex) {
+            return ex.toString();
+        }
+        try {
+            answer.setIdAnswer(answer.getIdFromDataBase());
+        } catch (SQLException ex) {
+            Logger.getLogger(ItemSelectedPanel.class.getName()).log(Level.SEVERE, null, ex);
+            return ex.toString();
+        }
+        return null;
+
+    }
+
+    @Override
+    public String loadAnswer(Integer idAnswer) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public String getTextAnswer() {
+        return jTextFieldAsk.getText();
+    }
+
+    @Override
+    public String removeAnswer() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public String checkToPrepareAnswer() {
+        if (this.getTextAnswer() == null || this.getTextAnswer().trim().isEmpty()) {
+            return "Не заполнено вариант ответа";
+        } else {
+            return null;
+        }
+
+    }
 }

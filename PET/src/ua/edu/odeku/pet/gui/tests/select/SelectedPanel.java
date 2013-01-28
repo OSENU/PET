@@ -4,20 +4,29 @@
  */
 package ua.edu.odeku.pet.gui.tests.select;
 
-import ua.edu.odeku.pet.gui.tests.select.ItemSelectedPanel;
-import ua.edu.odeku.pet.gui.tests.Questionable;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
+import ua.edu.odeku.pet.database.entry.Answer;
+import ua.edu.odeku.pet.database.entry.Question;
 import ua.edu.odeku.pet.database.entry.TypeQuestion;
+import ua.edu.odeku.pet.gui.tests.Answerable;
+import ua.edu.odeku.pet.gui.tests.Questionable;
+import ua.edu.odeku.pet.gui.tests.alternativeChoice.AlternativePanel;
 import ua.edu.odeku.pet.util.SMS;
 
 /**
  *
  * @author Aleo
  */
-public class SelectedPanel extends javax.swing.JPanel implements Questionable{
+public class SelectedPanel extends javax.swing.JPanel implements Questionable {
+
     ItemSelectedPanel[] selectVariantPanels;
+    Question question;
+
     /**
      * Creates new form SelectedTest
      */
@@ -114,25 +123,24 @@ public class SelectedPanel extends javax.swing.JPanel implements Questionable{
 
     private void jButtonApplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonApplyActionPerformed
         int countVariant = Integer.valueOf(jSpinnerCountVariant.getValue().toString());
-        if(selectVariantPanels != null){
-          if(!SMS.query("Все варианты будут потеряны\nПродолжить?")){
-              return;
-          }
-        } 
+        if (selectVariantPanels != null) {
+            if (!SMS.query("Все варианты будут потеряны\nПродолжить?")) {
+                return;
+            }
+        }
         selectVariantPanels = new ItemSelectedPanel[countVariant];
         jPanel2.removeAll();
         jPanel2.setLayout(new BoxLayout(jPanel2, BoxLayout.PAGE_AXIS));
 
         for (int i = 0; i < countVariant; i++) {
             selectVariantPanels[i] = new ItemSelectedPanel();
-            selectVariantPanels[i].setBorder(new TitledBorder("Вариант : " + (i+1)));
-            
+            selectVariantPanels[i].setBorder(new TitledBorder("Вариант : " + (i + 1)));
+
             jPanel2.add(selectVariantPanels[i]);
         }
         jScrollPane1.setVerticalScrollBarPolicy(javax.swing.JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         this.updateUI();
     }//GEN-LAST:event_jButtonApplyActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonApply;
     private javax.swing.JLabel jLabel1;
@@ -144,8 +152,46 @@ public class SelectedPanel extends javax.swing.JPanel implements Questionable{
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public String saveQuestion(ua.edu.odeku.pet.database.entry.Test idTest) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public String saveQuestion(ua.edu.odeku.pet.database.entry.Test test) {
+        if (test == null || test.getId_test() == null) {
+            return "Для сохранения вопроса необходимо передать объект теста";
+        }
+        question = new Question();
+        question.setIdTest(test);
+        question.setNameQuestion(this.getTask());
+        question.setTypeQuestion(this.getTypeQuestion());
+        try {
+            // Сохраним тест
+            int ret = question.insertInto();
+            if (ret == -1) {
+                return "Такое задание для этого теста уже есть в базе";
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AlternativePanel.class.getName()).log(Level.SEVERE, null, ex);
+            return ex.toString();
+        }
+        try {
+            // Получим код теста
+            question.setIdQuestion(question.getIdFromDataBase());
+        } catch (SQLException ex) {
+            Logger.getLogger(AlternativePanel.class.getName()).log(Level.SEVERE, null, ex);
+            return ex.toString();
+        }
+        String warning = null;
+        for (int i = 0; i < selectVariantPanels.length; i++) {
+            Answerable answerable = (Answerable) selectVariantPanels[i];
+            warning = answerable.checkToPrepareAnswer();
+            if (warning == null || warning.trim().isEmpty()) {
+                warning = answerable.saveAnswer(question);
+                if (warning != null && !warning.trim().isEmpty()) {
+                    return warning;
+                }
+            } else {
+                return warning;
+            }
+
+        }
+        return warning;
     }
 
     @Override
@@ -175,7 +221,7 @@ public class SelectedPanel extends javax.swing.JPanel implements Questionable{
     public int getCountRightAnswer() {
         int count = 0;
         for (ItemSelectedPanel itemSelectedPanel : selectVariantPanels) {
-            if(itemSelectedPanel.isRightAnswer()){
+            if (itemSelectedPanel.isRightAnswer()) {
                 count++;
             }
         }
@@ -196,28 +242,28 @@ public class SelectedPanel extends javax.swing.JPanel implements Questionable{
     public String checkToPrepareQuestion() {
         String warning = null;
         // Проверим заполненость всех текстовых полей
-        if(selectVariantPanels == null){
+        if (selectVariantPanels == null) {
             warning = "Создайте более одного варианта ответа, на данное задание";
             return warning;
         }
-        if(this.getTask().trim().isEmpty()){
+        if (this.getTask().trim().isEmpty()) {
             warning = "Не задан вопрос!";
             return warning;
         }
-        
+
         for (int i = 0; i < selectVariantPanels.length; i++) {
-            if(selectVariantPanels[i].getFieldText().trim().isEmpty()){
-                warning = "Внимание! " + (i+1) + " вариант ответа не заполнен!";
+            if (selectVariantPanels[i].getFieldText().trim().isEmpty()) {
+                warning = "Внимание! " + (i + 1) + " вариант ответа не заполнен!";
                 return warning;
             }
         }
         int countRight = this.getCountRightAnswer();
-        if(countRight < 1){
+        if (countRight < 1) {
             warning = "Должен быть хотя бы один правильный ответ!";
-        } else if(countRight == this.getCountAnswer()){
+        } else if (countRight == this.getCountAnswer()) {
             warning = "Все варианты не могут быть правильными!";
         }
         return warning;
-        
+
     }
 }

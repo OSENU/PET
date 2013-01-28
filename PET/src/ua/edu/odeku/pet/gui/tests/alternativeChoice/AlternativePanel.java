@@ -123,7 +123,7 @@ public class AlternativePanel extends javax.swing.JPanel implements Questionable
             // Сохраним тест
             int ret = question.insertInto();
             if (ret == -1){
-                return "Такое значение уже есть в базе";
+                return "Такое задание для этого теста уже есть в базе";
             }
         } catch (SQLException ex) {
             Logger.getLogger(AlternativePanel.class.getName()).log(Level.SEVERE, null, ex);
