@@ -126,7 +126,7 @@ public class TestsFrame extends javax.swing.JFrame {
                     return;
                 }
                 // Каждый элимент проверим на его заполненость.
-                warning = itemTests[i].checkToPrepare();
+                warning = itemTests[i].checkToPrepareQuestion();
                 if(warning != null && ! warning.trim().isEmpty() ){
                     SMS.warning(this, (i+1) + " задание:\n" + warning);
                     this.jTabbedPane1.setSelectedIndex(i);
@@ -146,7 +146,7 @@ public class TestsFrame extends javax.swing.JFrame {
                     // Пройдемся по всем заданиям и сохраним их
                     for (int i = 0; i < itemTests.length; i++) {
                         try{
-                            warning = itemTests[i].saveItemTest(idTest);
+                            warning = itemTests[i].saveQuestion(idTest);
                         } catch (Exception ex){
                             SMS.error(ex.toString());
                             ua.edu.odeku.pet.database.ConnectionDataBase.rollBackStatic();

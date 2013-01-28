@@ -20,7 +20,7 @@ public interface Questionable {
      * @param idTest код теста к которому будет приписан вопрос
      * @return вернет строку с возражениями, если она пуста, то все ОК
      */
-    public String saveItemTest(Integer idTest);
+    public String saveQuestion(Integer idTest);
     
     /**
      * Метод должен загрузить с базы данные, по переданому ему коду вопроса
@@ -28,7 +28,7 @@ public interface Questionable {
      * @param idItem код вопроса который будет восоздаваться
      * @return JPanel который будет вставлен в форму
      */
-    public JPanel loadItemTest(long idItem);
+    public JPanel loadQuestion(long idItem);
     
     /**
      * Метод должен вернуть текст задания этого теста
@@ -40,35 +40,35 @@ public interface Questionable {
      * Метод вернет строку которая содержит тип данного теста
      * @return String тип данного теста
      */
-    public String getTypeTask();
+    public String getTypeQuestion();
     
     /**
      * Метод вернет количество вариантов для данного теста
      * @return int количевство вариантов ответа для данного теста
      */
-    public int getCountVariant();
+    public int getCountAnswer();
     
     /**
      * Метод вернет количество правильных вариантов ответов для данного теста
      * @return int количество правильных вариантов ответа для данного теста
      */
-    public int getCountRightVariant();
+    public int getCountRightAnswer();
     
     /**
      * Метод удалит из базы данный тест
      */
-    public void removeItemTest();
+    public void removeQuestion();
     
     /**
      * Метод удалит один из вариантов из базы и из JPanel
      * @param idVariant int номер варианта ответа который необходио удалить
      */
-    public void removeVariant(int idVariant);
+    public void removeAnswer(int idVariant);
     
     /**
      * Метод проверяем готовность задания теста. Заполнен ли он или нет.
      * @return Возращает строку с возражение, 
      *         если вернет пустую строку, то возражений нет
      */
-    public String checkToPrepare();
+    public String checkToPrepareQuestion();
 }

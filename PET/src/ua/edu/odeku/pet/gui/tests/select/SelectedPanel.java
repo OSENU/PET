@@ -143,12 +143,12 @@ public class SelectedPanel extends javax.swing.JPanel implements Questionable{
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public String saveItemTest(Integer idTest) {
+    public String saveQuestion(Integer idTest) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public JPanel loadItemTest(long idItem) {
+    public JPanel loadQuestion(long idItem) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -158,17 +158,17 @@ public class SelectedPanel extends javax.swing.JPanel implements Questionable{
     }
 
     @Override
-    public String getTypeTask() {
+    public String getTypeQuestion() {
         return "Selected";
     }
 
     @Override
-    public int getCountVariant() {
+    public int getCountAnswer() {
         return jPanel2.getComponentCount();
     }
 
     @Override
-    public int getCountRightVariant() {
+    public int getCountRightAnswer() {
         int count = 0;
         for (ItemSelectedPanel itemSelectedPanel : selectVariantPanels) {
             if(itemSelectedPanel.isRightAnswer()){
@@ -179,17 +179,17 @@ public class SelectedPanel extends javax.swing.JPanel implements Questionable{
     }
 
     @Override
-    public void removeItemTest() {
+    public void removeQuestion() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void removeVariant(int idVariant) {
+    public void removeAnswer(int idVariant) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public String checkToPrepare() {
+    public String checkToPrepareQuestion() {
         String warning = null;
         // Проверим заполненость всех текстовых полей
         if(selectVariantPanels == null){
@@ -207,10 +207,10 @@ public class SelectedPanel extends javax.swing.JPanel implements Questionable{
                 return warning;
             }
         }
-        int countRight = this.getCountRightVariant();
+        int countRight = this.getCountRightAnswer();
         if(countRight < 1){
             warning = "Должен быть хотя бы один правильный ответ!";
-        } else if(countRight == this.getCountVariant()){
+        } else if(countRight == this.getCountAnswer()){
             warning = "Все варианты не могут быть правильными!";
         }
         return warning;

@@ -138,12 +138,12 @@ public class SequencingPanel extends javax.swing.JPanel implements Questionable{
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public String saveItemTest(Integer idTest) {
+    public String saveQuestion(Integer idTest) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public JPanel loadItemTest(long idItem) {
+    public JPanel loadQuestion(long idItem) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -153,32 +153,32 @@ public class SequencingPanel extends javax.swing.JPanel implements Questionable{
     }
 
     @Override
-    public String getTypeTask() {
+    public String getTypeQuestion() {
         return "Sequencing";
     }
 
     @Override
-    public int getCountVariant() {
+    public int getCountAnswer() {
         return jPanel.getComponentCount();
     }
 
     @Override
-    public int getCountRightVariant() {
+    public int getCountRightAnswer() {
         return 1;
     }
 
     @Override
-    public void removeItemTest() {
+    public void removeQuestion() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void removeVariant(int idVariant) {
+    public void removeAnswer(int idVariant) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public String checkToPrepare() {
+    public String checkToPrepareQuestion() {
         String warning = null;
         if(this.getTask().trim().isEmpty()){
             warning = "Введите текст задания";
