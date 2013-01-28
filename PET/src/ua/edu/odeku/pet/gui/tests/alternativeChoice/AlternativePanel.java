@@ -136,7 +136,7 @@ public class AlternativePanel extends javax.swing.JPanel implements Questionable
             Logger.getLogger(AlternativePanel.class.getName()).log(Level.SEVERE, null, ex);
             return ex.toString();
         }
-        return null;
+        return this.saveAnswer(question);
     }
 
     @Override

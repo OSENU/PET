@@ -171,7 +171,7 @@ public class CreateTestInternalFrame extends PetJInternalFrame {
                             return;
                         }
                         // Если были ошибки то прервем сохранение
-                        if (!warning.trim().isEmpty()) {
+                        if (warning != null && !warning.trim().isEmpty()) {
                             SMS.warning(this, "В задании " + (i + 1) + " : " + warning);
                             // Тут по идее откат....
                             ua.edu.odeku.pet.database.ConnectionDataBase.rollBackStatic();
@@ -179,7 +179,8 @@ public class CreateTestInternalFrame extends PetJInternalFrame {
                             return;
                         }
                     }
-                    SMS.message("Тест успешно сохранен");
+                    SMS.message(this, "Тест успешно сохранен");
+                    ua.edu.odeku.pet.database.ConnectionDataBase.commit();
                     this.dispose();
                 } else {
                     SMS.warning(this, warning);

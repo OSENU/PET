@@ -126,6 +126,7 @@ public class ConnectionDataBase {
                         String script = sb.toString();
                         try {
                             execute(script);
+                            ConnectionDataBase.commit();
                             SMS.message("База данных была успешно создана");
                         } catch (SQLException ex) {
                             SMS.error("Ошибка при выполенении скрипта");

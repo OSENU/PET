@@ -4,6 +4,10 @@
  */
 package ua.edu.odeku.pet.database.data;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import ua.edu.odeku.pet.database.ConnectionDataBase;
 import ua.edu.odeku.pet.database.entry.Department;
 import ua.edu.odeku.pet.database.entry.Faculty;
@@ -11,10 +15,6 @@ import ua.edu.odeku.pet.database.entry.Groups;
 import ua.edu.odeku.pet.database.entry.Subject;
 import ua.edu.odeku.pet.database.entry.Teacher;
 import ua.edu.odeku.pet.database.entry.TypeWork;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 
 /**
  *
@@ -96,7 +96,7 @@ public class GetDataTable {
             idDepartment = rs.getInt("id_department"); // 5
             nameDepartment = rs.getString(6); // 6
             
-            teacher = new Teacher(idDepartment, name, name2, surname);
+            teacher = new Teacher(id, name, name2, surname);
             teacher.setIdDepartment(new Department(idDepartment, nameDepartment));
             
             teachers[i] = teacher;

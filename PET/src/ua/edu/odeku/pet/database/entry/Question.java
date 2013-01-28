@@ -152,9 +152,9 @@ public class Question implements EntryDataBase{
         } else if (typeQuestion == null || typeQuestion.getIdTypeQuestion() == null){
             return null;
         }
-        ResultSet resultSet = statement.executeQuery("Select id__question "
+        ResultSet resultSet = statement.executeQuery("Select ID_QUESTION  "
                 + "from question "
-                + "where name__question = '"+nameQuestion+"' "
+                + "where name_question = '"+nameQuestion+"' "
                 + "and id_test = " + test.getId_test() + " "
                 + "and id_type_question = " + typeQuestion.getIdTypeQuestion() + "; ");
         if(resultSet.next()){

@@ -1,6 +1,10 @@
 
 drop all objects;
 
+CREATE TABLE PET_CONFIG(
+	name_version VARCHAR(100)
+);
+
 CREATE TABLE Department
 (
 	id_department        INTEGER NOT NULL AUTO_INCREMENT(1) ,
@@ -41,7 +45,7 @@ ALTER TABLE Faculty
 CREATE TABLE Groups
 (
 	id_groups            INTEGER NOT NULL AUTO_INCREMENT(1) ,
-	year_supply          DATE NULL ,
+	year_supply          INTEGER default year(CURDATE()) NULL ,
 	num_group            INTEGER NOT NULL ,
 	id_faculty           INTEGER NOT NULL 
 );
